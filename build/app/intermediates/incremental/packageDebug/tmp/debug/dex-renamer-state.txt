@@ -1,0 +1,4 @@
+#Wed Jul 05 22:27:43 WIB 2023
+base.0=/Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

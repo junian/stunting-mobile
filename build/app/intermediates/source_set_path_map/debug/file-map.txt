@@ -1,0 +1,14 @@
+com.example.stantapp-jetified-window-1.0.0-beta04-0 /Users/muhammadhariskumala/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/res
+com.example.stantapp-jetified-annotation-experimental-1.1.0-1 /Users/muhammadhariskumala/.gradle/caches/transforms-3/6c0c163cc77ae6c91f9f7dfcd179c29c/transformed/jetified-annotation-experimental-1.1.0/res
+com.example.stantapp-core-1.6.0-2 /Users/muhammadhariskumala/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res
+com.example.stantapp-jetified-window-java-1.0.0-beta04-3 /Users/muhammadhariskumala/.gradle/caches/transforms-3/ae81e06d24c799147c26814497a2a305/transformed/jetified-window-java-1.0.0-beta04/res
+com.example.stantapp-debug-4 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/android/app/src/debug/res
+com.example.stantapp-main-5 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/android/app/src/main/res
+com.example.stantapp-pngs-6 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/generated/res/pngs/debug
+com.example.stantapp-resValues-7 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/generated/res/resValues/debug
+com.example.stantapp-rs-8 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/generated/res/rs/debug
+com.example.stantapp-mergeDebugResources-9 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.example.stantapp-mergeDebugResources-10 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.example.stantapp-merged_res-11 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/app/intermediates/merged_res/debug
+com.example.stantapp-packaged_res-12 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/fluttertoast/intermediates/packaged_res/debug
+com.example.stantapp-packaged_res-13 /Users/muhammadhariskumala/Documents/pemrograman/flutter/stantapp-mobile/build/shared_preferences_android/intermediates/packaged_res/debug

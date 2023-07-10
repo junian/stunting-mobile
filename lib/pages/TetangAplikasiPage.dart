@@ -1,0 +1,193 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class TentangAplikasiPage extends StatelessWidget {
+  TentangAplikasiPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Uri _urlIG = Uri.parse('https://instagram.com/official.primaku');
+    Future<void> _launchUrlIG() async {
+      if (!await launchUrl(_urlIG)) {
+        throw Exception('Could not launch $_urlIG');
+      }
+    }
+
+    final Uri _urlFB = Uri.parse('https://www.facebook.com/official.primaku/');
+    Future<void> _launchUrlFB() async {
+      if (!await launchUrl(_urlFB)) {
+        throw Exception('Could not launch $_urlFB');
+      }
+    }
+
+    final Uri _urlYT = Uri.parse('https://www.youtube.com/watch?v=1Bgbn6F_ON8');
+    Future<void> _launchUrlYT() async {
+      if (!await launchUrl(_urlYT)) {
+        throw Exception('Could not launch $_urlYT');
+      }
+    }
+
+    final Uri _urlWEB = Uri.parse('www.primaku.com');
+    Future<void> _launchUrlWEB() async {
+      if (!await launchUrl(_urlWEB)) {
+        throw Exception('Could not launch $_urlWEB');
+      }
+    }
+
+    var width = MediaQuery.of(context).size.width;
+    var hight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Tentang Aplikasi',
+          style: TextStyle(fontSize: 20),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {},
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: hight * 0.05,
+              ),
+              Text(
+                "Tentang PrimaKu",
+                style: TextStyle(fontSize: 18),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: width,
+                height: hight * 0.2,
+                child: Text(
+                  "Perimaku adalah aplikasi kesehatan anak pertama di indonesia yang berfungsi untuk membantu orangtua memantau pertmbuhan anakdengan desain user experience yang intuitif.",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: width,
+                height: hight * 0.1,
+                child: Text(
+                  "Isi dan rekomendasi yang terdapat di dalam PrimaKu dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomLeft,
+                width: width,
+                height: hight * 0.1,
+                child: Text(
+                  "Temukan Primaku di media Sosial!",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                width: width,
+                height: hight * 0.08,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Instagram: @official.primaku",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrlIG();
+                      },
+                      child: Text(
+                        "(www.instagram.com/official.primaku)",
+                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                width: width,
+                height: hight * 0.08,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Facebook: PrimaKu",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrlFB();
+                      },
+                      child: Text(
+                        "(web.facebook.com/official.primaku)",
+                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                width: width,
+                height: hight * 0.08,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Youtube: Officiak PrimaKu Channel",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrlYT();
+                      },
+                      child: Text(
+                        "(www.youtube.com/@officialprimakuchannel8943)",
+                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                width: width,
+                height: hight * 0.08,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "website",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrlWEB();
+                      },
+                      child: Text(
+                        "(www.primaku.com)",
+                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
