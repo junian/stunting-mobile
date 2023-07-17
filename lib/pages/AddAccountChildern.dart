@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/SessionController.dart';
 import 'HomePage2.dart';
 
 class AddAccountChildernPage extends StatefulWidget {
-  const AddAccountChildernPage({super.key});
+  var anak_id;
+  AddAccountChildernPage({super.key, required this.anak_id});
 
   @override
   State<AddAccountChildernPage> createState() => _AddAccountChildernPageState();
@@ -14,6 +20,7 @@ class AddAccountChildernPage extends StatefulWidget {
 
 class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
   var childernController = Get.put(ChildernController());
+  var sessionController = Get.put(SessionController());
 
   TextEditingController nama_anak = TextEditingController();
   TextEditingController tanggal_lahir = TextEditingController();
@@ -26,20 +33,80 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
 
   bool isClicked = false;
 
-  List<String> _genders = ['Laki - Laki', 'Perempuan'];
+  // List<String> _genders = ['Laki - Laki', 'Perempuan'];
   String? _selectedGender;
+  String? _selectedPrematur;
+  String? _selectedAllergy;
 
-  List<String> _provinces = ['Pilih Golongan Darah', 'A', 'B', 'O', 'AB'];
-  String? _selectedProvince;
+  List<String> _blood = ['Pilih Golongan Darah', 'A', 'B', 'O', 'AB'];
+  String? _selectedBloodGroup;
 
   TextEditingController dateinput = TextEditingController();
   //text editing controller for text field
 
+  List<dynamic> isChildern = [];
+
+  //image picker
+  File? _imageFile;
+  Future<void> pickImage() async {
+    final picker = await ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Gambar berhasil dipilih
+      _imageFile = File(image.path);
+      // Lakukan sesuatu dengan file gambar yang dipilih
+    } else {
+      // Gambar tidak dipilih
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    dateinput.text = ""; //set the initial value of text field
-    _selectedProvince = _provinces.isNotEmpty ? _provinces[0] : null;
+    if (widget.anak_id != null) {
+      isChildern = jsonDecode(childernController.dataAnak.toString());
+
+      print(isChildern);
+
+      // Set nilai pada TextEditingControllers berdasarkan nilai dari isChildern
+      nama_anak.text = isChildern[0]['nama_anak'] ?? '';
+      dateinput.text = isChildern[0]['tanggal_lahir'] ?? '';
+      // jenis_kelamin.text = isChildern[0]['jenis_kelamin'] ?? '';
+      berat_badan.text = isChildern[0]['berat_badan'] ?? '';
+      tinggi_badan.text = isChildern[0]['tinggi_badan'] ?? '';
+      lingkar_kepala.text = isChildern[0]['lingkar_kepala'] ?? '';
+      tinggi_badan_ibu.text = isChildern[0]['tinggi_badan_ibu'] ?? '';
+      tinggi_badan_ayah.text = isChildern[0]['tinggi_badan_ayah'] ?? '';
+
+      String gender = isChildern[0]['jenis_kelamin'] ?? '';
+      if (gender == 'Laki-Laki') {
+        _selectedGender = 'Laki-Laki';
+      } else if (gender == 'Perempuan') {
+        _selectedGender = 'Perempuan';
+      }
+
+      String prematur = isChildern[0]['prematur'] ?? '';
+      if (prematur == 'Ya') {
+        _selectedPrematur = 'Ya';
+      } else if (prematur == 'Tidak') {
+        _selectedPrematur = 'Tidak';
+      }
+
+      String alergi = isChildern[0]['alergi'] ?? '';
+      if (alergi == 'Ya') {
+        _selectedAllergy = 'Ya';
+      } else if (alergi == 'Tidak') {
+        _selectedAllergy = 'Tidak';
+      }
+
+      // dateinput.text = ""; //set the initial value of text field
+      String bloodGroup = isChildern[0]['gol_darah'] ?? "Pilih Golongan Darah";
+      if (_blood.contains(bloodGroup)) {
+        _selectedBloodGroup = bloodGroup;
+      }
+    }
+
+    _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
   }
 
   @override
@@ -49,7 +116,8 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Profile Anda'),
+        title: Text(
+            widget.anak_id != null ? 'Edit Akun Anak' : 'Set Profile Anda'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -88,18 +156,35 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                           radius: 30,
                           backgroundColor:
                               const Color.fromARGB(255, 194, 192, 192),
-                          child: Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.white,
-                          ),
+                          child: isChildern.isNotEmpty &&
+                                  isChildern[0]['photo'] != null
+                              ? Image.network(
+                                  "http://stantapp.pejuang-subuh.com/" +
+                                      isChildern[0]['photo'],
+                                  fit: BoxFit.contain,
+                                )
+                              : _imageFile == null
+                                  ? Icon(
+                                      Icons.person,
+                                      size: 30,
+                                      color: Colors.white,
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Image(
+                                        image: FileImage(_imageFile!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                         ),
                       ),
                       SizedBox(
                         height: 16,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          pickImage();
+                        },
                         child: Text(
                           'Unggah Foto',
                           style: TextStyle(
@@ -247,22 +332,22 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Radio(
-                      value: 'Laki-laki',
+                      value: 'Laki-Laki',
                       groupValue: _selectedGender,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedGender = value as String?;
                         });
                       },
                     ),
-                    Text('Laki-laki'),
+                    Text('Laki-Laki'),
                     SizedBox(width: 16),
                     Radio(
                       value: 'Perempuan',
                       groupValue: _selectedGender,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedGender = value as String?;
                         });
                       },
                     ),
@@ -337,22 +422,22 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Radio(
-                      value: 'ya',
-                      groupValue: _selectedGender,
+                      value: 'YA',
+                      groupValue: _selectedPrematur,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedPrematur = value as String?;
                         });
                       },
                     ),
                     Text('Ya'),
                     SizedBox(width: 16),
                     Radio(
-                      value: 'tidak',
-                      groupValue: _selectedGender,
+                      value: 'Tidak',
+                      groupValue: _selectedPrematur,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedPrematur = value as String?;
                         });
                       },
                     ),
@@ -525,16 +610,16 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   ],
                 ),
                 DropdownButtonFormField(
-                  value: _selectedProvince ?? '',
-                  items: _provinces.map((province) {
+                  value: _selectedBloodGroup ?? '',
+                  items: _blood.map((blood) {
                     return DropdownMenuItem(
-                      value: province,
-                      child: Text(province),
+                      value: blood,
+                      child: Text(blood),
                     );
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      _selectedProvince = value;
+                      _selectedBloodGroup = value;
                     });
                   },
                   decoration: InputDecoration(
@@ -550,7 +635,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Mempunyai Alergi',
+                      'Apakah anak anda Mempunyai Alergi',
                       style: TextStyle(),
                     ),
                     Text(
@@ -565,22 +650,22 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Radio(
-                      value: 'ya',
-                      groupValue: _selectedGender,
+                      value: 'YA',
+                      groupValue: _selectedAllergy,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedAllergy = value as String?;
                         });
                       },
                     ),
                     Text('Ya'),
                     SizedBox(width: 16),
                     Radio(
-                      value: 'tidak',
-                      groupValue: _selectedGender,
+                      value: 'Tidak',
+                      groupValue: _selectedAllergy,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          _selectedAllergy = value as String?;
                         });
                       },
                     ),
@@ -708,16 +793,19 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
       floatingActionButton: GestureDetector(
         onTap: () {
           childernController.registerAnak(
-            5.toString(),
-            nama_anak.text,
-            dateinput.text,
-            _selectedGender.toString(),
-            berat_badan.text,
-            tinggi_badan.text,
-            lingkar_kepala.text,
-            tinggi_badan_ibu.text,
-            tinggi_badan_ayah.text,
-          );
+              sessionController.user_id.value,
+              widget.anak_id,
+              nama_anak.text,
+              dateinput.text,
+              _selectedGender.toString(),
+              berat_badan.text,
+              tinggi_badan.text,
+              lingkar_kepala.text,
+              tinggi_badan_ibu.text,
+              tinggi_badan_ayah.text,
+              _selectedBloodGroup.toString(),
+              _selectedAllergy.toString(),
+              _selectedPrematur.toString());
           // Get.to(
           //   HomePage2(),
           // );

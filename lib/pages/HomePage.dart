@@ -1,6 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ChildernDetail.dart';
@@ -13,12 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final authController = Get.put(AuthController());
   final childernController = Get.put(ChildernController());
+  final sessionController = Get.put(SessionController());
 
   @override
   void initState() {
     super.initState();
-    childernController.getAnak(5.toString(), null);
+    childernController.getAnak(sessionController.user_id.value, null);
   }
 
   @override
@@ -220,7 +224,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                authController.logout();
+                              },
                               child: Text(
                                 'Lihat Semua',
                                 style: TextStyle(
@@ -501,7 +507,9 @@ class MyContainer {
                     onTap: () {
                       // Aksi yang akan dijalankan ketika tombol ditekan
                       Get.to(
-                        AddAccountChildernPage(),
+                        AddAccountChildernPage(
+                          anak_id: null,
+                        ),
                       );
                     },
                     child: Container(
@@ -544,6 +552,7 @@ class MyContainer {
 class MyContainer2 {
   static Widget buildContainer(BuildContext context) {
     final childernController = Get.put(ChildernController());
+    final sessionController = Get.put(SessionController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -769,7 +778,8 @@ class MyContainer2 {
                             ),
                             GestureDetector(
                               onTap: () {
-                                childernController.getDataChildern(5.toString(),
+                                childernController.getAnakById(
+                                    sessionController.user_id.value,
                                     childernController.anakList[0]['anak_id']);
                                 Get.to(
                                   ChildernPage(),
@@ -817,7 +827,9 @@ class MyContainer2 {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(AddAccountChildernPage(anak_id: null));
+                            },
                             child: DottedBorder(
                               borderType: BorderType.Circle,
                               strokeWidth: 10,

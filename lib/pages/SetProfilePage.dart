@@ -1,29 +1,53 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart' as dio;
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/RegionController.dart';
+import 'package:stantapp/controller/SessionController.dart';
+import 'package:stantapp/models/MGetCity.dart';
+import 'package:stantapp/models/MGetKecamatan.dart';
+import 'package:stantapp/models/MGetKelurahan.dart';
+import 'package:stantapp/models/MGetProvince.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
 enum Gender { male, female }
 
 class SetProfilePage extends StatefulWidget {
-  List<dynamic> province = [];
-  SetProfilePage({super.key, required this.province});
+  // List<dynamic> province = [];
+  SetProfilePage({
+    super.key,
+  });
 
   @override
   State<SetProfilePage> createState() => _SetProfilePageState();
 }
 
 class _SetProfilePageState extends State<SetProfilePage> {
+  var sessionController = Get.put(SessionController());
+  var authController = Get.put(AuthController());
   var regionController = Get.put(RegionController());
   bool isClicked = false;
+
+  final TextEditingController nama_orang_tua = TextEditingController();
+  final TextEditingController alamat = TextEditingController();
+  final TextEditingController pekerjaan = TextEditingController();
+  final TextEditingController pendapatan = TextEditingController();
+
+  String? idProv;
+  String? idCity;
+  String? idKecamatan;
+  String? idKelurahan;
+  final dio.Dio _dio = dio.Dio();
 
   List<String> _genders = ['Male', 'Female'];
   String? _selectedGender;
 
   // List<Map<String, dynamic>> _provinces = []; // List<String> _provinces = ['Provinsi A', 'Provinsi B', 'Provinsi C'];
-  String? _selectedProvince = '1';
-  String? _selectedCity = '1';
+  // String? _selectedProvince = '1';
 
   List<String> _lastEducation = [
     'Pilih Pendidikan Terakhir',
@@ -34,7 +58,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
     'S2',
     'S3',
   ];
-  String? _selectedLastEducationFather;
+  String? _selectedLastEducation;
   String? _selectedLastEducationMother;
 
   List<String> _workType = [
@@ -49,10 +73,8 @@ class _SetProfilePageState extends State<SetProfilePage> {
   void initState() {
     super.initState();
     // regionController.getProvince();
-    _selectedProvince = regionController.provinces.isNotEmpty
-        ? regionController.provinces[0]['province_name']
-        : '1';
-    _selectedLastEducationFather =
+
+    _selectedLastEducation =
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
     _selectedLastEducationMother =
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
@@ -64,7 +86,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    print(regionController.city);
+    print(sessionController.user_id.value);
 
     return Scaffold(
       appBar: AppBar(
@@ -124,6 +146,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         ],
                       ),
                       TextField(
+                        controller: nama_orang_tua,
                         decoration: InputDecoration(
                           hintText: 'Masukkan Nama Orang tua',
                           border: UnderlineInputBorder(
@@ -152,96 +175,96 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           });
                         },
                       ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Email',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Masukkan Email',
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: isClicked
-                                  ? const Color.fromARGB(255, 188, 180, 179)
-                                  : Colors.grey,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            isClicked = true;
-                          });
-                        },
-                        onSubmitted: (value) {
-                          setState(() {
-                            isClicked = false;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'No Handphone',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Masukkan No Handphone',
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: isClicked
-                                  ? const Color.fromARGB(255, 188, 180, 179)
-                                  : Colors.grey,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            isClicked = true;
-                          });
-                        },
-                        onSubmitted: (value) {
-                          setState(() {
-                            isClicked = false;
-                          });
-                        },
-                      ),
+                      // SizedBox(height: 24),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'Email',
+                      //       style: TextStyle(),
+                      //     ),
+                      //     Text(
+                      //       '*',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.red,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Masukkan Email',
+                      //     border: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         color: isClicked
+                      //             ? const Color.fromARGB(255, 188, 180, 179)
+                      //             : Colors.grey,
+                      //         width: 2.0,
+                      //       ),
+                      //     ),
+                      //     focusedBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         color: Colors.blue,
+                      //         width: 2.0,
+                      //       ),
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     setState(() {
+                      //       isClicked = true;
+                      //     });
+                      //   },
+                      //   onSubmitted: (value) {
+                      //     setState(() {
+                      //       isClicked = false;
+                      //     });
+                      //   },
+                      // ),
+                      // SizedBox(height: 24),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'No Handphone',
+                      //       style: TextStyle(),
+                      //     ),
+                      //     Text(
+                      //       '*',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.red,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Masukkan No Handphone',
+                      //     border: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         color: isClicked
+                      //             ? const Color.fromARGB(255, 188, 180, 179)
+                      //             : Colors.grey,
+                      //         width: 2.0,
+                      //       ),
+                      //     ),
+                      //     focusedBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         color: Colors.blue,
+                      //         width: 2.0,
+                      //       ),
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     setState(() {
+                      //       isClicked = true;
+                      //     });
+                      //   },
+                      //   onSubmitted: (value) {
+                      //     setState(() {
+                      //       isClicked = false;
+                      //     });
+                      //   },
+                      // ),
                       SizedBox(height: 24),
                       Row(
                         children: [
@@ -261,7 +284,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Radio(
-                            value: 'Male',
+                            value: 'Laki-Laki',
                             groupValue: _selectedGender,
                             onChanged: (value) {
                               setState(() {
@@ -269,10 +292,10 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               });
                             },
                           ),
-                          Text('Male'),
+                          Text('Laki-Laki'),
                           SizedBox(width: 16),
                           Radio(
-                            value: 'Female',
+                            value: 'Perempuan',
                             groupValue: _selectedGender,
                             onChanged: (value) {
                               setState(() {
@@ -280,7 +303,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               });
                             },
                           ),
-                          Text('Female'),
+                          Text('Perempuan'),
                         ],
                       ),
                       SizedBox(height: 24),
@@ -299,34 +322,37 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           ),
                         ],
                       ),
-                      Obx(
-                        () => DropdownButtonFormField(
-                          value: _selectedProvince ?? "1",
-                          items: widget.province.map((province) {
-                            return DropdownMenuItem(
-                              value: province['province_id'].toString(),
-                              child: Text(province['province_name'].toString()),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              if (_selectedProvince == null) {
-                                _selectedProvince = "1";
-                              } else {
-                                regionController.getCity(value.toString());
-                                _selectedProvince = value;
-                              }
+                      DropdownSearch<MGetProvince>(
+                        mode: Mode.DIALOG,
+                        showSearchBox: true,
+                        onChanged: (value) => idProv = value?.provinceId,
+                        dropdownBuilder: (context, selectedItem) => Text(
+                            selectedItem?.provinceName ??
+                                "Belum Memilih Provinsi"),
+                        popupItemBuilder: ((context, item, isSelected) =>
+                            ListTile(
+                              title: Text(item.provinceName),
+                            )),
+                        onFind: (text) async {
+                          var response = await _dio.get(
+                              "http://stantapp.pejuang-subuh.com/api/getProvince");
+                          List<MGetProvince> allNameProvince = [];
+
+                          if (response.statusCode != 200) {
+                            return [];
+                          } else {
+                            List allProvince = response.data;
+
+                            allProvince.forEach((element) {
+                              allNameProvince.add(MGetProvince(
+                                  provinceId: element['province_id'],
+                                  provinceName: element['province_name'],
+                                  locationid: element['locationid'],
+                                  status: element['status']));
                             });
-                          },
-                          decoration: InputDecoration(
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                        ),
+                            return allNameProvince;
+                          }
+                        },
                       ),
                       SizedBox(height: 24),
                       Row(
@@ -344,112 +370,48 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           ),
                         ],
                       ),
-                      Obx(
-                        () => DropdownButtonFormField(
-                          value: _selectedCity ?? '1',
-                          items: regionController.city.map((city) {
-                            return DropdownMenuItem(
-                              value: city['city_id'].toString(),
-                              child: Text(city['city_name']),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedCity = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          ),
-                        ),
-                      ),
+                      DropdownSearch<MGetCity>(
+                        mode: Mode.DIALOG,
+                        showSearchBox: true,
+                        onChanged: (value) => idCity = value?.cityId,
+                        dropdownBuilder: (context, selectedItem) => Text(
+                            selectedItem?.cityName ??
+                                "Belum Memilih Kota/Kabupaten"),
+                        popupItemBuilder: ((context, item, isSelected) =>
+                            ListTile(
+                              title: Text(item.cityName),
+                            )),
+                        onFind: (text) async {
+                          dio.FormData formData = dio.FormData.fromMap({
+                            'province_id': idProv,
+                          });
+                          var response = await _dio.post(
+                              "http://stantapp.pejuang-subuh.com/api/getCity",
+                              data: formData);
+                          // print(response.data);
+                          List<MGetCity> allNameCity = [];
 
-                      // SizedBox(height: 24),
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       'Kecamatan',
-                      //       style: TextStyle(),
-                      //     ),
-                      //     Text(
-                      //       '*',
-                      //       style: TextStyle(
-                      //         fontWeight: FontWeight.bold,
-                      //         color: Colors.red,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // DropdownButtonFormField(
-                      //   value: _selectedProvince ?? '',
-                      //   items: regionController.provinces.map((province) {
-                      //     return DropdownMenuItem(
-                      //       value: province['province_id'].toString(),
-                      //       child: Text(province['province_name']),
-                      //     );
-                      //   }).toList(),
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _selectedProvince = value;
-                      //     });
-                      //   },
-                      //   decoration: InputDecoration(
-                      //     border: UnderlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.black),
-                      //     ),
-                      //     focusedBorder: UnderlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.blue),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(height: 24),
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       'Kelurahan/Desa',
-                      //       style: TextStyle(),
-                      //     ),
-                      //     Text(
-                      //       '*',
-                      //       style: TextStyle(
-                      //         fontWeight: FontWeight.bold,
-                      //         color: Colors.red,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // DropdownButtonFormField(
-                      //   value: _selectedProvince ?? '',
-                      //   items: regionController.provinces.map((province) {
-                      //     return DropdownMenuItem(
-                      //       value: province['province_id'].toString(),
-                      //       child: Text(province['province_name']),
-                      //     );
-                      //   }).toList(),
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _selectedProvince = value;
-                      //     });
-                      //   },
-                      //   decoration: InputDecoration(
-                      //     border: UnderlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.black),
-                      //     ),
-                      //     focusedBorder: UnderlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.blue),
-                      //     ),
-                      //   ),
-                      // ),
+                          if (response.statusCode != 200) {
+                            return [];
+                          } else {
+                            List allCity = response.data;
+
+                            allCity.forEach((element) {
+                              allNameCity.add(MGetCity(
+                                cityId: element['city_id'],
+                                cityName: element['city_name'],
+                                provinceId: element['province_id'],
+                              ));
+                            });
+                            return allNameCity;
+                          }
+                        },
+                      ),
                       SizedBox(height: 24),
                       Row(
                         children: [
                           Text(
-                            'Pendidikan Terakhir Ayah',
+                            'Kecamatan',
                             style: TextStyle(),
                           ),
                           Text(
@@ -461,33 +423,47 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           ),
                         ],
                       ),
-                      DropdownButtonFormField(
-                        value: _selectedLastEducationFather ?? '',
-                        items: _lastEducation.map((lastEducation) {
-                          return DropdownMenuItem(
-                            value: lastEducation,
-                            child: Text(lastEducation),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedLastEducationFather = value;
+                      DropdownSearch<MGetKecamatan>(
+                        mode: Mode.DIALOG,
+                        showSearchBox: true,
+                        onChanged: (value) => idKecamatan = value?.kecamatanId,
+                        dropdownBuilder: (context, selectedItem) => Text(
+                            selectedItem?.kecamatanName ??
+                                "Belum Memilih Kecamatan"),
+                        popupItemBuilder: ((context, item, isSelected) =>
+                            ListTile(
+                              title: Text(item.kecamatanName),
+                            )),
+                        onFind: (text) async {
+                          dio.FormData formData = dio.FormData.fromMap({
+                            'city_id': idCity,
                           });
+                          var response = await _dio.post(
+                              "http://stantapp.pejuang-subuh.com/api/getKecamatan",
+                              data: formData);
+                          // print(response.data);
+                          List<MGetKecamatan> allNameKecamatan = [];
+
+                          if (response.statusCode != 200) {
+                            return [];
+                          } else {
+                            List allKecamatan = response.data;
+
+                            allKecamatan.forEach((element) {
+                              allNameKecamatan.add(MGetKecamatan(
+                                  kecamatanId: element['kecamatan_id'],
+                                  kecamatanName: element['kecamatan_name'],
+                                  cityId: element['city_id']));
+                            });
+                            return allNameKecamatan;
+                          }
                         },
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
                       ),
                       SizedBox(height: 24),
                       Row(
                         children: [
                           Text(
-                            'Pendidikan Terakhir Ibu',
+                            'Kelurahan/Desa',
                             style: TextStyle(),
                           ),
                           Text(
@@ -499,109 +475,47 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           ),
                         ],
                       ),
-                      DropdownButtonFormField(
-                        value: _selectedLastEducationMother ?? '',
-                        items: _lastEducation.map((lastEducation) {
-                          return DropdownMenuItem(
-                            value: lastEducation,
-                            child: Text(lastEducation),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedLastEducationMother = value;
+                      DropdownSearch<MGetKelurahan>(
+                        mode: Mode.DIALOG,
+                        showSearchBox: true,
+                        onChanged: (value) => idKelurahan = value?.kelurahanId,
+                        dropdownBuilder: (context, selectedItem) => Text(
+                            selectedItem?.kelurahanName ??
+                                "Belum Memilih Kelurahan/Desa"),
+                        popupItemBuilder: ((context, item, isSelected) =>
+                            ListTile(
+                              title: Text(item.kelurahanName),
+                            )),
+                        onFind: (text) async {
+                          dio.FormData formData = dio.FormData.fromMap({
+                            'kecamatan_id': idKecamatan,
                           });
+                          var response = await _dio.post(
+                              "http://stantapp.pejuang-subuh.com/api/getKelurahan",
+                              data: formData);
+                          // print(response.data);
+                          List<MGetKelurahan> allNameKelurahan = [];
+
+                          if (response.statusCode != 200) {
+                            return [];
+                          } else {
+                            List allKelurahan = response.data;
+
+                            allKelurahan.forEach((element) {
+                              allNameKelurahan.add(MGetKelurahan(
+                                  kelurahanId: element['kelurahan_id'],
+                                  kelurahanName: element['kelurahan_name'],
+                                  kecamatanId: element['kecamatan_id']));
+                            });
+                            return allNameKelurahan;
+                          }
                         },
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
                       ),
                       SizedBox(height: 24),
                       Row(
                         children: [
                           Text(
-                            'Pekerjaan Ayah',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownButtonFormField(
-                        value: _selectedWorkType ?? '',
-                        items: _workType.map((work) {
-                          return DropdownMenuItem(
-                            value: work,
-                            child: Text(work),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedWorkType = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Pekerjaan Ibu',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownButtonFormField(
-                        value: _selectedWorkType ?? '',
-                        items: _workType.map((work) {
-                          return DropdownMenuItem(
-                            value: work,
-                            child: Text(work),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedWorkType = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Pendapatan per Kapita',
+                            'Alamat',
                             style: TextStyle(),
                           ),
                           Text(
@@ -614,6 +528,205 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         ],
                       ),
                       TextField(
+                        controller: alamat,
+                        decoration: InputDecoration(
+                          hintText: 'Masukkan Alamat',
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: isClicked
+                                  ? const Color.fromARGB(255, 188, 180, 179)
+                                  : Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            isClicked = true;
+                          });
+                        },
+                        onSubmitted: (value) {
+                          setState(() {
+                            isClicked = false;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Text(
+                            'Pendidikan',
+                            style: TextStyle(),
+                          ),
+                          Text(
+                            '*',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      DropdownButtonFormField(
+                        value: _selectedLastEducation ?? '',
+                        items: _lastEducation.map((lastEducation) {
+                          return DropdownMenuItem(
+                            value: lastEducation,
+                            child: Text(lastEducation),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedLastEducation = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                      // SizedBox(height: 24),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'Pendidikan Terakhir Ibu',
+                      //       style: TextStyle(),
+                      //     ),
+                      //     Text(
+                      //       '*',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.red,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // DropdownButtonFormField(
+                      //   value: _selectedLastEducationMother ?? '',
+                      //   items: _lastEducation.map((lastEducation) {
+                      //     return DropdownMenuItem(
+                      //       value: lastEducation,
+                      //       child: Text(lastEducation),
+                      //     );
+                      //   }).toList(),
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _selectedLastEducationMother = value;
+                      //     });
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     border: UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.black),
+                      //     ),
+                      //     focusedBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.blue),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Text(
+                            'Pekerjaan',
+                            style: TextStyle(),
+                          ),
+                          Text(
+                            '*',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      DropdownButtonFormField(
+                        value: _selectedWorkType ?? '',
+                        items: _workType.map((work) {
+                          return DropdownMenuItem(
+                            value: work,
+                            child: Text(work),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedWorkType = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                      // SizedBox(height: 24),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'Pekerjaan Ibu',
+                      //       style: TextStyle(),
+                      //     ),
+                      //     Text(
+                      //       '*',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.red,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // DropdownButtonFormField(
+                      //   value: _selectedWorkType ?? '',
+                      //   items: _workType.map((work) {
+                      //     return DropdownMenuItem(
+                      //       value: work,
+                      //       child: Text(work),
+                      //     );
+                      //   }).toList(),
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _selectedWorkType = value;
+                      //     });
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     border: UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.black),
+                      //     ),
+                      //     focusedBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.blue),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Text(
+                            'Pendapatan',
+                            style: TextStyle(),
+                          ),
+                          Text(
+                            '*',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      TextField(
+                        controller: pendapatan,
                         decoration: InputDecoration(
                           hintText: 'Masukkan Pendapatan Perkapita',
                           border: UnderlineInputBorder(
@@ -648,7 +761,17 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       GestureDetector(
                         onTap: () {
                           // Aksi ketika tombol submit ditekan
-                          regionController.getProvince();
+                          authController.registerOrangtua(
+                              sessionController.user_id.value,
+                              nama_orang_tua.text,
+                              _selectedGender.toString(),
+                              idKecamatan.toString(),
+                              idKelurahan.toString(),
+                              alamat.text,
+                              _selectedLastEducation.toString(),
+                              _selectedWorkType.toString(),
+                              pendapatan.text,
+                              "tes");
                           // Anda dapat menambahkan logika atau tindakan lain di sini
                         },
                         child: Container(

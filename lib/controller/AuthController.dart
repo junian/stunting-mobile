@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:stantapp/controller/RegionController.dart';
+import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,8 +8,10 @@ import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stantapp/pages/HomePage.dart';
+import 'package:stantapp/pages/LoginPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/VerivicationPage.dart';
+import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
 class AuthController extends GetxController {
@@ -16,6 +19,7 @@ class AuthController extends GetxController {
   final dio.Dio _dio = dio.Dio();
   RxBool isAuthenticated = false.obs;
   final String loggedInKey = 'loggedIn';
+  final sessionController = Get.put(SessionController());
 
   List<dynamic> isParent = [];
 
@@ -72,22 +76,20 @@ class AuthController extends GetxController {
         prefs.setBool(loggedInKey, true);
 
         // Data ditemukan
-        // String employeeName = response.data['data']['employee_name'];
-        // String employeeId = response.data['data']['employee_id'];
-        // // sessionController.setData(employeeName, employeeId);
-        // await prefs.setString('name', employeeName);
-        // await prefs.setString('id', employeeId);
+        String email = response.data['user']['email'];
+        String user_id = response.data['user']['user_id'];
+        sessionController.setData(email, user_id);
+        await prefs.setString('email', email);
+        await prefs.setString('user_id', user_id);
 
-        //redirect
         //cek apakah ada orang tua atau tidak
-        print(response.data);
-        await getOrangTua(4.toString());
+        await getOrangTua(user_id);
         // Set nilai variabel list dengan response data
         if (isParent.isEmpty) {
           var regionController = Get.put(RegionController());
           return Get.offAll(SetProfilePage(
-            province: regionController.provinces as List<dynamic>,
-          ));
+              // province: regionController.provinces as List<dynamic>,
+              ));
         } else {
           Get.offAll(BottomNavbar());
         }
@@ -119,7 +121,6 @@ class AuthController extends GetxController {
       });
       final response = await _dio.post('$api/register', data: formData);
 
-      print(response);
       if (response.data['success'] == true) {
         // Set isAuthenticated to true
         isAuthenticated.value = true;
@@ -160,59 +161,73 @@ class AuthController extends GetxController {
       });
       final response = await _dio.post('$api/getOrangTua', data: formData);
       isParent = response.data as List<dynamic>;
-      // print(response);
-      // if (response.data['success'] == true) {
-      //   // Set isAuthenticated to true
-      //   isAuthenticated.value = true;
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   prefs.setBool(loggedInKey, true);
-
-      //   // Data ditemukan
-      //   // String employeeName = response.data['data']['employee_name'];
-      //   // String employeeId = response.data['data']['employee_id'];
-      //   // // sessionController.setData(employeeName, employeeId);
-      //   // await prefs.setString('name', employeeName);
-      //   // await prefs.setString('id', employeeId);
-
-      //   //redirect
-      //   var regionController = Get.put(RegionController());
-      //   return Get.offAll(SetProfilePage(
-      //     province: regionController.provinces as List<dynamic>,
-      //   ));
-      // } else {
-      //   // Data tidak ditemukan
-      //   Fluttertoast.showToast(
-      //     msg: response.data['message'].toString(),
-      //     toastLength: Toast.LENGTH_LONG,
-      //     gravity: ToastGravity.CENTER,
-      //     backgroundColor: Colors.black38,
-      //     textColor: Colors.white,
-      //   );
-      // }
     } catch (e) {
       print(e);
     }
   }
 
-  // Future<void> logout() async {
-  //   sessionController.logout();
+  Future<void> registerOrangtua(
+    String user_id,
+    String nama_orang_tua,
+    String jenis_kelamin,
+    String kecamatan_id,
+    String kelurahan_id,
+    String alamat,
+    String pendidikan,
+    String pekerjaan,
+    String pendapatan,
+    String? photo,
+  ) async {
+    try {
+      dio.FormData formData = dio.FormData.fromMap({
+        'user_id': user_id,
+        'nama_orang_tua': nama_orang_tua,
+        'jenis_kelamin': jenis_kelamin,
+        'kecamatan_id': kecamatan_id,
+        'kelurahan_id': kelurahan_id,
+        'alamat': alamat,
+        'pendidikan': pendidikan,
+        'pekerjaan': pekerjaan,
+        'pendapatan': pendapatan,
+        'photo': photo,
+      });
+      final response = await _dio.post('$api/registerOrangtua', data: formData);
+      print(response);
+      if (response.data['success'] == true) {
+        Get.offAll(BottomNavbar());
+      } else {
+        Fluttertoast.showToast(
+          msg: response.data['message'].toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.black38,
+          textColor: Colors.white,
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
-  //   // Set isAuthenticated to false
-  //   isAuthenticated.value = false;
+  Future<void> logout() async {
+    sessionController.logout();
 
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool(loggedInKey, false);
+    // Set isAuthenticated to false
+    isAuthenticated.value = false;
 
-  //   // Navigate to Login Page
-  //   Get.offAll(LoginPage());
-  // }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(loggedInKey, false);
 
-  // Future<void> checkAuthentication() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool isLoggedIn = prefs.getBool(loggedInKey) ?? false;
-  //   isAuthenticated.value = isLoggedIn;
-  //   String name = prefs.getString('name') ?? '';
-  //   String id = prefs.getString('id') ?? '';
-  //   sessionController.setData(name, id);
-  // }
+    // Navigate to Login Page
+    Get.offAll(WelcomePage());
+  }
+
+  Future<void> checkAuthentication() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool(loggedInKey) ?? false;
+    isAuthenticated.value = isLoggedIn;
+    String email = prefs.getString('email') ?? '';
+    String user_id = prefs.getString('user_id') ?? '';
+    sessionController.setData(email, user_id);
+  }
 }

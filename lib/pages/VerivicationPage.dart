@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
 import 'package:stantapp/controller/RegionController.dart';
+import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/helper/CountdownTimer.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 
@@ -26,6 +27,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
   var authController = Get.put(AuthController());
   var regionController = Get.put(RegionController());
   var childernController = Get.put(ChildernController());
+  var sessionController = Get.put(SessionController());
 
   bool _onEditing = true;
   String? _code;
@@ -34,8 +36,6 @@ class _VerivicationPageState extends State<VerivicationPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    print(widget.email);
 
     return Scaffold(
       appBar: AppBar(

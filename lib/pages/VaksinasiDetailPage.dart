@@ -117,10 +117,157 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                   GestureDetector(
                     onTap: () {
                       print('Pilihan: $_selectedOption');
+                      // Navigator.of(context).pop();
+                      _showModalBottomSheetDetail(context);
+                    },
+                    child: Center(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: height * 0.03),
+                        padding: EdgeInsets.all(10),
+                        width: width * 0.9,
+                        height: height * 0.05,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Simpan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    ).whenComplete(() {
+      // Inisialisasi ulang nilai _selectedOption
+      setState(() {
+        _selectedOption = null;
+      });
+    });
+  }
+
+  void _showModalBottomSheetDetail(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        var width = MediaQuery.of(context).size.width;
+        var height = MediaQuery.of(context).size.height;
+
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: const Color.fromARGB(255, 209, 209, 209),
+                            width: 1),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Edit Detail Vaksin',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: const Color.fromARGB(255, 209, 209, 209),
+                                width: 1),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Belum'),
+                            Radio(
+                              value: 'Belum',
+                              groupValue: _selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedOption = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: const Color.fromARGB(255, 209, 209, 209),
+                                width: 1),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Sudah'),
+                            Radio(
+                              value: 'Sudah',
+                              groupValue: _selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedOption = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      print('Pilihan: $_selectedOption');
                       Navigator.of(context).pop();
                     },
                     child: Center(
                       child: Container(
+                        margin: EdgeInsets.only(bottom: height * 0.03),
                         padding: EdgeInsets.all(10),
                         width: width * 0.9,
                         height: height * 0.05,
@@ -314,7 +461,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showModalBottomSheet(context);
+                      _showModalBottomSheetDetail(context);
                     },
                     child: Container(
                       width: width * 0.9,

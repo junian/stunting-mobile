@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/ImunisasiPage.dart';
+import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
 import 'package:stantapp/pages/SetProfilePage%202.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
+import 'package:stantapp/pages/SplashScreen.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+
+  await GetStorage.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -39,8 +44,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: WelcomePage(),
-      // home: AddAccountChildernPage(),
+      // home: SplashScreen(),
+      home: SplashScreen(),
+      // home: SetProfilePage(),
     );
   }
 }
