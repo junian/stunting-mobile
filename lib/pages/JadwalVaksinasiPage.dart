@@ -1,5 +1,9 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stantapp/controller/JadwalVaksinasiController.dart';
+import 'package:stantapp/controller/JadwalVaksinasiIDAIController.dart';
+import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
 
 class JadwalVaksinasiPage extends StatefulWidget {
   JadwalVaksinasiPage({super.key});
@@ -9,370 +13,40 @@ class JadwalVaksinasiPage extends StatefulWidget {
 }
 
 class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
+  var jadwalVaksinasiController = Get.put(JadwalVaksinasiController());
+  var jadwalVaksinasiIDAIController = Get.put(JadwalVaksinasiIDAIController());
   int selectedMonth = 0;
   int selected = 0;
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> vaccinationData = [
-      {
-        "periode": "1 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "1",
-            "nama_vaksin": "Hepatitis B 1",
-            "bulan_ke": "1",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 19:59:50",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": "2",
-            "status": "Sudah"
-          },
-          {
-            "vaksin_id": "8",
-            "nama_vaksin": "BCG",
-            "bulan_ke": "1",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:03:17",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "9",
-            "nama_vaksin": "DTP 1",
-            "bulan_ke": "1",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:06",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "12",
-            "nama_vaksin": "Hib 1",
-            "bulan_ke": "1",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:52",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "2 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "2",
-            "nama_vaksin": "Hepatitis B 2",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:00:17",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "5",
-            "nama_vaksin": "Polio 1",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:03:08",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "10",
-            "nama_vaksin": "DTP 2",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:07",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "13",
-            "nama_vaksin": "Hib 2",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:52",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "15",
-            "nama_vaksin": "PCV 1",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:05:10",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "18",
-            "nama_vaksin": "Rotavirus 1",
-            "bulan_ke": "2",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:06:38",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "3 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "3",
-            "nama_vaksin": "Hepatitis B 3",
-            "bulan_ke": "3",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:00:28",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "6",
-            "nama_vaksin": "Polio 1",
-            "bulan_ke": "3",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:03:08",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "11",
-            "nama_vaksin": "DTP 2",
-            "bulan_ke": "3",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:09",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "14",
-            "nama_vaksin": "Hib 3",
-            "bulan_ke": "3",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:04:53",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "4 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "4",
-            "nama_vaksin": "Hepatitis B 4",
-            "bulan_ke": "4",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:02:22",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "7",
-            "nama_vaksin": "Polio 1",
-            "bulan_ke": "4",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:03:09",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "16",
-            "nama_vaksin": "PCV 2",
-            "bulan_ke": "4",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:05:11",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "19",
-            "nama_vaksin": "Rotavirus 2",
-            "bulan_ke": "4",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:06:39",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "6 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "17",
-            "nama_vaksin": "PCV 3",
-            "bulan_ke": "6",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:06:14",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "20",
-            "nama_vaksin": "Rotavirus 3",
-            "bulan_ke": "6",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:06:43",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "9 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "21",
-            "nama_vaksin": "MR / MMR",
-            "bulan_ke": "9",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:07:48",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "12 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "23",
-            "nama_vaksin": "Varisela 1",
-            "bulan_ke": "12",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:09:18",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "25",
-            "nama_vaksin": "Hepatitis A 1",
-            "bulan_ke": "12",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:09:29",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "18 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "24",
-            "nama_vaksin": "Varisela 2",
-            "bulan_ke": "18",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:09:19",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          },
-          {
-            "vaksin_id": "26",
-            "nama_vaksin": "Hepatitis A 2",
-            "bulan_ke": "18",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:09:30",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      },
-      {
-        "periode": "24 Bulan",
-        "vaksin": [
-          {
-            "vaksin_id": "22",
-            "nama_vaksin": "Tifoid",
-            "bulan_ke": "24",
-            "is_active": "1",
-            "created_by": "1",
-            "created_date": "2023-06-24 20:08:38",
-            "updated_by": null,
-            "updated_date": null,
-            "anak_id": null,
-            "status": "Belum"
-          }
-        ]
-      }
-    ];
 
+  bool isDataInitialized = false;
+  String landscapePathPdf = "";
+
+  Future<void> initializeData() async {
+    await Future.delayed(Duration(seconds: 3));
+    await jadwalVaksinasiController.getJadwalVaksin('2');
+    await jadwalVaksinasiIDAIController.createFileOfPdfUrl();
+
+    setState(() {
+      isDataInitialized = true;
+    });
+    jadwalVaksinasiIDAIController.createFileOfPdfUrl().then((f) {
+      setState(() {
+        landscapePathPdf = f.path;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    initializeData();
+
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    List<Map<String, dynamic>> vaccinationData =
+        jadwalVaksinasiController.jadwalVaksinasi.toList();
+//
     List<Map<String, dynamic>> filteredData = vaccinationData
         .where((vaccination) =>
             vaccination['vaksin'][0]['bulan_ke'] == selectedMonth.toString())
@@ -410,7 +84,10 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(
+                                  JadwalImunisaiIDAI(path: landscapePathPdf));
+                            },
                             icon: Icon(Icons.table_chart_outlined),
                           ),
                           IconButton(
@@ -469,114 +146,120 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
               },
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: selectedMonth == 0
-                  ? vaccinationData.length
-                  : filteredData.length,
-              itemBuilder: (BuildContext context, int index) {
-                Map<String, dynamic> item = selectedMonth == 0
-                    ? vaccinationData[index]
-                    : filteredData[index];
-                return ExpansionTile(
-                  title: Text(
-                    item['periode'],
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 2, right: 16, left: 16),
-                      child: DottedBorder(
-                        borderType: BorderType.RRect,
-                        color: Colors.blue,
-                        radius: Radius.circular(20),
-                        padding: EdgeInsets.all(3),
-                        child: Container(
-                          width: width * 0.9,
-                          height: height * 0.07,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 18),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[50],
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Dirokemendasikan di ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                '05 Jun 2023 ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
+          isDataInitialized
+              ? Expanded(
+                  child: ListView.builder(
+                    itemCount: selectedMonth == 0
+                        ? vaccinationData.length
+                        : filteredData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map<String, dynamic> item = selectedMonth == 0
+                          ? vaccinationData[index]
+                          : filteredData[index];
+                      return ExpansionTile(
+                        title: Text(
+                          item['periode'],
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Container(
-                        width: width,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: item['vaksin'].length,
-                          itemBuilder: (BuildContext context, int subIndex) {
-                            Map<String, dynamic> subItem =
-                                item['vaksin'][subIndex];
-                            return ListTile(
-                                title: Text(
-                                  subItem['nama_vaksin'],
-                                  style: TextStyle(color: Colors.black54),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 2, right: 16, left: 16),
+                            child: DottedBorder(
+                              borderType: BorderType.RRect,
+                              color: Colors.blue,
+                              radius: Radius.circular(20),
+                              padding: EdgeInsets.all(3),
+                              child: Container(
+                                width: width * 0.9,
+                                height: height * 0.07,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 18),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[50],
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                trailing: Container(
-                                  width: width * 0.5,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Chip(
-                                        side: BorderSide.none,
-                                        label: Text(
-                                          subItem['status'],
-                                          style: TextStyle(
-                                              fontSize: 12, color: Colors.red),
-                                        ),
-                                        backgroundColor: Colors.red[100],
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Dirokemendasikan di ',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 16,
                                       ),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 15,
-                                          ))
-                                    ],
-                                  ),
-                                ));
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
+                                    ),
+                                    Text(
+                                      '05 Jun 2023 ',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Container(
+                              width: width,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: item['vaksin'].length,
+                                itemBuilder:
+                                    (BuildContext context, int subIndex) {
+                                  Map<String, dynamic> subItem =
+                                      item['vaksin'][subIndex];
+                                  return ListTile(
+                                      title: Text(
+                                        subItem['nama_vaksin'],
+                                        style: TextStyle(color: Colors.black54),
+                                      ),
+                                      trailing: Container(
+                                        width: width * 0.5,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Chip(
+                                              side: BorderSide.none,
+                                              label: Text(
+                                                subItem['status'],
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.red),
+                                              ),
+                                              backgroundColor: Colors.red[100],
+                                            ),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 15,
+                                                ))
+                                          ],
+                                        ),
+                                      ));
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                )
+              : CircularProgressIndicator()
         ],
       ),
     );

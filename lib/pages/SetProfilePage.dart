@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/RegionController.dart';
 import 'package:stantapp/controller/SessionController.dart';
@@ -69,6 +71,19 @@ class _SetProfilePageState extends State<SetProfilePage> {
   ];
   String? _selectedWorkType;
 
+  File? _imageFile;
+  Future<void> pickImage() async {
+    final picker = await ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Gambar berhasil dipilih
+      _imageFile = File(image.path);
+      // Lakukan sesuatu dengan file gambar yang dipilih
+    } else {
+      // Gambar tidak dipilih
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -116,12 +131,17 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         'https://cdn.vectorstock.com/i/1000x1000/70/84/default-avatar-profile-icon-symbol-for-website-vector-46547084.webp'),
                     backgroundColor: Colors.white,
                   ),
-                  title: Text(
-                    'Unggah Foto Anda',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.blueAccent,
-                      fontWeight: FontWeight.w500,
+                  title: GestureDetector(
+                    onTap: () {
+                      ImagePicker();
+                    },
+                    child: Text(
+                      'Unggah Foto Anda',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
@@ -771,7 +791,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               _selectedLastEducation.toString(),
                               _selectedWorkType.toString(),
                               pendapatan.text,
-                              "tes");
+                              _imageFile);
                           // Anda dapat menambahkan logika atau tindakan lain di sini
                         },
                         child: Container(

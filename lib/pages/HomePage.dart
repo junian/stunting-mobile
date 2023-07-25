@@ -5,7 +5,11 @@ import 'package:stantapp/controller/ChildernController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/pages/ArtikelPage.dart';
 import 'package:stantapp/pages/ChildernDetail.dart';
+import 'package:stantapp/pages/NotificationPage.dart';
+import 'package:stantapp/pages/SetProfilePage.dart';
+import 'package:stantapp/widget/BottomNavbar.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -225,7 +229,13 @@ class _HomePageState extends State<HomePage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                authController.logout();
+                                setState(() {
+                                  authController.bottomNavIndex = 1;
+                                });
+                                Future.delayed(Duration(milliseconds: 500), () {
+                                  // Navigasi ke halaman BottomNavbar menggunakan Get.to()
+                                  Get.to(BottomNavbar());
+                                });
                               },
                               child: Text(
                                 'Lihat Semua',
@@ -434,8 +444,7 @@ class MyContainer {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                        // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                        Get.to(NotificationPage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran
@@ -452,8 +461,7 @@ class MyContainer {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                        // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                        Get.to(SetProfilePage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran
@@ -634,8 +642,7 @@ class MyContainer2 {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                        // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                        Get.to(NotificationPage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran
@@ -652,8 +659,7 @@ class MyContainer2 {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                        // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                        Get.to(SetProfilePage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran

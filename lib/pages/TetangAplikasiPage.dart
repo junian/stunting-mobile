@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:stantapp/controller/ParameterController.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
-class TentangAplikasiPage extends StatelessWidget {
+class TentangAplikasiPage extends StatefulWidget {
   TentangAplikasiPage({super.key});
+
+  @override
+  State<TentangAplikasiPage> createState() => _TentangAplikasiPageState();
+}
+
+class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
+  var parameterController = Get.put(ParameterController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    parameterController.getParameter('1');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +59,9 @@ class TentangAplikasiPage extends StatelessWidget {
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -66,7 +83,7 @@ class TentangAplikasiPage extends StatelessWidget {
                 width: width,
                 height: hight * 0.2,
                 child: Text(
-                  "Perimaku adalah aplikasi kesehatan anak pertama di indonesia yang berfungsi untuk membantu orangtua memantau pertmbuhan anakdengan desain user experience yang intuitif.",
+                  parameterController.parameterValue,
                   style: TextStyle(fontSize: 18),
                 ),
               ),

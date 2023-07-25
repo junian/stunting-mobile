@@ -5,8 +5,8 @@ class ArtikelDetailPage extends StatelessWidget {
   String title;
   String author;
   String date;
-  int views;
-  int likes;
+  // int views;
+  // int likes;
   String description;
   String imageUrl;
 
@@ -16,8 +16,8 @@ class ArtikelDetailPage extends StatelessWidget {
     required this.title,
     required this.author,
     required this.date,
-    required this.views,
-    required this.likes,
+    // required this.views,
+    // required this.likes,
     required this.description,
     required this.imageUrl,
   });
@@ -65,7 +65,7 @@ class ArtikelDetailPage extends StatelessWidget {
                   size: 30,
                 ),
               ),
-              Text(likes.toString()),
+              // Text(likes.toString()),
               SizedBox(
                 width: width * 0.05,
               ),
@@ -101,9 +101,15 @@ class ArtikelDetailPage extends StatelessWidget {
               width: width,
               height: height * 0.3,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(imageUrl)),
-                  color: Colors.red,
+                  image: imageUrl != 'null'
+                      ? DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(imageUrl),
+                        )
+                      : DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage('images/logo.png'),
+                        ),
                   borderRadius: BorderRadius.circular(20)),
             ),
           ),

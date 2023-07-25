@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:stantapp/helper.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,7 @@ class ChildernController extends GetxController {
     String gol_darah,
     String alergi,
     String prematur,
+    File? photo,
   ) async {
     try {
       dio.FormData formData = dio.FormData.fromMap({
@@ -59,9 +62,14 @@ class ChildernController extends GetxController {
         'alergi': alergi,
         'prematur': prematur,
       });
+
+      if (photo != null) {
+        String fileName = photo.path.split('/').last;
+        formData.files.add(MapEntry('photo',
+            await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
+      }
       // print(nama_anak);
       final response = await _dio.post('$api/registerAnak', data: formData);
-      print(response.data);
       var data = response.data;
       if (data['success'] == true) {
         Get.off(BottomNavbar());

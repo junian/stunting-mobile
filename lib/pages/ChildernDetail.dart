@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
+import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
 
 class ChildernPage extends StatefulWidget {
   ChildernPage({super.key});
@@ -40,55 +41,71 @@ class _ChildernPageState extends State<ChildernPage> {
       builder: (BuildContext context) {
         var width = MediaQuery.of(context).size.width;
         var height = MediaQuery.of(context).size.height;
+
+        print(selectedAnak);
+
         return Container(
+          padding: EdgeInsets.all(15.0),
           width: width,
-          // Konten bottom sheet
-          child: Column(
-            // mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                padding: EdgeInsets.all(15.0),
-                child: DropdownButton<String>(
-                  isExpanded: true, // Mengatasi masalah overflow
-                  value: selectedAnak,
-                  items: childernController.anakList.map((anak) {
-                    return DropdownMenuItem<String>(
-                      value: anak['anak_id'],
-                      child: Text(anak['nama_anak']),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedAnak = value ?? '';
-                    });
+          height: height * 0.4,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              )),
+          // child: DropdownButton<String>(
+          //   isExpanded: true, // Mengatasi masalah overflow
+          //   value: selectedAnak,
+          //   items: childernController.anakList.map((anak) {
+          //     return DropdownMenuItem<String>(
+          //       value: anak['anak_id'],
+          //       child: Text(anak['nama_anak']),
+          //     );
+          //   }).toList(),
+          //   onChanged: (value) {
+          //     setState(() {
+          //       selectedAnak = value ?? '';
+          //     });
+          //   },
+          // ),
+          child: ListView.builder(
+            itemCount: childernController.anakList.length,
+            itemBuilder: (context, index) {
+              var data = childernController.anakList[index];
+              return ListTile(
+                subtitle: Text(data['tanggal_lahir']),
+                title: Text(data['nama_anak']),
+                trailing: GestureDetector(
+                  onTap: () {
+                    if (selectedAnak.isNotEmpty) {
+                      childernController.getAnakById(
+                          sessionController.user_id.value, data['anak_id']);
+                    }
+                    Get.back(); // Menutup bottom sheet setelah aksi selesai
+                    isDataInitialized = false;
+                    initializeData();
+                    selectedAnak = data['anak_id'];
                   },
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (selectedAnak.isNotEmpty) {
-                    childernController.getAnakById(
-                        sessionController.user_id.value, selectedAnak);
-                  }
-                  Navigator.of(context)
-                      .pop(); // Menutup bottom sheet setelah aksi selesai
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'Pilih',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                    decoration: BoxDecoration(
+                      color: selectedAnak == data['anak_id']
+                          ? Colors.blue
+                          : Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'Choose',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
         );
       },
@@ -137,6 +154,7 @@ class _ChildernPageState extends State<ChildernPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         toolbarHeight: 100,
         title: isDataInitialized
             ? Column(
@@ -151,6 +169,8 @@ class _ChildernPageState extends State<ChildernPage> {
                             ? Image.network(
                                 "http://stantapp.pejuang-subuh.com/" +
                                     isChildern[0]['photo'],
+                                width: 20,
+                                height: 20,
                                 fit: BoxFit.contain,
                               )
                             : Icon(
@@ -255,446 +275,555 @@ class _ChildernPageState extends State<ChildernPage> {
             : CircularProgressIndicator(),
       ),
       body: isDataInitialized
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: width * 0.5,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
+          ? SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: width * 0.5,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
                   ),
-                ),
-                Container(
-                  color: Color.fromARGB(255, 225, 223, 223),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: height * 0.025),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 12),
-                              height: height * 0.12,
-                              width: width * 0.90,
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Image.asset(
-                                      fit: BoxFit.contain,
-                                      height: height * 0.15,
-                                      width: width * 0.15,
-                                      'images/image_3.png',
+                  Container(
+                    // color: Color.fromARGB(255, 255, 255, 255),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: height * 0.025),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 12),
+                                height: height * 0.12,
+                                width: width * 0.90,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Image.asset(
+                                        fit: BoxFit.contain,
+                                        height: height * 0.15,
+                                        width: width * 0.15,
+                                        'images/image_3.png',
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Text(
-                                            'Panduan Kesehatan Anak',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
+                                    Container(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Panduan Kesehatan Anak',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
                                             ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              '0 - 3 Bulan',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        child: Transform.rotate(
+                                          angle: 270 * 3.1415926535 / 180,
+                                          child: Icon(
+                                            Icons.arrow_back_ios,
+                                            size: 16,
                                           ),
                                         ),
-                                        Container(
-                                          child: Text(
-                                            '0 - 3 Bulan',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: height * 0.05),
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Hasil Pertumbuhan',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Lihat Semua',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    height: height * 0.3,
+                                    width: width * 0.9,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 238, 236, 236),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: height * 0.2,
+                                              width: width * 0.25,
+                                              decoration: BoxDecoration(
+                                                color: Color.fromARGB(
+                                                    255, 201, 242, 229),
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: width * 0.25,
+                                                    height: height * 0.060,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(15),
+                                                        topRight:
+                                                            Radius.circular(15),
+                                                      ),
+                                                      color: Colors.greenAccent,
+                                                    ),
+                                                    child: Container(
+                                                      child: Icon(
+                                                        Icons
+                                                            .monitor_weight_outlined,
+                                                        size: 35,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 15),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          'Berat',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              '${isChildern[0]["berat_badan"]} ',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Kg',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              height: height * 0.2,
+                                              width: width * 0.25,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    255, 240, 176, 176),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: width * 0.25,
+                                                    height: height * 0.060,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(15),
+                                                        topRight:
+                                                            Radius.circular(15),
+                                                      ),
+                                                      color: Color.fromARGB(
+                                                          255, 236, 122, 122),
+                                                    ),
+                                                    child: Container(
+                                                      child: Icon(
+                                                        Icons
+                                                            .co_present_outlined,
+                                                        size: 35,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 15),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          'Tinggi',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              '${isChildern[0]["tinggi_badan"]} ',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Cm',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: height * 0.2,
+                                              width: width * 0.25,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    255, 240, 176, 176),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: width * 0.25,
+                                                    height: height * 0.060,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(15),
+                                                        topRight:
+                                                            Radius.circular(15),
+                                                      ),
+                                                      color: Color.fromARGB(
+                                                          255, 236, 122, 122),
+                                                    ),
+                                                    child: Container(
+                                                      child: Icon(
+                                                        Icons
+                                                            .child_care_outlined,
+                                                        size: 35,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 15),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          'L.Kepala',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              '${isChildern[0]["lingkar_kepala"]} ',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Cm',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Terakhir Update',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                            Text(
+                                              isChildern[0]['created_date'],
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          ],
                                         )
                                       ],
                                     ),
                                   ),
                                   Container(
-                                    child: CircleAvatar(
-                                      radius: 15,
-                                      child: Transform.rotate(
-                                        angle: 270 * 3.1415926535 / 180,
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          size: 16,
-                                        ),
+                                    width: width * 0.9,
+                                    height: height * 0.1,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 178, 180, 181),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(15),
+                                        bottomRight: Radius.circular(15),
                                       ),
                                     ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: width * 0.50,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Update Pertumbuhan',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                isChildern[0]['nama_anak'],
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: width * 0.25,
+                                          height: height * 0.055,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border: Border.all(
+                                              color: Colors.blue,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Update',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: height * 0.05),
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Hasil Pertumbuhan',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                              Container(
+                                margin: EdgeInsets.only(top: height * 0.05),
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Imunissasi',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Lihat Semua',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.blue,
-                                    ),
-                                  )
-                                ],
+                                    Text(
+                                      'Lihat Detil',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  height: height * 0.3,
-                                  width: width * 0.9,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 12),
+                                height: height * 0.12,
+                                width: width * 0.90,
+                                decoration: BoxDecoration(
+                                  color: Colors.greenAccent,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Icon(
+                                        Icons.medication_liquid_rounded,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
+                                    Container(
+                                      child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: height * 0.2,
-                                            width: width * 0.25,
-                                            decoration: BoxDecoration(
-                                              color: Color.fromARGB(
-                                                  255, 201, 242, 229),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: width * 0.25,
-                                                  height: height * 0.060,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(15),
-                                                      topRight:
-                                                          Radius.circular(15),
-                                                    ),
-                                                    color: Colors.greenAccent,
-                                                  ),
-                                                  child: Container(
-                                                    child: Icon(
-                                                        Icons.access_alarm),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 15),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        'Berat',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            '35 ',
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            'Kg',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: height * 0.2,
-                                            width: width * 0.25,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              color: Color.fromARGB(
-                                                  255, 240, 176, 176),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: width * 0.25,
-                                                  height: height * 0.060,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(15),
-                                                      topRight:
-                                                          Radius.circular(15),
-                                                    ),
-                                                    color: Color.fromARGB(
-                                                        255, 236, 122, 122),
-                                                  ),
-                                                  child: Container(
-                                                    child: Icon(
-                                                        Icons.access_alarm),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 15),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        'Tinggi',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            '40 ',
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            'Cm',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: height * 0.2,
-                                            width: width * 0.25,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              color: Color.fromARGB(
-                                                  255, 240, 176, 176),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: width * 0.25,
-                                                  height: height * 0.060,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(15),
-                                                      topRight:
-                                                          Radius.circular(15),
-                                                    ),
-                                                    color: Color.fromARGB(
-                                                        255, 236, 122, 122),
-                                                  ),
-                                                  child: Container(
-                                                    child: Icon(
-                                                        Icons.access_alarm),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 15),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        'L.Kepala',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            '40 ',
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            'Cm',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Terakhir Update',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          Text(
-                                            '20 Juni 2023 - 20:46',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: width * 0.9,
-                                  height: height * 0.1,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 178, 180, 181),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(15),
-                                      bottomRight: Radius.circular(15),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: width * 0.50,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Update Pertumbuhan',
+                                            child: Text(
+                                              'Jadwal Imunisasi',
                                               style: TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                            Text(
-                                              isChildern[0]['nama_anak'],
-                                              style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
+                                                color: Colors.white,
                                               ),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
                                             ),
-                                          ],
+                                          ),
+                                          // Container(
+                                          //   child: Text(
+                                          //     '0 - 3 Bulan',
+                                          //     style: TextStyle(
+                                          //       fontSize: 12,
+                                          //       color: Colors.white,
+                                          //     ),
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(
+                                          JadwalVaksinasiPage(),
+                                        );
+                                      },
+                                      child: Container(
+                                        child: CircleAvatar(
+                                          radius: 15,
+                                          child: Transform.rotate(
+                                            angle: 270 * 3.1415926535 / 90,
+                                            child: Icon(
+                                              Icons.arrow_back_ios,
+                                              size: 16,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                      Container(
-                                        width: width * 0.25,
-                                        height: height * 0.055,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'Update',
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             )
           : Center(child: CircularProgressIndicator()),
     );

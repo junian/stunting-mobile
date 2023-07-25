@@ -1,527 +1,252 @@
+import 'dart:async';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 
-List<Map<String, dynamic>> vaccinationData = [
-  {
-    "periode": "1 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "1",
-        "nama_vaksin": "Hepatitis B 1",
-        "bulan_ke": "1",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 19:59:50",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": "2",
-        "status": "Sudah"
-      },
-      {
-        "vaksin_id": "8",
-        "nama_vaksin": "BCG",
-        "bulan_ke": "1",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:03:17",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "9",
-        "nama_vaksin": "DTP 1",
-        "bulan_ke": "1",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:06",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "12",
-        "nama_vaksin": "Hib 1",
-        "bulan_ke": "1",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:52",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "2 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "2",
-        "nama_vaksin": "Hepatitis B 2",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:00:17",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "5",
-        "nama_vaksin": "Polio 1",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:03:08",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "10",
-        "nama_vaksin": "DTP 2",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:07",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "13",
-        "nama_vaksin": "Hib 2",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:52",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "15",
-        "nama_vaksin": "PCV 1",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:05:10",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "18",
-        "nama_vaksin": "Rotavirus 1",
-        "bulan_ke": "2",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:06:38",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "3 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "3",
-        "nama_vaksin": "Hepatitis B 3",
-        "bulan_ke": "3",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:00:28",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "6",
-        "nama_vaksin": "Polio 1",
-        "bulan_ke": "3",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:03:08",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "11",
-        "nama_vaksin": "DTP 2",
-        "bulan_ke": "3",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:09",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "14",
-        "nama_vaksin": "Hib 3",
-        "bulan_ke": "3",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:04:53",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "4 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "4",
-        "nama_vaksin": "Hepatitis B 4",
-        "bulan_ke": "4",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:02:22",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "7",
-        "nama_vaksin": "Polio 1",
-        "bulan_ke": "4",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:03:09",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "16",
-        "nama_vaksin": "PCV 2",
-        "bulan_ke": "4",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:05:11",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "19",
-        "nama_vaksin": "Rotavirus 2",
-        "bulan_ke": "4",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:06:39",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "6 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "17",
-        "nama_vaksin": "PCV 3",
-        "bulan_ke": "6",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:06:14",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "20",
-        "nama_vaksin": "Rotavirus 3",
-        "bulan_ke": "6",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:06:43",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "9 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "21",
-        "nama_vaksin": "MR / MMR",
-        "bulan_ke": "9",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:07:48",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "12 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "23",
-        "nama_vaksin": "Varisela 1",
-        "bulan_ke": "12",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:09:18",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "25",
-        "nama_vaksin": "Hepatitis A 1",
-        "bulan_ke": "12",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:09:29",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "18 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "24",
-        "nama_vaksin": "Varisela 2",
-        "bulan_ke": "18",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:09:19",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      },
-      {
-        "vaksin_id": "26",
-        "nama_vaksin": "Hepatitis A 2",
-        "bulan_ke": "18",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:09:30",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  },
-  {
-    "periode": "24 Bulan",
-    "vaksin": [
-      {
-        "vaksin_id": "22",
-        "nama_vaksin": "Tifoid",
-        "bulan_ke": "24",
-        "is_active": "1",
-        "created_by": "1",
-        "created_date": "2023-06-24 20:08:38",
-        "updated_by": null,
-        "updated_date": null,
-        "anak_id": null,
-        "status": "Belum"
-      }
-    ]
-  }
-];
+class JadwalImunisaiIDAI extends StatefulWidget {
+  final String? path;
 
-class SfDataGridDemo extends StatefulWidget {
-  const SfDataGridDemo({Key? key}) : super(key: key);
+  JadwalImunisaiIDAI({Key? key, required this.path}) : super(key: key);
 
   @override
-  _SfDataGridDemoState createState() => _SfDataGridDemoState();
+  _JadwalImunisaiIDAIState createState() => _JadwalImunisaiIDAIState();
 }
 
-class _SfDataGridDemoState extends State<SfDataGridDemo> {
-  late EmployeeDataSource _employeeDataSource;
-  List<Employee> _employees = <Employee>[];
+class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
+    with WidgetsBindingObserver {
+  final Completer<PDFViewController> _controller =
+      Completer<PDFViewController>();
+  int? pages = 0;
+  int? currentPage = 0;
+  int? previousPage = 0;
+  bool isReady = false;
+  String errorMessage = '';
+  double scrollPosition = 0.0;
+  double scrollThreshold = 50.0;
 
-  @override
-  void initState() {
-    super.initState();
-    _employees = getEmployeeData();
-    _employeeDataSource = EmployeeDataSource(_employees);
+  Future<bool> _onWillPop() async {
+    if (previousPage != currentPage) {
+      _controller.future.then((controller) {
+        if (previousPage! >= 0 && previousPage! < pages!) {
+          controller.setPage(previousPage!);
+          setState(() {
+            currentPage = previousPage;
+          });
+        }
+      });
+      return false;
+    }
+    return true;
   }
-
-  final CustomColumnSizer _customColumnSizer = CustomColumnSizer();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter SfDataGrid'),
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Document"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.info_outline),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Center(
+                      child: AlertDialog(
+                        title: Text('Cara membaca colom umur',
+                            style: TextStyle(fontSize: 20)),
+                        content: Container(
+                          width: width,
+                          height: height * 0.25,
+                          child: Column(
+                            children: [
+                              Text(
+                                  "Misal 2 berarti 2 bulan (60 Hari) Sampai dengan 2 bulan 29 hari (89 Hari)"),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.square,
+                                    color: Colors.blue,
+                                  ),
+                                  Text("Usia si kecil"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.square,
+                                      color: Colors.blueAccent[100]),
+                                  Text("Primer"),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.square, color: Colors.white),
+                                  Text("Kejar"),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.square, color: Colors.pink[100]),
+                                  Text("Penguat"),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.square, color: Colors.orange),
+                                  Text("Daerah Endemis"),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        body: Stack(
+          children: <Widget>[
+            NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification is ScrollUpdateNotification) {
+                  setState(() {
+                    scrollPosition += notification.scrollDelta!;
+                  });
+
+                  if (scrollPosition.abs() > scrollThreshold) {
+                    int nextPage = currentPage! + (scrollPosition > 0 ? 1 : -1);
+                    if (nextPage >= 0 && nextPage < pages!) {
+                      setState(() {
+                        previousPage = currentPage;
+                        currentPage = nextPage;
+                      });
+                    }
+                    setState(() {
+                      scrollPosition = 0.0;
+                    });
+                  }
+                }
+                return true;
+              },
+              child: PDFView(
+                filePath: widget.path,
+                enableSwipe: false,
+                swipeHorizontal: true,
+                autoSpacing: false,
+                pageFling: true,
+                pageSnap: true,
+                defaultPage: currentPage!,
+                fitPolicy: FitPolicy.BOTH,
+                preventLinkNavigation: false,
+                onRender: (_pages) {
+                  setState(() {
+                    pages = _pages;
+                    isReady = true;
+                  });
+                },
+                onError: (error) {
+                  setState(() {
+                    errorMessage = error.toString();
+                  });
+                  print(error.toString());
+                },
+                onPageError: (page, error) {
+                  setState(() {
+                    errorMessage = '$page: ${error.toString()}';
+                  });
+                  print('$page: ${error.toString()}');
+                },
+                onViewCreated: (PDFViewController pdfViewController) {
+                  _controller.complete(pdfViewController);
+                },
+                onLinkHandler: (String? uri) {
+                  print('goto uri: $uri');
+                },
+                onPageChanged: (int? page, int? total) {
+                  print('page change: $page/$total');
+                  setState(() {
+                    previousPage = currentPage;
+                    currentPage = page;
+                  });
+                },
+              ),
+            ),
+            errorMessage.isEmpty
+                ? !isReady
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container()
+                : Center(
+                    child: Text(errorMessage),
+                  )
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (previousPage! >= 0 && previousPage! < pages!) {
+                      _controller.future.then((controller) {
+                        int nextPage =
+                            previousPage! - 1; // Mengurangi 1 dari previousPage
+                        controller.setPage(nextPage);
+                        setState(() {
+                          currentPage = nextPage;
+                          previousPage =
+                              nextPage - 1; // Mengurangi 1 dari nextPage
+                        });
+                      });
+                    }
+                  },
+                ),
+                Text(
+                  '${currentPage! + 1}/$pages',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    int nextPage = currentPage! + 1;
+                    if (nextPage >= 0 && nextPage < pages!) {
+                      _controller.future.then((controller) {
+                        controller.setPage(nextPage);
+                        setState(() {
+                          currentPage = nextPage;
+                        });
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      body: SfDataGrid(
-          source: _employeeDataSource,
-          columns: getColumns,
-          columnSizer: _customColumnSizer,
-          columnWidthMode: ColumnWidthMode.auto),
     );
   }
-
-  List<GridColumn> get getColumns {
-    return [
-      GridColumn(
-          columnName: 'id',
-          autoFitPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          label: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.center,
-              child: const Text('ID'))),
-      GridColumn(
-          columnName: 'name',
-          label: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.center,
-              child: const Text('Name'))),
-      GridColumn(
-          columnName: 'mail',
-          autoFitPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          label: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.center,
-              child: const Text(
-                'E-Mail',
-                softWrap: false,
-              ))),
-      GridColumn(
-          columnName: 'contact no',
-          autoFitPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          label: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.center,
-              child: const Text('Contact No'))),
-      GridColumn(
-          columnName: 'city',
-          autoFitPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          label: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              alignment: Alignment.center,
-              child: const Text('City')))
-    ];
-  }
-
-  List<Employee> getEmployeeData() {
-    return [
-      Employee(10001, 'James', '123thisisareallylongemail@longemaildomain.com',
-          '1231233211', 'Paris'),
-      Employee(
-          10002,
-          'Kathryn',
-          '123thisisareallylongemail@longemaildomain.com',
-          '1212122121',
-          'Strasbourg'),
-      Employee(10003, 'Lara', '123thisisareallylongemail@longemaildomain.com',
-          '1312131221', 'Berlin'),
-      Employee(
-          10004,
-          'Michael',
-          '123thisisareallylongemail@longemaildomain.com',
-          '7834236578',
-          'Lyon'),
-      Employee(10005, 'Martin', '123thisisareallylongemail@longemaildomain.com',
-          '1122324451', 'Reims'),
-    ];
-  }
-}
-
-class EmployeeDataSource extends DataGridSource {
-  EmployeeDataSource(List<Employee> employees) {
-    buildDataGridRow(employees);
-  }
-
-  void buildDataGridRow(List<Employee> employeeData) {
-    dataGridRow = employeeData.map<DataGridRow>((employee) {
-      return DataGridRow(cells: [
-        DataGridCell<int>(columnName: 'id', value: employee.id),
-        DataGridCell<String>(columnName: 'name', value: employee.name),
-        DataGridCell<String>(columnName: 'mail', value: employee.email),
-        DataGridCell<String>(
-            columnName: 'contact no', value: employee.designation),
-        DataGridCell<String>(columnName: 'city', value: employee.salary),
-      ]);
-    }).toList();
-  }
-
-  List<DataGridRow> dataGridRow = <DataGridRow>[];
-
-  @override
-  List<DataGridRow> get rows => dataGridRow.isEmpty ? [] : dataGridRow;
-
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((dataGridCell) {
-      return Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            dataGridCell.value.toString(),
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            softWrap: false,
-          ));
-    }).toList());
-  }
-}
-
-class CustomColumnSizer extends ColumnSizer {
-  @override
-  double computeHeaderCellWidth(GridColumn column, TextStyle style) {
-    style = const TextStyle(fontWeight: FontWeight.bold);
-
-    return super.computeHeaderCellWidth(column, style);
-  }
-
-  @override
-  double computeCellWidth(GridColumn column, DataGridRow row, Object? cellValue,
-      TextStyle textStyle) {
-    textStyle = const TextStyle(fontWeight: FontWeight.bold);
-
-    return super.computeCellWidth(column, row, cellValue, textStyle);
-  }
-}
-
-class Employee {
-  Employee(this.id, this.name, this.email, this.designation, this.salary);
-  final int id;
-  final String name;
-  final String email;
-  final String designation;
-  final String salary;
 }

@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/pages/ArtikelPage.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/HomePage2.dart';
 import 'package:stantapp/pages/KonsultasiPage.dart';
 import 'package:stantapp/pages/LoginPage.dart';
 import 'package:stantapp/pages/RegisterPage.dart';
+import 'package:stantapp/pages/SettingUserPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +29,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   final authController = Get.put(AuthController());
 
   final autoSizeGroup = AutoSizeGroup();
-  var _bottomNavIndex = 0; //default index of a first screen
+  // var _bottomNavIndex = 0; //default index of a first screen
 
   late AnimationController _fabAnimationController;
   late AnimationController _borderRadiusAnimationController;
@@ -38,16 +40,15 @@ class _BottomNavbarState extends State<BottomNavbar> {
   late AnimationController _hideBottomBarAnimationController;
 
   final iconList = <IconData>[
-    Icons.home,
-    Icons.construction,
-    Icons.chat,
-    Icons.newspaper,
+    Icons.home_filled,
+    Icons.article,
+    Icons.settings,
   ];
 
   @override
   void initState() {
     super.initState();
-    // childernController.getAnak(5.toString(), null);
+    authController.bottomNavIndex;
 
     Future.delayed(
       Duration(seconds: 1),
@@ -90,27 +91,22 @@ class _BottomNavbarState extends State<BottomNavbar> {
           return Stack(
             children: [
               Offstage(
-                offstage:
-                    _bottomNavIndex != 0, // Mengatur visibilitas halaman ke-0
+                offstage: authController.bottomNavIndex !=
+                    0, // Mengatur visibilitas halaman ke-0
                 child: Container(
                   height: availableHeight,
                   child: HomePage(),
                 ),
               ),
               Offstage(
-                offstage:
-                    _bottomNavIndex != 1, // Mengatur visibilitas halaman ke-1
-                child: HomePage(),
+                offstage: authController.bottomNavIndex !=
+                    1, // Mengatur visibilitas halaman ke-1
+                child: ArtikelPage(),
               ),
               Offstage(
-                offstage:
-                    _bottomNavIndex != 2, // Mengatur visibilitas halaman ke-2
-                child: WelcomePage(),
-              ),
-              Offstage(
-                offstage:
-                    _bottomNavIndex != 3, // Mengatur visibilitas halaman ke-3
-                child: RegisterPage(),
+                offstage: authController.bottomNavIndex !=
+                    2, // Mengatur visibilitas halaman ke-3
+                child: SettingUserPage(),
               ),
             ],
           );
@@ -120,12 +116,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
         icons: iconList,
         inactiveColor: Colors.grey,
         activeColor: Colors.blue,
-        activeIndex: _bottomNavIndex,
+        activeIndex: authController.bottomNavIndex,
         gapLocation: GapLocation.none,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
         backgroundColor: Colors.white,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+        onTap: (index) => setState(() => authController.bottomNavIndex = index),
         //other params
       ),
     );

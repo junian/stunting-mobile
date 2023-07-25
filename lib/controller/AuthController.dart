@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:stantapp/controller/RegionController.dart';
 import 'package:stantapp/controller/SessionController.dart';
@@ -21,6 +23,7 @@ class AuthController extends GetxController {
   final String loggedInKey = 'loggedIn';
   final sessionController = Get.put(SessionController());
 
+  var bottomNavIndex = 0; //default index of a first screen
   List<dynamic> isParent = [];
 
   // final sessionController = Get.put(SessionController());
@@ -176,7 +179,7 @@ class AuthController extends GetxController {
     String pendidikan,
     String pekerjaan,
     String pendapatan,
-    String? photo,
+    File? photo,
   ) async {
     try {
       dio.FormData formData = dio.FormData.fromMap({
@@ -189,8 +192,14 @@ class AuthController extends GetxController {
         'pendidikan': pendidikan,
         'pekerjaan': pekerjaan,
         'pendapatan': pendapatan,
-        'photo': photo,
       });
+      if (photo != null) {
+        String fileName = photo.path.split('/').last;
+        formData.files.add(MapEntry('photo',
+            await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
+
+        // await dio.MultipartFile.fromFile(photo.path, filename: '$fileName');
+      }
       final response = await _dio.post('$api/registerOrangtua', data: formData);
       print(response);
       if (response.data['success'] == true) {

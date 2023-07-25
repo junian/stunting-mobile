@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		EwKRKDYe6JQyPqhZXaqbFDUsVNU=
+		KEzeJ0k8fyDO23HGLsmNtmWVgEM=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		BSA1J6EaTK5/BWsdGFjJB8RtKZg=
+		Hi3dapgGD+O26L3XrE2f4gCHadY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -70,7 +70,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		I1Sn+t7LYMD5hg+HV1Hyu0MKtDc=
+		YKACu4uN5SJYRw5jZyqg4wMi78Y=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -138,7 +138,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		SVvZRb6ZsF/GTIM40rFI93X7XxE=
+		wKYTy2IuTBVQRl/AWLPna9/e7bw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -258,11 +258,23 @@
 		</data>
 		<key>Frameworks/Toast.framework/Toast</key>
 		<data>
-		I7JCT+nNXo3Q8wgkl6DZleWuniE=
+		DTfyF5o+hxMMhv4cOyku+YoWZio=
 		</data>
 		<key>Frameworks/Toast.framework/_CodeSignature/CodeResources</key>
 		<data>
 		qRI4xjhLGogRmwZ1iRrkPHRh3WQ=
+		</data>
+		<key>Frameworks/flutter_pdfview.framework/Info.plist</key>
+		<data>
+		iUF+VyH93Axevcf+lBIr4+fvZ6c=
+		</data>
+		<key>Frameworks/flutter_pdfview.framework/_CodeSignature/CodeResources</key>
+		<data>
+		KP4mK109GyY2FGU/S1MkWEjcBac=
+		</data>
+		<key>Frameworks/flutter_pdfview.framework/flutter_pdfview</key>
+		<data>
+		vzR7MHoKkGk6TCHq2HoLb2u75o0=
 		</data>
 		<key>Frameworks/fluttertoast.framework/Info.plist</key>
 		<data>
@@ -274,7 +286,7 @@
 		</data>
 		<key>Frameworks/fluttertoast.framework/fluttertoast</key>
 		<data>
-		1zN/G2wb3M2LGK5jxz5h5m984oo=
+		sZM/Sf1ete2NVvpsM2gxVMC2dmc=
 		</data>
 		<key>Frameworks/image_picker_ios.framework/Info.plist</key>
 		<data>
@@ -310,7 +322,7 @@
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation</key>
 		<data>
-		Q4mllymqX3V4AQNbA3kb5lm5sj4=
+		v6Pb/2e7EBS9Sprj4PEHHd+kYxo=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
 		<data>
@@ -322,7 +334,7 @@
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
 		<data>
-		I9Qew9T+i5TxxdljUIR2dbYp4dg=
+		udxwaoK6jFftD0Zn3Y+2j6H4tuU=
 		</data>
 		<key>Frameworks/video_player_avfoundation.framework/Info.plist</key>
 		<data>
@@ -421,7 +433,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			x/BIKD/m5IxymyLtJT98RbwThya9w/xDYJWF0yv+Q9Q=
+			HOW7LWF6FsV8zmCvRz2qRmXD7veeus+RN48CmW8U8EQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -435,7 +447,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WvAkTdrBXdJ7JtpKoXsoV2O9pyukD8zLa1YZINf327s=
+			4ayHeyFhh6lUDgBUE+tZTSau0I5mBSk2r6Gramx4Q04=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -463,7 +475,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ObD5qhMlfEcMk/Sb1qv+b+d/XdbVe+nhHpy7EhvjEgQ=
+			CvxaPeqg2SO18CK9do28FJQ6kYTSL3W2sh4DLTlOiMM=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -582,7 +594,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			visucJHHoCDteakjQLQtllcae7ag1T38bMpwO+D1utc=
+			h51gpvzTg9+HS5dUUIgFrM3DBj/YhRarBlFWEqfnlLc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -792,7 +804,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UofBVX1DTBc/1tAdokT5bkG88FXOit6j8R/AA1JHYCw=
+			7eN+blBC6brRKhnENGNA61znoA/OY/7q0XCddovB+4c=
 			</data>
 		</dict>
 		<key>Frameworks/Toast.framework/_CodeSignature/CodeResources</key>
@@ -800,6 +812,27 @@
 			<key>hash2</key>
 			<data>
 			m9vAkdYrXLjDqhBOMX4lShm7vd8xJvOQYjh2R4jc0jw=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_pdfview.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nLOb4IXyj8+EVqGOdUsCVsxpqzwy+U5mMb/qTqq6AYU=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_pdfview.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rZdRYl+Usgo/Zaug3nOPhuu6or/JdzvoA6/vEQssDu8=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_pdfview.framework/flutter_pdfview</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			KBOVBMFEZN7PeeM/+TrZ8GZLPjP7kNpHn5gtN8ExkeQ=
 			</data>
 		</dict>
 		<key>Frameworks/fluttertoast.framework/Info.plist</key>
@@ -820,7 +853,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			80iEoGiOrZp5perfqWQUN4818NvSHop/v39dn8zaRAA=
+			TW15m99Z01B9l1vdsgHpFpoWOqzgAEm6JCNFLvAIjqw=
 			</data>
 		</dict>
 		<key>Frameworks/image_picker_ios.framework/Info.plist</key>
@@ -883,7 +916,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cgXkKRuKnJ77eW4OJVZUnVbR6xgKT1jv4s6gPGT5kmQ=
+			VnLxfYFbSweUTX3ZOt9W51qznoAY59+ldjNcqJMxs4Y=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
@@ -904,7 +937,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			rNwFySI4uwCEG1LDt+NpB4lhMro9QHC2+xEYZILVv40=
+			79elPOqC8am24ihUgxkk0eL+WWhsZZbtOb+VfoU9Xpw=
 			</data>
 		</dict>
 		<key>Frameworks/video_player_avfoundation.framework/Info.plist</key>

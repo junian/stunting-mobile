@@ -48,12 +48,14 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
 
   //image picker
   File? _imageFile;
+  String? _result;
   Future<void> pickImage() async {
     final picker = await ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       // Gambar berhasil dipilih
       _imageFile = File(image.path);
+      _result = _imageFile?.path.split('/').last;
       // Lakukan sesuatu dengan file gambar yang dipilih
     } else {
       // Gambar tidak dipilih
@@ -805,7 +807,8 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
               tinggi_badan_ayah.text,
               _selectedBloodGroup.toString(),
               _selectedAllergy.toString(),
-              _selectedPrematur.toString());
+              _selectedPrematur.toString(),
+              _imageFile);
           // Get.to(
           //   HomePage2(),
           // );
