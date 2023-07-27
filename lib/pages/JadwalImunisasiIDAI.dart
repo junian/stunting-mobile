@@ -57,8 +57,13 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                   builder: (BuildContext context) {
                     return Center(
                       child: AlertDialog(
-                        title: Text('Cara membaca colom umur',
-                            style: TextStyle(fontSize: 20)),
+                        title: Text(
+                          'Cara membaca colom umur',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         content: Container(
                           width: width,
                           height: height * 0.25,
@@ -76,7 +81,7 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                                 ],
                               ),
                               SizedBox(
-                                height: 30,
+                                height: 15,
                               ),
                               Row(
                                 children: [

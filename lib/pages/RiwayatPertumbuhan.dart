@@ -1,79 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:stantapp/controller/DetailPertumbuhanController.dart';
+import '../controller/RiwayatPertumbuhanController.dart';
+import '../controller/TambahDataPertumbuhanController.dart';
 import 'DetailPertumbuhan.dart';
 import 'TambahPertumbuhanPage.dart';
 
-class Data {
-  double berat;
-  double tinggi;
-  double lebarKepala;
-  DateTime createDate;
-  DateTime tanggalLahir;
-  String imageUrl;
-
-  Data({
-    required this.berat,
-    required this.tinggi,
-    required this.lebarKepala,
-    required this.createDate,
-    required this.tanggalLahir,
-    required this.imageUrl,
-  });
-}
-
-List<Data> dataList = [
-  Data(
-    berat: 3.5,
-    tinggi: 50.0,
-    lebarKepala: 35.0,
-    createDate: DateTime(2023, 1, 1),
-    tanggalLahir: DateTime(2022, 12, 15),
-    imageUrl: 'https://example.com/image1.jpg',
-  ),
-  Data(
-    berat: 3.2,
-    tinggi: 48.0,
-    lebarKepala: 33.0,
-    createDate: DateTime(2023, 1, 2),
-    tanggalLahir: DateTime(2022, 11, 30),
-    imageUrl: 'https://example.com/image2.jpg',
-  ),
-  Data(
-    berat: 3.8,
-    tinggi: 52.0,
-    lebarKepala: 36.0,
-    createDate: DateTime(2023, 1, 3),
-    tanggalLahir: DateTime(1997, 10, 20),
-    imageUrl: 'https://example.com/image3.jpg',
-  ),
-  Data(
-    berat: 3.5,
-    tinggi: 50.0,
-    lebarKepala: 35.0,
-    createDate: DateTime(2023, 1, 1),
-    tanggalLahir: DateTime(2022, 12, 15),
-    imageUrl: 'https://example.com/image1.jpg',
-  ),
-  Data(
-    berat: 3.2,
-    tinggi: 48.0,
-    lebarKepala: 33.0,
-    createDate: DateTime(2023, 1, 2),
-    tanggalLahir: DateTime(2022, 11, 30),
-    imageUrl: 'https://example.com/image2.jpg',
-  ),
-  Data(
-    berat: 20.8,
-    tinggi: 52.0,
-    lebarKepala: 36.0,
-    createDate: DateTime(2023, 1, 3),
-    tanggalLahir: DateTime(1997, 10, 20),
-    imageUrl: 'https://example.com/image3.jpg',
-  ),
-];
-
 class RiwayatpertumbuhanPage extends StatefulWidget {
-  const RiwayatpertumbuhanPage({Key? key}) : super(key: key);
+  String anak_id;
+  String tinggi_badan_ibu;
+  String tinggi_badan_ayah;
+  RiwayatpertumbuhanPage(
+      {Key? key,
+      required this.anak_id,
+      required this.tinggi_badan_ayah,
+      required this.tinggi_badan_ibu})
+      : super(key: key);
 
   @override
   State<RiwayatpertumbuhanPage> createState() => _RiwayatpertumbuhanPageState();
@@ -81,35 +24,57 @@ class RiwayatpertumbuhanPage extends StatefulWidget {
 
 class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
   bool isAscending = false;
+  bool isDataInitialized = false;
+  var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+  var tambahPertumbuhanAnak = Get.put(TambahDataPertumbuhanController());
+  var detailRiwayatPertumbuhanController =
+      Get.put(DetailPertumbuhanController());
 
-  List<Data> filteredList = [];
+  List<Map<String, dynamic>> filteredList = [];
+
+  Future<void> initializeData() async {
+    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
+    filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
+    setState(() {
+      isDataInitialized =
+          true; // Mengubah status inisialisasi data menjadi true
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    // Mengatur filteredList dengan data asli saat inisialisasi
-    filteredList = List.from(dataList);
+    initializeData();
   }
 
   void filterData(bool ascending) {
     setState(() {
       isAscending = ascending;
 
-      filteredList = List.from(dataList);
+      filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
 
-      filteredList.sort((a, b) => ascending
-          ? a.createDate.compareTo(b.createDate)
-          : b.createDate.compareTo(a.createDate));
+      filteredList.sort((a, b) {
+        // Membandingkan nilai berdasarkan tanggal pembuatan (created_date)
+        DateTime dateA = DateTime.parse(a['created_date']);
+        DateTime dateB = DateTime.parse(b['created_date']);
+
+        if (isAscending) {
+          return dateA.compareTo(dateB); // Urutan ascending
+        } else {
+          return dateB.compareTo(dateA); // Urutan descending
+        }
+      });
     });
   }
 
   Future<void> _refreshData() async {
     // Simulasikan proses pembaruan data (misalnya: pengambilan data baru dari server)
+    riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
     await Future.delayed(Duration(seconds: 2));
 
     setState(() {
-      // Perbarui data Anda di sini
-      filteredList = List.from(dataList);
+      filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
     });
   }
 
@@ -126,10 +91,14 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TambahPertummbuhanPage()));
+          riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
+
+          riwayatPertumbuhanController.riwayatPertumbuhan;
+
+          Get.to(TambahPertummbuhanPage(
+              anakID: widget.anak_id,
+              tinggiBadanAyah: widget.tinggi_badan_ayah,
+              tinggiBadanIbu: widget.tinggi_badan_ibu));
         },
         child: Container(
             alignment: Alignment.center,
@@ -234,138 +203,150 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
             width: width,
             child: RefreshIndicator(
               onRefresh: _refreshData,
-              child: ListView.builder(
-                itemCount: filteredList.length,
-                itemBuilder: (context, index) {
-                  Data data = filteredList[index];
-                  DateFormat dateFormat = DateFormat('d MMM y');
-                  String tglbuat = dateFormat.format(data.createDate);
+              child: isDataInitialized == true
+                  ? ListView.builder(
+                      itemCount: filteredList.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> data = filteredList[index];
+                        DateFormat dateFormat = DateFormat('d MMM y');
+                        String tglbuat = dateFormat
+                            .format(DateTime.parse(data['created_date']));
 
-                  String formatSelisihTanggal(
-                      DateTime startDate, DateTime endDate) {
-                    Duration selisih = endDate.difference(startDate);
-                    int tahun = selisih.inDays ~/ 365;
-                    int bulan = (selisih.inDays % 365) ~/ 30;
-                    int hari = selisih.inDays % 30;
+                        // String formatSelisihTanggal(
+                        //     DateTime startDate, DateTime endDate) {
+                        //   Duration selisih = endDate.difference(startDate);
+                        //   int tahun = selisih.inDays ~/ 365;
+                        //   int bulan = (selisih.inDays % 365) ~/ 30;
+                        //   int hari = selisih.inDays % 30;
 
-                    String hasil = '';
-                    if (tahun > 0) {
-                      hasil += '$tahun tahun ';
-                    }
-                    if (bulan > 0) {
-                      hasil += '$bulan bulan ';
-                    }
-                    if (hari > 0) {
-                      hasil += '$hari hari';
-                    }
+                        //   String hasil = '';
+                        //   if (tahun > 0) {
+                        //     hasil += '$tahun tahun ';
+                        //   }
+                        //   if (bulan > 0) {
+                        //     hasil += '$bulan bulan ';
+                        //   }
+                        //   if (hari > 0) {
+                        //     hasil += '$hari hari';
+                        //   }
 
-                    return hasil.trim();
-                  }
+                        //   return hasil.trim();
+                        // }
 
-                  var selisih =
-                      formatSelisihTanggal(data.tanggalLahir, data.createDate);
+                        // var selisih =
+                        //     formatSelisihTanggal(data.tanggalLahir, data.createDate);
 
-                  return Container(
-                    width: width,
-                    height: height * 0.18,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20))),
-                            width: width,
-                            height: height * 0.08,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailPertumbuhanPage(
-                                                      berat: data.berat,
-                                                      tinggi: data.tinggi,
-                                                      lebarKepala:
-                                                          data.lebarKepala,
-                                                      createDate: tglbuat,
-                                                      usia: selisih)));
-                                    },
-                                    child: Icon(
-                                      Icons.image,
-                                      color: Colors.grey,
-                                    )),
-                                Text("${data.berat.toString()} kg"),
-                                Text("${data.tinggi.toString()} cm"),
-                                Text("${data.lebarKepala.toString()} cm"),
-                                GestureDetector(
-                                  onTap: () {
-                                    //function edit
-                                  },
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
+                        return Container(
+                          width: width,
+                          height: height * 0.18,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ],
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  width: width,
+                                  height: height * 0.08,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () {
+                                            detailRiwayatPertumbuhanController
+                                                .getDetailPertumbuhan(
+                                                    data['pertumbuhan_anak_id'],
+                                                    data['umur']);
+                                          },
+                                          child: Container(
+                                            height: height * 0.03,
+                                            width: width * 0.06,
+                                            child: Image.network(
+                                              "http://stantapp.pejuang-subuh.com/" +
+                                                  data['photo'],
+                                              fit: BoxFit.contain,
+                                            ),
+                                            // child: Icon(
+                                            //   Icons.image,
+                                            //   color: Colors.grey,
+                                            // ),
+                                          )),
+                                      Text("${data['berat_badan']} kg"),
+                                      Text("${data['tinggi_badan']} cm"),
+                                      Text("${data['lingkar_kepala']} cm"),
+                                      GestureDetector(
+                                        onTap: () {
+                                          detailRiwayatPertumbuhanController
+                                              .getDetailPertumbuhan(
+                                                  data['pertumbuhan_anak_id'],
+                                                  data['umur']);
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 2,
-                            left: 16,
-                            right: 16,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20))),
-                            width: width,
-                            height: height * 0.08,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  tglbuat,
-                                  style: TextStyle(color: Colors.grey),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 2,
+                                  left: 16,
+                                  right: 16,
                                 ),
-                                Text(selisih,
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20))),
+                                  width: width,
+                                  height: height * 0.08,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        tglbuat,
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      Text(data['umur'],
+                                          style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
                     ),
-                  );
-                },
-              ),
             ),
           ),
         ],

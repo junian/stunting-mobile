@@ -158,12 +158,11 @@ class AuthController extends GetxController {
     String user_id,
   ) async {
     try {
-      print(user_id);
       dio.FormData formData = dio.FormData.fromMap({
         'user_id': user_id,
       });
       final response = await _dio.post('$api/getOrangTua', data: formData);
-      isParent = response.data as List<dynamic>;
+      return isParent = response.data;
     } catch (e) {
       print(e);
     }

@@ -6,7 +6,8 @@ import 'package:stantapp/controller/JadwalVaksinasiIDAIController.dart';
 import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
 
 class JadwalVaksinasiPage extends StatefulWidget {
-  JadwalVaksinasiPage({super.key});
+  String anak_id;
+  JadwalVaksinasiPage({super.key, required this.anak_id});
 
   @override
   State<JadwalVaksinasiPage> createState() => _JadwalVaksinasiPageState();
@@ -23,7 +24,7 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 3));
-    await jadwalVaksinasiController.getJadwalVaksin('2');
+    await jadwalVaksinasiController.getJadwalVaksin(widget.anak_id);
     await jadwalVaksinasiIDAIController.createFileOfPdfUrl();
 
     setState(() {
@@ -156,6 +157,8 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                       Map<String, dynamic> item = selectedMonth == 0
                           ? vaccinationData[index]
                           : filteredData[index];
+
+                      print(item);
                       return ExpansionTile(
                         title: Text(
                           item['periode'],
@@ -192,7 +195,7 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                                       ),
                                     ),
                                     Text(
-                                      '05 Jun 2023 ',
+                                      item['rekomendasi'],
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,

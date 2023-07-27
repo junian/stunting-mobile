@@ -87,21 +87,30 @@ class _SetProfilePageState extends State<SetProfilePage> {
   @override
   void initState() {
     super.initState();
-    // regionController.getProvince();
+    authController.isParent;
 
     _selectedLastEducation =
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
     _selectedLastEducationMother =
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
     _selectedWorkType = _workType.isNotEmpty ? _workType[0] : null;
+
+    print(authController.isParent);
+
+    // Set nilai pada TextEditingControllers berdasarkan nilai dari isChildern
+    nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
+    String gender = authController.isParent[0]['jenis_kelamin'] ?? '';
+    if (gender == 'Laki-Laki') {
+      _selectedGender = 'Laki-Laki';
+    } else if (gender == 'Perempuan') {
+      _selectedGender = 'Perempuan';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    print(sessionController.user_id.value);
 
     return Scaffold(
       appBar: AppBar(
@@ -796,6 +805,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         },
                         child: Container(
                           width: double.infinity,
+                          margin: EdgeInsets.only(bottom: 30.0),
                           padding: EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 82, 163, 230),

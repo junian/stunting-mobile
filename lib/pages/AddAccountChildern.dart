@@ -68,8 +68,6 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
     if (widget.anak_id != null) {
       isChildern = jsonDecode(childernController.dataAnak.toString());
 
-      print(isChildern);
-
       // Set nilai pada TextEditingControllers berdasarkan nilai dari isChildern
       nama_anak.text = isChildern[0]['nama_anak'] ?? '';
       dateinput.text = isChildern[0]['tanggal_lahir'] ?? '';

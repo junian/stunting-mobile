@@ -1,36 +1,49 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:stantapp/controller/TambahDataPertumbuhanController.dart';
 
 class TambahPertummbuhanPage extends StatefulWidget {
-  const TambahPertummbuhanPage({super.key});
+  String anakID;
+  String tinggiBadanAyah;
+  String tinggiBadanIbu;
+  TambahPertummbuhanPage(
+      {super.key,
+      required this.anakID,
+      required this.tinggiBadanAyah,
+      required this.tinggiBadanIbu});
 
   @override
   State<TambahPertummbuhanPage> createState() => _TambahPertummbuhanPageState();
 }
 
 class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
-  DateTime _selectedDate = DateTime.now();
+  var tambahPertumbuhanAnak = Get.put(TambahDataPertumbuhanController());
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final imagePicker = ImagePicker();
+      final pickedFile = await imagePicker.pickImage(source: source);
 
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+      if (pickedFile != null) {
+        // Mengambil file gambar yang dipilih
+        File pickedImageFile = File(pickedFile.path);
+
+        setState(() {
+          tambahPertumbuhanAnak.pickedImage = pickedImageFile;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    DateFormat dateFormat = DateFormat('d MMM y');
-    String datenow = dateFormat.format(_selectedDate);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     bool isClicked = true;
@@ -43,7 +56,19 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
         title: Text('Tambah Data Pertumbuhan'),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          tambahPertumbuhanAnak.addPertumbuhanAnak(
+              anakID: widget.anakID,
+              selectedDate: DateTime.now(),
+              pickedImage: tambahPertumbuhanAnak.pickedImage as File,
+              beratBadan: double.parse(tambahPertumbuhanAnak.beratBadan.text),
+              tinggiBadan: double.parse(tambahPertumbuhanAnak.tinggiBadan.text),
+              lingkarKepala:
+                  double.parse(tambahPertumbuhanAnak.lingkarKepala.text),
+              tinggiBadanIbu: widget.tinggiBadanIbu,
+              tinggiBadanAyah: widget.tinggiBadanAyah);
+          Get.back();
+        },
         child: Container(
             alignment: Alignment.center,
             width: width * 0.9,
@@ -62,71 +87,68 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
             )),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: width * 0.6,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  // Container(
+                  //   width: width * 0.3,
+                  //   height: height * 0.1,
+                  //   child: Column(
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Text(
+                  //             'Umur',
+                  //             style: TextStyle(color: Colors.grey),
+                  //           ),
+                  //           Text(
+                  //             '*',
+                  //             style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               color: Colors.red,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       Container(
+                  //         decoration: BoxDecoration(
+                  //           border: Border(
+                  //             bottom: BorderSide(
+                  //               color: Colors.black,
+                  //               width: 1.0,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         child: TextField(
+                  //           keyboardType: TextInputType.number,
+                  //           decoration: InputDecoration(
+                  //             hintStyle:
+                  //                 TextStyle(fontSize: 15, color: Colors.black),
+                  //             hintText: 'Usia Anak',
+                  //             border: InputBorder.none,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: width,
                   height: height * 0.1,
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Text(
-                            'Tgl Pertumbuhan',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: width * 0.4,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.black,
-                                  width: 1.0,
-                                ),
-                              ),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                _selectDate(context);
-                              },
-                              child: Text(
-                                datenow,
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: width * 0.3,
-                  height: height * 0.1,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Umur',
+                            'Berat Badan (kg)',
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -148,11 +170,12 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                           ),
                         ),
                         child: TextField(
+                          controller: tambahPertumbuhanAnak.beratBadan,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
-                            hintText: 'Usia Anak',
+                            hintText: 'Contoh : 3.5',
                             border: InputBorder.none,
                           ),
                         ),
@@ -160,188 +183,156 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                     ],
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Container(
-                width: width,
-                height: height * 0.1,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Berat Badan (kg)',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
-                          hintText: 'Contoh : 3.5',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Container(
-                width: width,
-                height: height * 0.1,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Tinggi Badan (cm)',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
-                          hintText: 'Contoh : 40.8',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Container(
-                width: width,
-                height: height * 0.1,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Lingkar Kepala (cm)',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
-                          hintText: 'Contoh : 40.8',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    // Aksi ketika tombol unggah foto ditekan
-                  },
-                  child: DottedBorder(
-                    borderType: BorderType.RRect,
-                    color: Colors.blue,
-                    radius: Radius.circular(20),
-                    padding: EdgeInsets.all(3),
-                    child: Container(
-                      width: width * 0.9,
-                      height: height * 0.07,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: width,
+                  height: height * 0.1,
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(width: 8),
                           Text(
-                            'Unggah Foto',
+                            'Tinggi Badan (cm)',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            '*',
                             style: TextStyle(
-                              color: Colors.blue,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              color: Colors.red,
                             ),
                           ),
                         ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: tambahPertumbuhanAnak.tinggiBadan,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintStyle:
+                                TextStyle(fontSize: 15, color: Colors.black),
+                            hintText: 'Contoh : 40.8',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: width,
+                  height: height * 0.1,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Lingkar Kepala (cm)',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            '*',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: tambahPertumbuhanAnak.lingkarKepala,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintStyle:
+                                TextStyle(fontSize: 15, color: Colors.black),
+                            hintText: 'Contoh : 40.8',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Aksi ketika tombol unggah foto ditekan
+                      _pickImage(ImageSource.gallery);
+                    },
+                    child: DottedBorder(
+                      borderType: BorderType.RRect,
+                      color: Colors.blue,
+                      radius: Radius.circular(20),
+                      padding: EdgeInsets.all(3),
+                      child: Container(
+                        width: width * 0.9,
+                        height: height * 0.07,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Unggah Foto',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: width,
+                  height: height * 0.2,
+                  child: tambahPertumbuhanAnak.pickedImage == null
+                      ? SizedBox() // Tampilkan data kosong jika belum ada gambar terpilih
+                      : Image.file(tambahPertumbuhanAnak.pickedImage!),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

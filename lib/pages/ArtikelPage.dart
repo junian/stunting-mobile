@@ -24,7 +24,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
-    await artikelController.getArtikel();
+    // await artikelController.getArtikel();
     await artikelController.getArtikelKategori();
     filteredList = artikelController.artikel.toList();
     categories = artikelController.kategori.toList();

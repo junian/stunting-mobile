@@ -16,6 +16,13 @@ class _SettingUserPageState extends State<SettingUserPage> {
   var authController = Get.put(AuthController());
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authController.isParent;
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var hight = MediaQuery.of(context).size.height;
@@ -58,7 +65,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                         backgroundColor: Colors.white,
                       ),
                       title: Text(
-                        'MOH.NURUDDIN',
+                        '${authController.isParent[0]["nama_orang_tua"]}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
@@ -276,6 +283,9 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: hight * 0.06,
                     ),
                   ],
                 ),

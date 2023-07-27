@@ -1,52 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DetailPertumbuhanPage extends StatelessWidget {
-  double berat;
-  double tinggi;
-  double lebarKepala;
-  String createDate;
-  String usia;
-
-  DetailPertumbuhanPage({
-    super.key,
-    required this.berat,
-    required this.tinggi,
-    required this.lebarKepala,
-    required this.createDate,
-    required this.usia,
-  });
+  String pertumbuhanAnakId;
+  String anakId;
+  String beratBadan;
+  String tinggiBadan;
+  String lingkarKepala;
+  String createdDate;
+  String statusPertumbuhanBerat;
+  String statusPertumbuhanTinggi;
+  String statusPertumbuhanLingkarKepala;
+  String umur;
+  DetailPertumbuhanPage(
+      {super.key,
+      required this.pertumbuhanAnakId,
+      required this.anakId,
+      required this.beratBadan,
+      required this.tinggiBadan,
+      required this.lingkarKepala,
+      required this.createdDate,
+      required this.statusPertumbuhanBerat,
+      required this.statusPertumbuhanTinggi,
+      required this.statusPertumbuhanLingkarKepala,
+      required this.umur});
 
   @override
   Widget build(BuildContext context) {
-    bool isBeratNormal(double berat) {
-      // Logika pengecekan berat badan normal berdasarkan standar WHO
-      // Anda dapat mengubah logika ini sesuai dengan preferensi Anda
-      if (berat >= 2.5 && berat <= 4.0) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    bool isTinggiNormal(double tinggi) {
-      // Logika pengecekan tinggi badan normal berdasarkan standar WHO
-      // Anda dapat mengubah logika ini sesuai dengan preferensi Anda
-      if (tinggi >= 45.0 && tinggi <= 55.0) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    bool isLebarKepalaNormal(double lebarKepala) {
-      // Logika pengecekan lebar kepala normal berdasarkan standar WHO
-      // Anda dapat mengubah logika ini sesuai dengan preferensi Anda
-      if (lebarKepala >= 30.0 && lebarKepala <= 40.0) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    DateFormat dateFormat = DateFormat('d MMM y');
+    String tglbuat = dateFormat.format(DateTime.parse(createdDate));
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -68,7 +50,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                   "Tanggal Pertumbuhan : ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text(createDate,
+                Text(tglbuat,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
@@ -79,7 +61,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                   "Usia Anak : ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text(usia,
+                Text(umur,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
@@ -90,7 +72,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                   "Berat : ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text("${berat.toString()} kg",
+                Text("${beratBadan.toString()} kg",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
@@ -101,7 +83,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                   "Tinggi : ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text("${tinggi.toString()} cm",
+                Text("${tinggiBadan.toString()} cm",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
@@ -112,7 +94,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                   "Lingkar Kepala : ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text("${lebarKepala.toString()} cm",
+                Text("${lingkarKepala.toString()} cm",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
@@ -139,15 +121,15 @@ class DetailPertumbuhanPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(isBeratNormal(berat) ? "Normal" : "Tidak Normal",
+                      Text(statusPertumbuhanBerat,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: isBeratNormal(berat)
+                              color: statusPertumbuhanBerat == "Normal"
                                   ? Colors.green
                                   : Colors.yellow)),
                       Text(
-                          isBeratNormal(berat)
+                          statusPertumbuhanBerat == "Normal"
                               ? "Ket. Tetap jaga kesehatan Anak Anda"
                               : "Ket. Silahkan konsultasi dengan petugas setempat",
                           style: TextStyle(
@@ -179,15 +161,15 @@ class DetailPertumbuhanPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(isTinggiNormal(tinggi) ? "Normal" : "Tidak Normal",
+                      Text(statusPertumbuhanTinggi,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: isTinggiNormal(tinggi)
+                              color: statusPertumbuhanBerat == "Normal"
                                   ? Colors.green
                                   : Colors.yellow)),
                       Text(
-                          isTinggiNormal(tinggi)
+                          statusPertumbuhanBerat == "Normal"
                               ? "Ket. Tetap jaga kesehatan Anak Anda"
                               : "Ket. Silahkan konsultasi dengan petugas setempat",
                           style: TextStyle(
@@ -219,18 +201,18 @@ class DetailPertumbuhanPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(
-                          isLebarKepalaNormal(lebarKepala)
-                              ? "Normal"
-                              : "Tidak Normal",
+                      Text(statusPertumbuhanLingkarKepala,
+                          // isLebarKepalaNormal(lebarKepala)
+                          //     ? "Normal"
+                          //     : "Tidak Normal",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: isLebarKepalaNormal(lebarKepala)
+                              color: statusPertumbuhanBerat == "Normal"
                                   ? Colors.green
                                   : Colors.yellow)),
                       Text(
-                          isLebarKepalaNormal(lebarKepala)
+                          statusPertumbuhanBerat == "Normal"
                               ? "Ket. Tetap jaga kesehatan Anak Anda"
                               : "Ket. Silahkan konsultasi dengan petugas setempat",
                           style: TextStyle(

@@ -1,11 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/controller/ParameterController.dart';
 
-class SnkPage extends StatelessWidget {
+class SnkPage extends StatefulWidget {
   const SnkPage({super.key});
 
   @override
+  State<SnkPage> createState() => _SnkPageState();
+}
+
+class _SnkPageState extends State<SnkPage> {
+  var parameterController = Get.put(ParameterController());
+
+  bool isDataInitialized = false;
+  String isParams = "";
+
+  Future<void> initializeData() async {
+    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await parameterController.getParameter("1");
+    isParams = parameterController.parameterValue.toString();
+
+    setState(() {
+      isDataInitialized =
+          true; // Mengubah status inisialisasi data menjadi true
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(isParams);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -40,49 +72,13 @@ class SnkPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sapien vel feugiat consectetur. Ut tincidunt faucibus purus a dignissim. Morbi non congue nunc, eget ultricies ex. Quisque non mi malesuada, suscipit ex a, convallis libero. Nulla consequat pellentesque quam id condimentum. Nulla sodales rutrum fringilla. Nullam vitae nibh et purus ullamcorper accumsan at vel nisi. Donec eleifend placerat arcu sed semper. Integer nec tincidunt urna.',
-              ),
+              isDataInitialized == true
+                  ? Text(
+                      isParams,
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ],
           ),
         ),
