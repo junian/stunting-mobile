@@ -36,13 +36,13 @@ class _SetProfilePageState extends State<SetProfilePage> {
 
   final TextEditingController nama_orang_tua = TextEditingController();
   final TextEditingController alamat = TextEditingController();
-  final TextEditingController pekerjaan = TextEditingController();
   final TextEditingController pendapatan = TextEditingController();
 
   String? idProv;
   String? idCity;
   String? idKecamatan;
   String? idKelurahan;
+  String? pendidikan;
   final dio.Dio _dio = dio.Dio();
 
   List<String> _genders = ['Male', 'Female'];
@@ -97,13 +97,16 @@ class _SetProfilePageState extends State<SetProfilePage> {
 
     print(authController.isParent);
 
-    // Set nilai pada TextEditingControllers berdasarkan nilai dari isChildern
-    nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
-    String gender = authController.isParent[0]['jenis_kelamin'] ?? '';
-    if (gender == 'Laki-Laki') {
-      _selectedGender = 'Laki-Laki';
-    } else if (gender == 'Perempuan') {
-      _selectedGender = 'Perempuan';
+    // Set nilai pada TextEditingControllers berdasarkan nilai dari isParent
+    if (authController.isParent != null) {
+      nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
+      alamat.text = authController.isParent[0]['alamat'] ?? '';
+      String gender = authController.isParent[0]['jenis_kelamin'] ?? '';
+      if (gender == 'Laki-Laki') {
+        _selectedGender = 'Laki-Laki';
+      } else if (gender == 'Perempuan') {
+        _selectedGender = 'Perempuan';
+      }
     }
   }
 
@@ -336,226 +339,252 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         ],
                       ),
                       SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Provinsi',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownSearch<MGetProvince>(
-                        mode: Mode.DIALOG,
-                        showSearchBox: true,
-                        onChanged: (value) => idProv = value?.provinceId,
-                        dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.provinceName ??
-                                "Belum Memilih Provinsi"),
-                        popupItemBuilder: ((context, item, isSelected) =>
-                            ListTile(
-                              title: Text(item.provinceName),
-                            )),
-                        onFind: (text) async {
-                          var response = await _dio.get(
-                              "http://stantapp.pejuang-subuh.com/api/getProvince");
-                          List<MGetProvince> allNameProvince = [];
+                      authController.isParent == null
+                          ? Container(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Provinsi',
+                                        style: TextStyle(),
+                                      ),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  DropdownSearch<MGetProvince>(
+                                    mode: Mode.DIALOG,
+                                    showSearchBox: true,
+                                    onChanged: (value) =>
+                                        idProv = value?.provinceId,
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(selectedItem?.provinceName ??
+                                            "Belum Memilih Provinsi"),
+                                    popupItemBuilder:
+                                        ((context, item, isSelected) =>
+                                            ListTile(
+                                              title: Text(item.provinceName),
+                                            )),
+                                    onFind: (text) async {
+                                      var response = await _dio.get(
+                                          "http://stantapp.pejuang-subuh.com/api/getProvince");
+                                      List<MGetProvince> allNameProvince = [];
 
-                          if (response.statusCode != 200) {
-                            return [];
-                          } else {
-                            List allProvince = response.data;
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      } else {
+                                        List allProvince = response.data;
 
-                            allProvince.forEach((element) {
-                              allNameProvince.add(MGetProvince(
-                                  provinceId: element['province_id'],
-                                  provinceName: element['province_name'],
-                                  locationid: element['locationid'],
-                                  status: element['status']));
-                            });
-                            return allNameProvince;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Kota/Kabupaten',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownSearch<MGetCity>(
-                        mode: Mode.DIALOG,
-                        showSearchBox: true,
-                        onChanged: (value) => idCity = value?.cityId,
-                        dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.cityName ??
-                                "Belum Memilih Kota/Kabupaten"),
-                        popupItemBuilder: ((context, item, isSelected) =>
-                            ListTile(
-                              title: Text(item.cityName),
-                            )),
-                        onFind: (text) async {
-                          dio.FormData formData = dio.FormData.fromMap({
-                            'province_id': idProv,
-                          });
-                          var response = await _dio.post(
-                              "http://stantapp.pejuang-subuh.com/api/getCity",
-                              data: formData);
-                          // print(response.data);
-                          List<MGetCity> allNameCity = [];
+                                        allProvince.forEach((element) {
+                                          allNameProvince.add(MGetProvince(
+                                              provinceId:
+                                                  element['province_id'],
+                                              provinceName:
+                                                  element['province_name'],
+                                              locationid: element['locationid'],
+                                              status: element['status']));
+                                        });
+                                        return allNameProvince;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 24),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Kota/Kabupaten',
+                                        style: TextStyle(),
+                                      ),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  DropdownSearch<MGetCity>(
+                                    mode: Mode.DIALOG,
+                                    showSearchBox: true,
+                                    onChanged: (value) =>
+                                        idCity = value?.cityId,
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(selectedItem?.cityName ??
+                                            "Belum Memilih Kota/Kabupaten"),
+                                    popupItemBuilder:
+                                        ((context, item, isSelected) =>
+                                            ListTile(
+                                              title: Text(item.cityName),
+                                            )),
+                                    onFind: (text) async {
+                                      dio.FormData formData =
+                                          dio.FormData.fromMap({
+                                        'province_id': idProv,
+                                      });
+                                      var response = await _dio.post(
+                                          "http://stantapp.pejuang-subuh.com/api/getCity",
+                                          data: formData);
+                                      // print(response.data);
+                                      List<MGetCity> allNameCity = [];
 
-                          if (response.statusCode != 200) {
-                            return [];
-                          } else {
-                            List allCity = response.data;
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      } else {
+                                        List allCity = response.data;
 
-                            allCity.forEach((element) {
-                              allNameCity.add(MGetCity(
-                                cityId: element['city_id'],
-                                cityName: element['city_name'],
-                                provinceId: element['province_id'],
-                              ));
-                            });
-                            return allNameCity;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Kecamatan',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownSearch<MGetKecamatan>(
-                        mode: Mode.DIALOG,
-                        showSearchBox: true,
-                        onChanged: (value) => idKecamatan = value?.kecamatanId,
-                        dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.kecamatanName ??
-                                "Belum Memilih Kecamatan"),
-                        popupItemBuilder: ((context, item, isSelected) =>
-                            ListTile(
-                              title: Text(item.kecamatanName),
-                            )),
-                        onFind: (text) async {
-                          dio.FormData formData = dio.FormData.fromMap({
-                            'city_id': idCity,
-                          });
-                          var response = await _dio.post(
-                              "http://stantapp.pejuang-subuh.com/api/getKecamatan",
-                              data: formData);
-                          // print(response.data);
-                          List<MGetKecamatan> allNameKecamatan = [];
+                                        allCity.forEach((element) {
+                                          allNameCity.add(MGetCity(
+                                            cityId: element['city_id'],
+                                            cityName: element['city_name'],
+                                            provinceId: element['province_id'],
+                                          ));
+                                        });
+                                        return allNameCity;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 24),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Kecamatan',
+                                        style: TextStyle(),
+                                      ),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  DropdownSearch<MGetKecamatan>(
+                                    mode: Mode.DIALOG,
+                                    showSearchBox: true,
+                                    onChanged: (value) =>
+                                        idKecamatan = value?.kecamatanId,
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(selectedItem?.kecamatanName ??
+                                            "Belum Memilih Kecamatan"),
+                                    popupItemBuilder:
+                                        ((context, item, isSelected) =>
+                                            ListTile(
+                                              title: Text(item.kecamatanName),
+                                            )),
+                                    onFind: (text) async {
+                                      dio.FormData formData =
+                                          dio.FormData.fromMap({
+                                        'city_id': idCity,
+                                      });
+                                      var response = await _dio.post(
+                                          "http://stantapp.pejuang-subuh.com/api/getKecamatan",
+                                          data: formData);
+                                      // print(response.data);
+                                      List<MGetKecamatan> allNameKecamatan = [];
 
-                          if (response.statusCode != 200) {
-                            return [];
-                          } else {
-                            List allKecamatan = response.data;
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      } else {
+                                        List allKecamatan = response.data;
 
-                            allKecamatan.forEach((element) {
-                              allNameKecamatan.add(MGetKecamatan(
-                                  kecamatanId: element['kecamatan_id'],
-                                  kecamatanName: element['kecamatan_name'],
-                                  cityId: element['city_id']));
-                            });
-                            return allNameKecamatan;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Kelurahan/Desa',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DropdownSearch<MGetKelurahan>(
-                        mode: Mode.DIALOG,
-                        showSearchBox: true,
-                        onChanged: (value) => idKelurahan = value?.kelurahanId,
-                        dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.kelurahanName ??
-                                "Belum Memilih Kelurahan/Desa"),
-                        popupItemBuilder: ((context, item, isSelected) =>
-                            ListTile(
-                              title: Text(item.kelurahanName),
-                            )),
-                        onFind: (text) async {
-                          dio.FormData formData = dio.FormData.fromMap({
-                            'kecamatan_id': idKecamatan,
-                          });
-                          var response = await _dio.post(
-                              "http://stantapp.pejuang-subuh.com/api/getKelurahan",
-                              data: formData);
-                          // print(response.data);
-                          List<MGetKelurahan> allNameKelurahan = [];
+                                        allKecamatan.forEach((element) {
+                                          allNameKecamatan.add(MGetKecamatan(
+                                              kecamatanId:
+                                                  element['kecamatan_id'],
+                                              kecamatanName:
+                                                  element['kecamatan_name'],
+                                              cityId: element['city_id']));
+                                        });
+                                        return allNameKecamatan;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 24),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Kelurahan/Desa',
+                                        style: TextStyle(),
+                                      ),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  DropdownSearch<MGetKelurahan>(
+                                    mode: Mode.DIALOG,
+                                    showSearchBox: true,
+                                    onChanged: (value) =>
+                                        idKelurahan = value?.kelurahanId,
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(selectedItem?.kelurahanName ??
+                                            "Belum Memilih Kelurahan/Desa"),
+                                    popupItemBuilder:
+                                        ((context, item, isSelected) =>
+                                            ListTile(
+                                              title: Text(item.kelurahanName),
+                                            )),
+                                    onFind: (text) async {
+                                      dio.FormData formData =
+                                          dio.FormData.fromMap({
+                                        'kecamatan_id': idKecamatan,
+                                      });
+                                      var response = await _dio.post(
+                                          "http://stantapp.pejuang-subuh.com/api/getKelurahan",
+                                          data: formData);
+                                      // print(response.data);
+                                      List<MGetKelurahan> allNameKelurahan = [];
 
-                          if (response.statusCode != 200) {
-                            return [];
-                          } else {
-                            List allKelurahan = response.data;
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      } else {
+                                        List allKelurahan = response.data;
 
-                            allKelurahan.forEach((element) {
-                              allNameKelurahan.add(MGetKelurahan(
-                                  kelurahanId: element['kelurahan_id'],
-                                  kelurahanName: element['kelurahan_name'],
-                                  kecamatanId: element['kecamatan_id']));
-                            });
-                            return allNameKelurahan;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Text(
-                            'Alamat',
-                            style: TextStyle(),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
+                                        allKelurahan.forEach((element) {
+                                          allNameKelurahan.add(MGetKelurahan(
+                                              kelurahanId:
+                                                  element['kelurahan_id'],
+                                              kelurahanName:
+                                                  element['kelurahan_name'],
+                                              kecamatanId:
+                                                  element['kecamatan_id']));
+                                        });
+                                        return allNameKelurahan;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 24),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Alamat',
+                                        style: TextStyle(),
+                                      ),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
                       TextField(
                         controller: alamat,
                         decoration: InputDecoration(

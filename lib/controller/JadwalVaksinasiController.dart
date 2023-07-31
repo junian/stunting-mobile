@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:stantapp/helper.dart';
@@ -9,6 +11,8 @@ import 'package:stantapp/helper/Constant.dart';
 class JadwalVaksinasiController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
+
+  File? pickedImage;
 
   RxList<Map<String, dynamic>> jadwalVaksinasi =
       RxList<Map<String, dynamic>>([]);

@@ -7,6 +7,7 @@ import 'package:stantapp/controller/ChildernController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/pages/ArtikelDetailPage.dart';
 import 'package:stantapp/pages/ArtikelPage.dart';
 import 'package:stantapp/pages/ChildernDetail.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
@@ -352,19 +353,39 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                   ),
                                                   SizedBox(height: 4),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8, right: 8),
-                                                    child: Text(
-                                                      artikel.judul,
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13,
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        ArtikelDetailPage(
+                                                          category: artikel
+                                                              .namaKategori,
+                                                          title: artikel.judul,
+                                                          author:
+                                                              artikel.fullname,
+                                                          date: tglbuat,
+                                                          description:
+                                                              artikel.konten,
+                                                          imageUrl: artikel
+                                                              .thumbnail
+                                                              .toString(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8,
+                                                              right: 8),
+                                                      child: Text(
+                                                        artikel.judul,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -707,22 +728,27 @@ class MyContainer2 {
 
     // Tanggal saat ini
     DateTime currentDate = DateTime.now();
-    // Tanggal kelahiran
+// Tanggal kelahiran
     DateTime birthDate =
         DateTime.parse(childernController.anakList[0]['tanggal_lahir']);
-    // Hitung selisih bulan
-    int diffMonths = (currentDate.year - birthDate.year) * 12 +
-        currentDate.month -
-        birthDate.month;
-    // Hitung selisih tahun
-    int diffYears = diffMonths ~/ 12;
-    // Format hasil
-    String formattedAge;
-    if (diffYears > 0) {
-      int remainingMonths = diffMonths % 12;
-      formattedAge = '${diffYears} tahun ${remainingMonths} bulan';
-    } else {
-      formattedAge = '${diffMonths} bulan';
+// Hitung selisih antara tanggal saat ini dan tanggal kelahiran
+    Duration ageDifference = currentDate.difference(birthDate);
+
+// Hitung tahun, bulan, dan hari dari selisih yang dihitung
+    int years = ageDifference.inDays ~/ 365;
+    int remainingMonths = (ageDifference.inDays % 365) ~/ 30;
+    int remainingDays = ageDifference.inDays % 30;
+
+// Format hasil
+    String formattedAge = '';
+    if (years > 0) {
+      formattedAge += '${years} tahun ';
+    }
+    if (remainingMonths > 0) {
+      formattedAge += '${remainingMonths} bulan ';
+    }
+    if (remainingDays > 0) {
+      formattedAge += '${remainingDays} hari';
     }
 
     return Container(
@@ -891,11 +917,24 @@ class MyContainer2 {
                               children: [
                                 CircleAvatar(
                                   radius: 35,
-                                  child: Image.asset(
-                                    'images/image_0.png',
-                                    width: width * 0.7,
-                                    height: height * 0.05,
-                                  ),
+                                  child: childernController.anakList[0]
+                                              ['photo'] !=
+                                          null
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            "http://stantapp.pejuang-subuh.com/" +
+                                                childernController.anakList[0]
+                                                    ['photo'],
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : Icon(
+                                          Icons.person,
+                                          size: 30,
+                                          color: Colors.white,
+                                        ),
                                 ),
                                 Container(
                                   width: width * 0.30,
@@ -920,7 +959,7 @@ class MyContainer2 {
                                       color: Colors.black,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             SizedBox(

@@ -48,55 +48,55 @@ class DetailPertumbuhanPage extends StatelessWidget {
               children: [
                 Text(
                   "Tanggal Pertumbuhan : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text(tglbuat,
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ],
             ),
             Row(
               children: [
                 Text(
                   "Usia Anak : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text(umur,
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ],
             ),
             Row(
               children: [
                 Text(
                   "Berat : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${beratBadan.toString()} kg",
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ],
             ),
             Row(
               children: [
                 Text(
                   "Tinggi : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${tinggiBadan.toString()} cm",
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ],
             ),
             Row(
               children: [
                 Text(
                   "Lingkar Kepala : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${lingkarKepala.toString()} cm",
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ],
             ),
             SizedBox(

@@ -163,15 +163,26 @@ class _ChildernPageState extends State<ChildernPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CircleAvatar(
-                              radius: 20,
+                            Container(
+                              width:
+                                  40, // Sesuaikan dengan radius pada CircleAvatar
+                              height:
+                                  40, // Sesuaikan dengan radius pada CircleAvatar
+                              decoration: BoxDecoration(
+                                shape: BoxShape
+                                    .circle, // Membuat container berbentuk bulat
+                                color: Colors
+                                    .blue, // Ganti dengan warna latar belakang yang Anda inginkan
+                              ),
                               child: isChildern[0]['photo'] != null
-                                  ? Image.network(
-                                      "http://stantapp.pejuang-subuh.com/" +
-                                          isChildern[0]['photo'],
-                                      width: 20,
-                                      height: 20,
-                                      fit: BoxFit.contain,
+                                  ? ClipOval(
+                                      child: Image.network(
+                                        "http://stantapp.pejuang-subuh.com/" +
+                                            isChildern[0]['photo'],
+                                        width: 40,
+                                        height: 40,
+                                        fit: BoxFit.cover,
+                                      ),
                                     )
                                   : Icon(
                                       Icons.person,
@@ -826,7 +837,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               children: [
                                                 Container(
                                                   child: Text(
-                                                    'Jadwal Imunisasi',
+                                                    'Jadwal Vaksinasi',
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -985,6 +996,9 @@ class _ChildernPageState extends State<ChildernPage> {
                                         ],
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: height * 0.05,
+                                    )
                                   ],
                                 ),
                               ),

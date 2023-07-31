@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:stantapp/controller/JadwalVaksinasiController.dart';
 import 'package:stantapp/controller/JadwalVaksinasiIDAIController.dart';
 import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
+import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 
 class JadwalVaksinasiPage extends StatefulWidget {
   String anak_id;
@@ -245,7 +246,18 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                                               backgroundColor: Colors.red[100],
                                             ),
                                             IconButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Get.to(
+                                                    VaksinasiDetailPage(
+                                                      tgl_rekomendasi:
+                                                          item['rekomendasi']
+                                                              .toString(),
+                                                      nama_vaksinasi:
+                                                          subItem['nama_vaksin']
+                                                              .toString(),
+                                                    ),
+                                                  );
+                                                },
                                                 icon: Icon(
                                                   Icons.arrow_forward_ios,
                                                   size: 15,

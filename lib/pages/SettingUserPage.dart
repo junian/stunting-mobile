@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ParameterController.dart';
+import 'package:stantapp/pages/SnkPage.dart';
 import 'package:stantapp/pages/TetangAplikasiPage.dart';
 import 'package:get/get.dart';
 
@@ -59,19 +60,32 @@ class _SettingUserPageState extends State<SettingUserPage> {
                   children: [
                     ListTile(
                       leading: CircleAvatar(
-                        radius: 41,
-                        backgroundImage: NetworkImage(
-                            'https://cdn.vectorstock.com/i/1000x1000/70/84/default-avatar-profile-icon-symbol-for-website-vector-46547084.webp'),
-                        backgroundColor: Colors.white,
+                        radius: 40,
+                        backgroundColor: Colors.grey,
+                        child: authController.isParent[0]['photo'] != null
+                            ? ClipOval(
+                                child: Image.network(
+                                  "http://stantapp.pejuang-subuh.com/" +
+                                      authController.isParent[0]['photo'],
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Icon(
+                                Icons.person,
+                                size: 30,
+                                color: Colors.white,
+                              ),
                       ),
                       title: Text(
                         '${authController.isParent[0]["nama_orang_tua"]}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(
-                        '085649930202',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                      // subtitle: Text(
+                      //   '085649930202',
+                      //   style: TextStyle(color: Colors.grey),
+                      // ),
                       trailing: TextButton(
                         onPressed: () {},
                         child: Text(
@@ -163,32 +177,31 @@ class _SettingUserPageState extends State<SettingUserPage> {
                                     ),
                                     IconButton(
                                       icon: Icon(Icons.arrow_forward_ios),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.to(SnkPage());
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    parameterController.getParameter("1");
-                                    Get.to(TentangAplikasiPage());
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Tetang Aplikasi',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.arrow_forward_ios),
-                                        onPressed: () {},
-                                      ),
-                                    ],
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Tetang Aplikasi',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.arrow_forward_ios),
+                                      onPressed: () {
+                                        parameterController.getParameter("1");
+                                        Get.to(TentangAplikasiPage());
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
                               Padding(

@@ -47,18 +47,22 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
   List<dynamic> isChildern = [];
 
   //image picker
-  File? _imageFile;
-  String? _result;
-  Future<void> pickImage() async {
-    final picker = await ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      // Gambar berhasil dipilih
-      _imageFile = File(image.path);
-      _result = _imageFile?.path.split('/').last;
-      // Lakukan sesuatu dengan file gambar yang dipilih
-    } else {
-      // Gambar tidak dipilih
+  File? image;
+  Future<void> _pickImage() async {
+    try {
+      final imagePicker = ImagePicker();
+      final image = await imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        // Mengambil file gambar yang dipilih
+        File imageTemporary = File(image.path);
+
+        setState(() {
+          this.image = imageTemporary;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -158,12 +162,16 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                               const Color.fromARGB(255, 194, 192, 192),
                           child: isChildern.isNotEmpty &&
                                   isChildern[0]['photo'] != null
-                              ? Image.network(
-                                  "http://stantapp.pejuang-subuh.com/" +
-                                      isChildern[0]['photo'],
-                                  fit: BoxFit.contain,
+                              ? ClipOval(
+                                  child: Image.network(
+                                    "http://stantapp.pejuang-subuh.com/" +
+                                        isChildern[0]['photo'],
+                                    height: 60,
+                                    width: 60,
+                                    fit: BoxFit.cover,
+                                  ),
                                 )
-                              : _imageFile == null
+                              : image == null
                                   ? Icon(
                                       Icons.person,
                                       size: 30,
@@ -172,7 +180,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                                   : ClipRRect(
                                       borderRadius: BorderRadius.circular(30),
                                       child: Image(
-                                        image: FileImage(_imageFile!),
+                                        image: FileImage(image!),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -183,7 +191,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          pickImage();
+                          _pickImage();
                         },
                         child: Text(
                           'Unggah Foto',
@@ -806,7 +814,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
               _selectedBloodGroup.toString(),
               _selectedAllergy.toString(),
               _selectedPrematur.toString(),
-              _imageFile);
+              image);
           // Get.to(
           //   HomePage2(),
           // );

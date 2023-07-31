@@ -242,7 +242,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                                           GestureDetector(
                                             onTap: () {
                                               vaksin['vaksin_id'];
-                                              Get.to(VaksinasiDetailPage());
+                                              // Get.to(VaksinasiDetailPage());
                                             },
                                             child: CircleAvatar(
                                               radius: 15,
