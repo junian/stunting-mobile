@@ -67,8 +67,8 @@ class _SettingUserPageState extends State<SettingUserPage> {
                                 child: Image.network(
                                   "http://stantapp.pejuang-subuh.com/" +
                                       authController.isParent[0]['photo'],
-                                  width: 80,
-                                  height: 80,
+                                  width: 55,
+                                  height: 55,
                                   fit: BoxFit.cover,
                                 ),
                               )

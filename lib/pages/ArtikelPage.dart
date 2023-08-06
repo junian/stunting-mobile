@@ -23,7 +23,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
   bool isDataInitialized = false;
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 3)); // Menunggu selama 2 detik
     // await artikelController.getArtikel();
     await artikelController.getArtikelKategori();
     filteredList = artikelController.artikel.toList();
@@ -287,35 +287,35 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                           SizedBox(
                                             width: width * 0.02,
                                           ),
-                                          Icon(
-                                            Icons.remove_red_eye_outlined,
-                                            color: Colors.grey,
-                                          ),
-                                          SizedBox(
-                                            width: width * 0.015,
-                                          ),
-                                          Text(
-                                              "Dilihat"
-                                              // ${artikel.views
-                                              //   }
-                                              ,
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey)),
-                                          SizedBox(
-                                            width: width * 0.015,
-                                          ),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.favorite_border_outlined,
-                                                color: Colors.grey,
-                                              )),
-                                          Text("",
-                                              // artikel.likes.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey)),
+                                          // Icon(
+                                          //   Icons.remove_red_eye_outlined,
+                                          //   color: Colors.grey,
+                                          // ),
+                                          // SizedBox(
+                                          //   width: width * 0.015,
+                                          // ),
+                                          // Text(
+                                          //     "Dilihat"
+                                          //     // ${artikel.views
+                                          //     //   }
+                                          //     ,
+                                          //     style: TextStyle(
+                                          //         fontSize: 12,
+                                          //         color: Colors.grey)),
+                                          // SizedBox(
+                                          //   width: width * 0.015,
+                                          // ),
+                                          // IconButton(
+                                          //     onPressed: () {},
+                                          //     icon: Icon(
+                                          //       Icons.favorite_border_outlined,
+                                          //       color: Colors.grey,
+                                          //     )),
+                                          // Text("",
+                                          //     // artikel.likes.toString(),
+                                          //     style: TextStyle(
+                                          //         fontSize: 12,
+                                          //         color: Colors.grey)),
                                         ],
                                       ),
                                     ),
