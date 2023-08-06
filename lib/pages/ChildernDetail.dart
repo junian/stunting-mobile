@@ -790,7 +790,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Imunissasi',
+                                            'Vaksinasi',
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,

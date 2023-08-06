@@ -118,6 +118,8 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
+    print(image);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -160,30 +162,31 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                           radius: 30,
                           backgroundColor:
                               const Color.fromARGB(255, 194, 192, 192),
-                          child: isChildern.isNotEmpty &&
-                                  isChildern[0]['photo'] != null
-                              ? ClipOval(
-                                  child: Image.network(
-                                    "http://stantapp.pejuang-subuh.com/" +
-                                        isChildern[0]['photo'],
-                                    height: 60,
-                                    width: 60,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : image == null
-                                  ? Icon(
+                          child: image == null
+                              ? isChildern.isNotEmpty &&
+                                      isChildern[0]['photo'] != null
+                                  ? ClipOval(
+                                      child: Image.network(
+                                        "http://stantapp.pejuang-subuh.com/" +
+                                            isChildern[0]['photo'],
+                                        height: 60,
+                                        width: 60,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Icon(
                                       Icons.person,
                                       size: 30,
                                       color: Colors.white,
                                     )
-                                  : ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: Image(
-                                        image: FileImage(image!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                              : ClipOval(
+                                  child: Image(
+                                    image: FileImage(image!),
+                                    height: 60,
+                                    width: 60,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                         ),
                       ),
                       SizedBox(

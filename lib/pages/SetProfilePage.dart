@@ -71,16 +71,22 @@ class _SetProfilePageState extends State<SetProfilePage> {
   ];
   String? _selectedWorkType;
 
-  File? _imageFile;
-  Future<void> pickImage() async {
-    final picker = await ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      // Gambar berhasil dipilih
-      _imageFile = File(image.path);
-      // Lakukan sesuatu dengan file gambar yang dipilih
-    } else {
-      // Gambar tidak dipilih
+  File? image;
+  Future<void> _pickImage() async {
+    try {
+      final imagePicker = ImagePicker();
+      final image = await imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        // Mengambil file gambar yang dipilih
+        File imageTemporary = File(image.path);
+
+        setState(() {
+          this.image = imageTemporary;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -95,17 +101,26 @@ class _SetProfilePageState extends State<SetProfilePage> {
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
     _selectedWorkType = _workType.isNotEmpty ? _workType[0] : null;
 
-    print(authController.isParent);
-
     // Set nilai pada TextEditingControllers berdasarkan nilai dari isParent
     if (authController.isParent != null) {
       nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
       alamat.text = authController.isParent[0]['alamat'] ?? '';
+      pendapatan.text = authController.isParent[0]['pendapatan'] ?? '';
       String gender = authController.isParent[0]['jenis_kelamin'] ?? '';
       if (gender == 'Laki-Laki') {
         _selectedGender = 'Laki-Laki';
       } else if (gender == 'Perempuan') {
         _selectedGender = 'Perempuan';
+      }
+
+      String education = authController.isParent[0]['pendidikan'] ?? "";
+      if (_lastEducation.contains(education)) {
+        _selectedLastEducation = education;
+      }
+
+      String workType = authController.isParent[0]['pekerjaan'] ?? "";
+      if (_workType.contains(workType)) {
+        _selectedWorkType = workType;
       }
     }
   }
@@ -137,15 +152,43 @@ class _SetProfilePageState extends State<SetProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  leading: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                        'https://cdn.vectorstock.com/i/1000x1000/70/84/default-avatar-profile-icon-symbol-for-website-vector-46547084.webp'),
-                    backgroundColor: Colors.white,
-                  ),
+                  leading: image !=
+                          null // Cek apakah image tidak null (berarti gambar dari galeri telah dipilih)
+                      ? ClipOval(
+                          // Jika ada gambar dari galeri, tampilkan gambar menggunakan ClipOval
+                          child: Image(
+                            image: FileImage(image!),
+                            height: 60,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : authController.isParent.isNotEmpty &&
+                              authController.isParent[0]['photo'] != null
+                          ? ClipOval(
+                              child: Image.network(
+                                "http://stantapp.pejuang-subuh.com/" +
+                                    authController.isParent[0]['photo'],
+                                height: 60,
+                                width: 60,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : ClipOval(
+                              child: Container(
+                                height: 60,
+                                width: 60,
+                                color: Colors.grey,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                   title: GestureDetector(
                     onTap: () {
-                      ImagePicker();
+                      _pickImage();
                     },
                     child: Text(
                       'Unggah Foto Anda',
@@ -819,17 +862,33 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       GestureDetector(
                         onTap: () {
                           // Aksi ketika tombol submit ditekan
-                          authController.registerOrangtua(
-                              sessionController.user_id.value,
-                              nama_orang_tua.text,
-                              _selectedGender.toString(),
-                              idKecamatan.toString(),
-                              idKelurahan.toString(),
-                              alamat.text,
-                              _selectedLastEducation.toString(),
-                              _selectedWorkType.toString(),
-                              pendapatan.text,
-                              _imageFile);
+                          if (authController.isParent != null) {
+                            authController.registerOrangtua(
+                                authController.isParent[0]['orang_tua_id'],
+                                sessionController.user_id.value,
+                                nama_orang_tua.text,
+                                _selectedGender.toString(),
+                                authController.isParent[0]['kecamatan_id'],
+                                authController.isParent[0]['kelurahan_id'],
+                                alamat.text,
+                                _selectedLastEducation.toString(),
+                                _selectedWorkType.toString(),
+                                pendapatan.text,
+                                image);
+                          } else {
+                            authController.registerOrangtua(
+                                null,
+                                sessionController.user_id.value,
+                                nama_orang_tua.text,
+                                _selectedGender.toString(),
+                                idKecamatan.toString(),
+                                idKelurahan.toString(),
+                                alamat.text,
+                                _selectedLastEducation.toString(),
+                                _selectedWorkType.toString(),
+                                pendapatan.text,
+                                image);
+                          }
                           // Anda dapat menambahkan logika atau tindakan lain di sini
                         },
                         child: Container(

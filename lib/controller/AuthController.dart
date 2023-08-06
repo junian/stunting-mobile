@@ -169,11 +169,12 @@ class AuthController extends GetxController {
   }
 
   Future<void> registerOrangtua(
+    String? orang_tua_id,
     String user_id,
     String nama_orang_tua,
     String jenis_kelamin,
-    String kecamatan_id,
-    String kelurahan_id,
+    String? kecamatan_id,
+    String? kelurahan_id,
     String alamat,
     String pendidikan,
     String pekerjaan,
@@ -192,15 +193,17 @@ class AuthController extends GetxController {
         'pekerjaan': pekerjaan,
         'pendapatan': pendapatan,
       });
+
+      if (orang_tua_id != null) {
+        formData.fields.add(MapEntry('orang_tua_id', orang_tua_id));
+      }
+
       if (photo != null) {
         String fileName = photo.path.split('/').last;
         formData.files.add(MapEntry('photo',
             await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
-
-        // await dio.MultipartFile.fromFile(photo.path, filename: '$fileName');
       }
       final response = await _dio.post('$api/registerOrangtua', data: formData);
-      print(response);
       if (response.data['success'] == true) {
         Get.offAll(BottomNavbar());
       } else {

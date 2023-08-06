@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   List<MGetArtikel> filteredList = [];
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2));
     await artikelController.getArtikel();
     await childernController.getAnak(sessionController.user_id.value, null);
     await authController.getOrangTua(sessionController.user_id.toString());
