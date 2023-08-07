@@ -265,25 +265,35 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       GestureDetector(
-                                          onTap: () {
-                                            detailRiwayatPertumbuhanController
-                                                .getDetailPertumbuhan(
-                                                    data['pertumbuhan_anak_id'],
-                                                    data['umur']);
-                                          },
-                                          child: Container(
-                                            height: height * 0.03,
-                                            width: width * 0.06,
-                                            child: Image.network(
-                                              "https://stantapp.alalanusantara.com/" +
-                                                  data['photo'],
-                                              fit: BoxFit.contain,
-                                            ),
-                                            // child: Icon(
-                                            //   Icons.image,
-                                            //   color: Colors.grey,
-                                            // ),
-                                          )),
+                                        onTap: () {
+                                          detailRiwayatPertumbuhanController
+                                              .getDetailPertumbuhan(
+                                                  data['pertumbuhan_anak_id'],
+                                                  data['umur']);
+                                        },
+                                        child: data['photo'] != null
+                                            ? Container(
+                                                height: height * 0.03,
+                                                width: width * 0.06,
+                                                child: Image.network(
+                                                  "https://stantapp.alalanusantara.com/" +
+                                                      data['photo'],
+                                                  fit: BoxFit.contain,
+                                                ),
+                                                // child: Icon(
+                                                //   Icons.image,
+                                                //   color: Colors.grey,
+                                                // ),
+                                              )
+                                            : Container(
+                                                height: height * 0.03,
+                                                width: width * 0.06,
+                                                child: Icon(
+                                                  Icons.image,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                      ),
                                       Text("${data['berat_badan']} kg"),
                                       Text("${data['tinggi_badan']} cm"),
                                       Text("${data['lingkar_kepala']} cm"),
