@@ -35,7 +35,6 @@ class AuthController extends GetxController {
       });
 
       final response = await _dio.post('$api/reqAuthCode', data: formData);
-      print(response);
 
       if (response.data['success'] == true) {
         String authCode = response.data['message'].toString();
@@ -131,14 +130,23 @@ class AuthController extends GetxController {
         prefs.setBool(loggedInKey, true);
 
         // Data ditemukan
-        String employeeName = response.data['data']['employee_name'];
-        String employeeId = response.data['data']['employee_id'];
-        // sessionController.setData(employeeName, employeeId);
-        await prefs.setString('name', employeeName);
-        await prefs.setString('id', employeeId);
+        String email = response.data['user']['email'];
+        String user_id = response.data['user']['user_id'];
+        sessionController.setData(email, user_id);
+        await prefs.setString('email', email);
+        await prefs.setString('user_id', user_id);
 
-        //redirect
-        // return Get.offAll(SetProfilePage());
+        //cek apakah ada orang tua atau tidak
+        await getOrangTua(user_id);
+        // Set nilai variabel list dengan response data
+        if (isParent.isEmpty) {
+          var regionController = Get.put(RegionController());
+          return Get.offAll(SetProfilePage(
+              // province: regionController.provinces as List<dynamic>,
+              ));
+        } else {
+          Get.offAll(BottomNavbar());
+        }
       } else {
         // Data tidak ditemukan
         Fluttertoast.showToast(

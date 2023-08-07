@@ -83,22 +83,24 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              // SizedBox(height: 16),
-              SizedBox(
-                height: height,
-                width: width,
-                child: PageView.builder(
-                  controller: controller,
-                  // itemCount: pages.length,
-                  itemBuilder: (_, index) {
-                    return pages[index % pages.length];
-                  },
+          SingleChildScrollView(
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // SizedBox(height: 16),
+                SizedBox(
+                  height: height,
+                  width: width,
+                  child: PageView.builder(
+                    controller: controller,
+                    // itemCount: pages.length,
+                    itemBuilder: (_, index) {
+                      return pages[index % pages.length];
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,

@@ -102,7 +102,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
     _selectedWorkType = _workType.isNotEmpty ? _workType[0] : null;
 
     // Set nilai pada TextEditingControllers berdasarkan nilai dari isParent
-    if (authController.isParent != null) {
+    if (authController.isParent.isNotEmpty) {
       nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
       alamat.text = authController.isParent[0]['alamat'] ?? '';
       pendapatan.text = authController.isParent[0]['pendapatan'] ?? '';
@@ -167,7 +167,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               authController.isParent[0]['photo'] != null
                           ? ClipOval(
                               child: Image.network(
-                                "http://stantapp.pejuang-subuh.com/" +
+                                "https://stantapp.alalanusantara.com/" +
                                     authController.isParent[0]['photo'],
                                 height: 60,
                                 width: 60,
@@ -382,7 +382,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         ],
                       ),
                       SizedBox(height: 24),
-                      authController.isParent == null
+                      authController.isParent.isEmpty
                           ? Container(
                               child: Column(
                                 children: [
@@ -416,7 +416,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                             )),
                                     onFind: (text) async {
                                       var response = await _dio.get(
-                                          "http://stantapp.pejuang-subuh.com/api/getProvince");
+                                          "https://stantapp.alalanusantara.com/api/getProvince");
                                       List<MGetProvince> allNameProvince = [];
 
                                       if (response.statusCode != 200) {
@@ -472,7 +472,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'province_id': idProv,
                                       });
                                       var response = await _dio.post(
-                                          "http://stantapp.pejuang-subuh.com/api/getCity",
+                                          "https://stantapp.alalanusantara.com/api/getCity",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetCity> allNameCity = [];
@@ -528,7 +528,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'city_id': idCity,
                                       });
                                       var response = await _dio.post(
-                                          "http://stantapp.pejuang-subuh.com/api/getKecamatan",
+                                          "https://stantapp.alalanusantara.com/api/getKecamatan",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetKecamatan> allNameKecamatan = [];
@@ -585,7 +585,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'kecamatan_id': idKecamatan,
                                       });
                                       var response = await _dio.post(
-                                          "http://stantapp.pejuang-subuh.com/api/getKelurahan",
+                                          "https://stantapp.alalanusantara.com/api/getKelurahan",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetKelurahan> allNameKelurahan = [];
@@ -862,7 +862,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       GestureDetector(
                         onTap: () {
                           // Aksi ketika tombol submit ditekan
-                          if (authController.isParent != null) {
+                          if (authController.isParent.isNotEmpty) {
                             authController.registerOrangtua(
                                 authController.isParent[0]['orang_tua_id'],
                                 sessionController.user_id.value,

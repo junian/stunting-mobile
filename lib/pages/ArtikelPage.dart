@@ -222,7 +222,9 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         author: artikel.fullname,
                                         date: tglbuat,
                                         description: artikel.konten,
-                                        imageUrl: artikel.thumbnail.toString(),
+                                        imageUrl:
+                                            "https://stantapp.alalanusantara.com" +
+                                                artikel.thumbnail.toString(),
                                       ),
                                     );
                                   },
@@ -233,7 +235,12 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                       image: artikel.thumbnail != null
                                           ? DecorationImage(
                                               fit: BoxFit.cover,
-                                              image: NetworkImage(""))
+                                              image: NetworkImage(
+                                                "https://stantapp.alalanusantara.com" +
+                                                    artikel.thumbnail
+                                                        .toString(),
+                                              ),
+                                            )
                                           : DecorationImage(
                                               image:
                                                   AssetImage('images/logo.png'),
@@ -252,12 +259,16 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         author: artikel.fullname,
                                         date: tglbuat,
                                         description: artikel.konten,
-                                        imageUrl: artikel.thumbnail.toString(),
+                                        imageUrl:
+                                            "https://stantapp.alalanusantara.com" +
+                                                artikel.thumbnail.toString(),
                                       ),
                                     );
                                   },
                                   child: Text(
                                     artikel.judul,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),

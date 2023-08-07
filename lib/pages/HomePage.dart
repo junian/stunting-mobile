@@ -255,25 +255,25 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        authController.bottomNavIndex = 1;
-                                      });
-                                      Future.delayed(
-                                          Duration(milliseconds: 500), () {
-                                        // Navigasi ke halaman BottomNavbar menggunakan Get.to()
-                                        Get.to(BottomNavbar());
-                                      });
-                                    },
-                                    child: Text(
-                                      'Lihat Semua',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     setState(() {
+                                  //       authController.bottomNavIndex = 1;
+                                  //     });
+                                  //     Future.delayed(
+                                  //         Duration(milliseconds: 500), () {
+                                  //       // Navigasi ke halaman BottomNavbar menggunakan Get.to()
+                                  //       Get.to(BottomNavbar());
+                                  //     });
+                                  //   },
+                                  //   child: Text(
+                                  //     'Lihat Semua',
+                                  //     style: TextStyle(
+                                  //       color: Colors.blue,
+                                  //       fontWeight: FontWeight.bold,
+                                  //     ),
+                                  //   ),
+                                  // )
                                 ],
                               ),
                               SizedBox(
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                                                             fit: BoxFit.contain,
                                                           )
                                                         : Image.network(
-                                                            "http://stantapp.pejuang-subuh.com/" +
+                                                            "https://stantapp.alalanusantara.com/" +
                                                                 artikel
                                                                     .thumbnail
                                                                     .toString(),
@@ -365,9 +365,11 @@ class _HomePageState extends State<HomePage> {
                                                           date: tglbuat,
                                                           description:
                                                               artikel.konten,
-                                                          imageUrl: artikel
-                                                              .thumbnail
-                                                              .toString(),
+                                                          imageUrl:
+                                                              "https://stantapp.alalanusantara.com" +
+                                                                  artikel
+                                                                      .thumbnail
+                                                                      .toString(),
                                                         ),
                                                       );
                                                     },
@@ -922,7 +924,7 @@ class MyContainer2 {
                                           null
                                       ? ClipOval(
                                           child: Image.network(
-                                            "http://stantapp.pejuang-subuh.com/" +
+                                            "https://stantapp.alalanusantara.com/" +
                                                 childernController.anakList[0]
                                                     ['photo'],
                                             width: 70,

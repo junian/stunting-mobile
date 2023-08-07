@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _baseUrl = "http://stantapp.pejuang-subuh.com/api/getProvince";
+  String _baseUrl = "https://stantapp.alalanusantara.com/api/getProvince";
   late String? _valProvince = "null";
   List<dynamic> _dataProvince = [];
   void getProvince() async {

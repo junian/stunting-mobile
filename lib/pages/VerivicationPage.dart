@@ -141,14 +141,19 @@ class _VerivicationPageState extends State<VerivicationPage> {
       floatingActionButton: GestureDetector(
         onTap: () {
           // Tindakan yang dijalankan ketika GestureDetector ditekan
-          regionController.getProvince();
-          if (widget.phone_no.isNotEmpty) {
-            authController.register(
-                widget.email, widget.phone_no, _code.toString());
+          if (_onEditing == false) {
+            regionController.getProvince();
+            if (widget.phone_no.isNotEmpty) {
+              authController.register(
+                  widget.email, widget.phone_no, _code.toString());
+            } else {
+              // childernController.getAnak(5.toString(), null);
+              authController.login(widget.email, _code.toString());
+            }
           } else {
-            childernController.getAnak(5.toString(), null);
-            authController.login(widget.email, _code.toString());
+            Get.snackbar("Warning", "Kode Verifikasi Belum Lengkap");
           }
+
           // Get.to(SetProfilePage());
         },
         child: Container(
@@ -156,13 +161,17 @@ class _VerivicationPageState extends State<VerivicationPage> {
             width: width * 0.9,
             height: height / 18,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 219, 215, 215),
+              color: _onEditing != false
+                  ? Color.fromARGB(255, 226, 226, 226)
+                  : Colors.blueAccent,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               "Verifikasi",
               style: TextStyle(
-                  color: Colors.grey,
+                  color: _onEditing == true
+                      ? const Color.fromARGB(255, 45, 45, 45)
+                      : Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 15),
             )),

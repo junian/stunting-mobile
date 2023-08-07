@@ -1,3 +1,3 @@
 class helper {
-  static String api = "http://stantapp.pejuang-subuh.com/api";
+  static String api = "https://stantapp.alalanusantara.com/api";
 }

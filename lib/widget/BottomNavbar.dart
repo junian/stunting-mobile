@@ -29,7 +29,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   final authController = Get.put(AuthController());
 
   final autoSizeGroup = AutoSizeGroup();
-  // var _bottomNavIndex = 0; //default index of a first screen
+  var _bottomNavIndex = 0; //default index of a first screen
 
   late AnimationController _fabAnimationController;
   late AnimationController _borderRadiusAnimationController;
@@ -91,21 +91,21 @@ class _BottomNavbarState extends State<BottomNavbar> {
           return Stack(
             children: [
               Offstage(
-                offstage: authController.bottomNavIndex !=
-                    0, // Mengatur visibilitas halaman ke-0
+                offstage:
+                    _bottomNavIndex != 0, // Mengatur visibilitas halaman ke-0
                 child: Container(
                   height: availableHeight,
                   child: HomePage(),
                 ),
               ),
               Offstage(
-                offstage: authController.bottomNavIndex !=
-                    1, // Mengatur visibilitas halaman ke-1
+                offstage:
+                    _bottomNavIndex != 1, // Mengatur visibilitas halaman ke-1
                 child: ArtikelPage(),
               ),
               Offstage(
-                offstage: authController.bottomNavIndex !=
-                    2, // Mengatur visibilitas halaman ke-3
+                offstage:
+                    _bottomNavIndex != 2, // Mengatur visibilitas halaman ke-3
                 child: SettingUserPage(),
               ),
             ],
@@ -116,12 +116,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
         icons: iconList,
         inactiveColor: Colors.grey,
         activeColor: Colors.blue,
-        activeIndex: authController.bottomNavIndex,
+        activeIndex: _bottomNavIndex,
         gapLocation: GapLocation.none,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
         backgroundColor: Colors.white,
-        onTap: (index) => setState(() => authController.bottomNavIndex = index),
+        onTap: (index) => setState(() => _bottomNavIndex = index),
         //other params
       ),
     );

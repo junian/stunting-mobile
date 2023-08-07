@@ -196,22 +196,33 @@ class _RegisterPageState extends State<RegisterPage> {
               GestureDetector(
                 onTap: () {
                   // Aksi ketika tombol submit ditekan
-                  authController.reqAuthCode(
-                      emailController.text, phone_noController.text);
+                  if (emailController.text.isNotEmpty &&
+                      phone_noController.text.isNotEmpty &&
+                      agreeToTerms == true) {
+                    authController.reqAuthCode(
+                        emailController.text, phone_noController.text);
+                  } else {
+                    Get.snackbar("Warning",
+                        "Cek Kembali field yang kosong atau anda belum menerima syarat dan ketentuan");
+                  }
                   // Anda dapat menambahkan logika atau tindakan lain di sini
                 },
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 171, 172, 173),
+                    color: agreeToTerms == true
+                        ? Colors.blueAccent
+                        : Color.fromARGB(255, 226, 226, 226),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
                     child: Text(
                       'Daftar',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: agreeToTerms == true
+                            ? Colors.white
+                            : const Color.fromARGB(255, 45, 45, 45),
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),

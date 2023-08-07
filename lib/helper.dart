@@ -1,1 +1,1 @@
-const api = "http://stantapp.pejuang-subuh.com/api";
+const api = "https://stantapp.alalanusantara.com/api";

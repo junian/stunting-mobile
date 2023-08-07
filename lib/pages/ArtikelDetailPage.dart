@@ -24,6 +24,7 @@ class ArtikelDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(imageUrl.toString());
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
