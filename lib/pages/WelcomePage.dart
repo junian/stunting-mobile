@@ -36,7 +36,8 @@ class _WelcomePageState extends State<WelcomePage> {
                 Container(
                   padding: EdgeInsets.only(top: height * 0.1),
                   child: Image.asset(
-                    'images/image_$index.png', // Ganti dengan path atau nama file gambar yang Anda miliki
+                    // 'images/image_$index.png', // Ganti dengan path atau nama file gambar yang Anda miliki
+                    'images/logo.png',
                     width: width * 0.5, // Atur lebar gambar sesuai kebutuhan
                     height: height * 0.4, // Atur tinggi gambar sesuai kebutuhan
                   ),
