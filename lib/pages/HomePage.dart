@@ -590,16 +590,14 @@ class MyContainer {
               children: [
                 Container(
                   width: width * 0.5,
-                  child: Expanded(
-                    child: Text(
-                      'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  child: Text(
+                    'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -767,16 +765,14 @@ class MyContainer2 {
                   children: [
                     Container(
                       width: width * 0.5,
-                      child: Expanded(
-                        child: Text(
-                          'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                      child: Text(
+                        'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),

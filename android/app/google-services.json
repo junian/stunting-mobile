@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "534904344966",
+    "project_id": "stunting-app-5ccfd",
+    "storage_bucket": "stunting-app-5ccfd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534904344966:android:c94294b7c9fb39a1611c07",
+        "android_client_info": {
+          "package_name": "com.example.stantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534904344966-i41lf66kqpk2n2vge6utkasu94l824h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stantapp",
+            "certificate_hash": "33325d4d91ee710498585c3c391c2968321c051c"
+          }
+        },
+        {
+          "client_id": "534904344966-tslk48q1rh39v7sq0suvh1gmosti3ehb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR7HjF5Qd-rK2FBPDy8VhXKfBmQyLLry8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534904344966-tslk48q1rh39v7sq0suvh1gmosti3ehb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
