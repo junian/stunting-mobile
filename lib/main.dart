@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:stantapp/firebase_api.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/ImunisasiPage.dart';
@@ -12,6 +14,10 @@ import 'package:stantapp/widget/BottomNavbar.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseApi().initNotifications();
+  
   runApp(const MyApp());
 
   await GetStorage.init();
