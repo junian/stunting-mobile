@@ -20,10 +20,12 @@ class FirebaseController extends GetxController {
         'user_id': sessionController.user_id,
         'token': sessionController.token,
       });
+      
+      // print('ini user : ${sessionController.user_id} , token : ${sessionController.token}');
 
       final response =
           await _dio.post('$api/updateFirebaseToken', data: formData);
-      if (response.statusCode == 200) {
+      if (response.data['success'] == true) {
         print(response.data);
         return response.data;
       } else {

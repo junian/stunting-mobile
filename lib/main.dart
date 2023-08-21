@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stantapp/firebase_api.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/HomePage.dart';
@@ -16,8 +17,16 @@ import 'package:get_storage/get_storage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseApi().requestPermission();
 
   runApp(const MyApp());
+
+  //set potrait only
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
 
   await GetStorage.init();
 }

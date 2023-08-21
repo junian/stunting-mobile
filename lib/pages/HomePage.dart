@@ -298,15 +298,15 @@ class _HomePageState extends State<HomePage> {
                                               DateTime.parse(
                                                   artikel.createdDate));
                                           return Container(
-                                            width: 200,
+                                            width: width * 0.5,
                                             child: Card(
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    width: 200,
-                                                    height: 110,
+                                                    width: width * 0.5,
+                                                    height: height * 0.12,
                                                     child: artikel.thumbnail ==
                                                             null
                                                         ? Image.asset(
