@@ -16,8 +16,7 @@ import 'package:get_storage/get_storage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseApi().initNotifications();
-  
+
   runApp(const MyApp());
 
   await GetStorage.init();

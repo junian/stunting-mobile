@@ -14,6 +14,7 @@ import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
+import '../controller/FirebaseController.dart';
 import '../models/MGetArtikel.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   final childernController = Get.put(ChildernController());
   final sessionController = Get.put(SessionController());
   final artikelController = Get.put(ArtikelController());
+  final firebaseController = Get.put(FirebaseController());
 
   bool isDataInitialized = false;
   List<MGetArtikel> filteredList = [];
@@ -37,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     await artikelController.getArtikel();
     await childernController.getAnak(sessionController.user_id.value, null);
     await authController.getOrangTua(sessionController.user_id.toString());
+    await firebaseController.updateFirebaseToken();
 
     filteredList = artikelController.artikel.toList();
     setState(() {

@@ -16,6 +16,8 @@ import 'package:stantapp/pages/VerivicationPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
+import '../firebase_api.dart';
+
 class AuthController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
@@ -77,7 +79,7 @@ class AuthController extends GetxController {
         isAuthenticated.value = true;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(loggedInKey, true);
-
+        await FirebaseApi().initNotifications();
         // Data ditemukan
         String email = response.data['user']['email'];
         String user_id = response.data['user']['user_id'];
