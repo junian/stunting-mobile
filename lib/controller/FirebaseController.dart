@@ -18,9 +18,9 @@ class FirebaseController extends GetxController {
     try {
       dio.FormData formData = dio.FormData.fromMap({
         'user_id': sessionController.user_id,
-        'token': sessionController.token,
+        'firebase_token': sessionController.token,
       });
-      
+
       // print('ini user : ${sessionController.user_id} , token : ${sessionController.token}');
 
       final response =
