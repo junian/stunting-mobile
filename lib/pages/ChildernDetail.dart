@@ -9,6 +9,7 @@ import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
 import 'package:stantapp/pages/RiwayatPertumbuhan.dart';
+import 'package:stantapp/pages/TambahPertumbuhanPage.dart';
 
 class ChildernPage extends StatefulWidget {
   ChildernPage({super.key});
@@ -308,77 +309,77 @@ class _ChildernPageState extends State<ChildernPage> {
                               child: Center(
                                 child: Column(
                                   children: [
+                                    // Container(
+                                    //   margin:
+                                    //       EdgeInsets.only(top: height * 0.025),
+                                    //   padding: EdgeInsets.symmetric(
+                                    //       vertical: 5, horizontal: 12),
+                                    //   height: height * 0.12,
+                                    //   width: width * 0.90,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.blueAccent,
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //   ),
+                                    //   child: Row(
+                                    //     mainAxisAlignment:
+                                    //         MainAxisAlignment.spaceBetween,
+                                    //     children: [
+                                    //       Container(
+                                    //         child: Image.asset(
+                                    //           fit: BoxFit.contain,
+                                    //           height: height * 0.15,
+                                    //           width: width * 0.15,
+                                    //           'images/image_3.png',
+                                    //         ),
+                                    //       ),
+                                    //       Container(
+                                    //         child: Column(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.center,
+                                    //           crossAxisAlignment:
+                                    //               CrossAxisAlignment.start,
+                                    //           children: [
+                                    //             Container(
+                                    //               child: Text(
+                                    //                 'Panduan Kesehatan Anak',
+                                    //                 style: TextStyle(
+                                    //                   fontSize: 16,
+                                    //                   fontWeight:
+                                    //                       FontWeight.bold,
+                                    //                   color: Colors.white,
+                                    //                 ),
+                                    //               ),
+                                    //             ),
+                                    //             Container(
+                                    //               child: Text(
+                                    //                 '0 - 3 Bulan',
+                                    //                 style: TextStyle(
+                                    //                   fontSize: 12,
+                                    //                   color: Colors.white,
+                                    //                 ),
+                                    //               ),
+                                    //             )
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //       Container(
+                                    //         child: CircleAvatar(
+                                    //           radius: 15,
+                                    //           child: Transform.rotate(
+                                    //             angle: 270 * 3.1415926535 / 180,
+                                    //             child: Icon(
+                                    //               Icons.arrow_back_ios,
+                                    //               size: 16,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     Container(
                                       margin:
-                                          EdgeInsets.only(top: height * 0.025),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 12),
-                                      height: height * 0.12,
-                                      width: width * 0.90,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blueAccent,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: Image.asset(
-                                              fit: BoxFit.contain,
-                                              height: height * 0.15,
-                                              width: width * 0.15,
-                                              'images/image_3.png',
-                                            ),
-                                          ),
-                                          Container(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    'Panduan Kesehatan Anak',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Text(
-                                                    '0 - 3 Bulan',
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            child: CircleAvatar(
-                                              radius: 15,
-                                              child: Transform.rotate(
-                                                angle: 270 * 3.1415926535 / 180,
-                                                child: Icon(
-                                                  Icons.arrow_back_ios,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(top: height * 0.05),
+                                          EdgeInsets.only(top: height * 0.01),
                                       padding: EdgeInsets.all(10),
                                       child: Row(
                                         mainAxisAlignment:
@@ -392,12 +393,30 @@ class _ChildernPageState extends State<ChildernPage> {
                                               color: Colors.black,
                                             ),
                                           ),
-                                          Text(
-                                            'Lihat Semua',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.blue,
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(
+                                                RiwayatpertumbuhanPage(
+                                                  anak_id: isChildern[0]
+                                                          ['anak_id']
+                                                      .toString(),
+                                                  tinggi_badan_ayah: isChildern[
+                                                              0]
+                                                          ['tinggi_badan_ayah']
+                                                      .toString(),
+                                                  tinggi_badan_ibu: isChildern[
+                                                          0]['tinggi_badan_ibu']
+                                                      .toString(),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Lihat Semua',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.blue,
+                                              ),
                                             ),
                                           )
                                         ],
@@ -755,23 +774,35 @@ class _ChildernPageState extends State<ChildernPage> {
                                                   ],
                                                 ),
                                               ),
-                                              Container(
-                                                width: width * 0.25,
-                                                height: height * 0.055,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  border: Border.all(
-                                                    color: Colors.blue,
-                                                    width: 2.0,
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Update',
-                                                    style: TextStyle(
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Get.to(TambahPertummbuhanPage(anakID: isChildern[0]
+                                                          ['anak_id']
+                                                      .toString(), tinggiBadanAyah: isChildern[
+                                                              0]
+                                                          ['tinggi_badan_ayah']
+                                                      .toString(), tinggiBadanIbu: isChildern[
+                                                          0]['tinggi_badan_ibu']
+                                                      .toString()));
+                                                },
+                                                child: Container(
+                                                  width: width * 0.25,
+                                                  height: height * 0.055,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(15),
+                                                    border: Border.all(
                                                       color: Colors.blue,
+                                                      width: 2.0,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Update',
+                                                      style: TextStyle(
+                                                        color: Colors.blue,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
