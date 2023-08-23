@@ -12,11 +12,26 @@ class TentangAplikasiPage extends StatefulWidget {
 
 class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
   var parameterController = Get.put(ParameterController());
+
+  bool isDataInitialized = false;
+  String isParams = "";
+
+  Future<void> initializeData() async {
+    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await parameterController.getParameter("5");
+    isParams = parameterController.parameterValue.toString();
+
+    setState(() {
+      isDataInitialized =
+          true; // Mengubah status inisialisasi data menjadi true
+    });
+  }
+  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    parameterController.getParameter('1');
+    initializeData();
   }
 
   @override
@@ -64,7 +79,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
           },
         ),
       ),
-      body: SingleChildScrollView(
+      body: isDataInitialized == true ? SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
           child: Column(
@@ -78,14 +93,18 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                 "Tentang PrimaKu",
                 style: TextStyle(fontSize: 18),
               ),
+              SizedBox(
+                height: hight * 0.02,
+              ),
               Container(
-                alignment: Alignment.center,
                 width: width,
-                height: hight * 0.2,
                 child: Text(
-                  parameterController.parameterValue,
+                  isParams,
                   style: TextStyle(fontSize: 18),
                 ),
+              ),
+              SizedBox(
+                height: hight * 0.02,
               ),
               Container(
                 alignment: Alignment.center,
@@ -204,7 +223,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
             ],
           ),
         ),
-      ),
+      ) : Center(child: CircularProgressIndicator(),),
     );
   }
 }

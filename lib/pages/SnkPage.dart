@@ -37,7 +37,6 @@ class _SnkPageState extends State<SnkPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(isParams);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -75,6 +74,9 @@ class _SnkPageState extends State<SnkPage> {
               isDataInitialized == true
                   ? Text(
                       isParams,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     )
                   : Center(
                       child: CircularProgressIndicator(),

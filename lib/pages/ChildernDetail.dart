@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
@@ -21,21 +22,27 @@ class ChildernPage extends StatefulWidget {
 class _ChildernPageState extends State<ChildernPage> {
   var childernController = Get.put(ChildernController());
   var sessionController = Get.put(SessionController());
+  var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
   bool isDataInitialized = false;
   String selectedAnak = ''; // Nilai anak yang dipilih
 
   List<dynamic> isChildern = [];
+  List<Map<String, dynamic>> isHistoryGrow = [];
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
-    // await childernController.getAnakById(5.toString(), 5.toString());
     isChildern = jsonDecode(childernController.dataAnak.toString());
-
-    setState(() {
+    isHistoryGrow = riwayatPertumbuhanController.riwayatPertumbuhan;
+    // await childernController.getAnakById(5.toString(), 5.toString());
+    if (isChildern.isNotEmpty) {
+            setState(() {
       isDataInitialized =
           true; // Mengubah status inisialisasi data menjadi true
-    });
+    } );
+    }
+    
   }
+  
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -502,9 +509,19 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [
+                                                                children: [ isHistoryGrow.isEmpty ?
                                                                   Text(
                                                                     '${isChildern[0]["berat_badan"]} ',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ) : Text(
+                                                                    '${isHistoryGrow.last["berat_badan"]} ',
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -589,9 +606,19 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [
+                                                                children: [ isHistoryGrow.isEmpty ?
                                                                   Text(
                                                                     '${isChildern[0]["tinggi_badan"]} ',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ) : Text(
+                                                                    '${isHistoryGrow.last["tinggi_badan"]} ',
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -676,9 +703,19 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [
+                                                                children: [ isHistoryGrow.isEmpty ?
                                                                   Text(
                                                                     '${isChildern[0]["lingkar_kepala"]} ',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ) : Text(
+                                                                    '${isHistoryGrow.last["lingkar_kepala"]} ',
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -717,9 +754,9 @@ class _ChildernPageState extends State<ChildernPage> {
                                                       fontSize: 15,
                                                     ),
                                                   ),
-                                                  Text(
+                                                  Text( isHistoryGrow.isEmpty ?
                                                     isChildern[0]
-                                                        ['created_date'],
+                                                        ['created_date'] : isHistoryGrow.last['created_date'],
                                                     style: TextStyle(
                                                       fontSize: 15,
                                                     ),
@@ -994,7 +1031,6 @@ class _ChildernPageState extends State<ChildernPage> {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              print(isChildern[0]);
                                               Get.to(
                                                 RiwayatpertumbuhanPage(
                                                   anak_id: isChildern[0]

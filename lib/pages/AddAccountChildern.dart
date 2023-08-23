@@ -69,6 +69,9 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
   @override
   void initState() {
     super.initState();
+    _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
+
+
     if (widget.anak_id != null) {
       isChildern = jsonDecode(childernController.dataAnak.toString());
 
@@ -104,21 +107,18 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
       }
 
       // dateinput.text = ""; //set the initial value of text field
-      String bloodGroup = isChildern[0]['gol_darah'] ?? "Pilih Golongan Darah";
+      String bloodGroup = isChildern[0]['gol_darah'] ?? "";
       if (_blood.contains(bloodGroup)) {
         _selectedBloodGroup = bloodGroup;
       }
     }
 
-    _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
   }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    print(image);
 
     return Scaffold(
       appBar: AppBar(

@@ -24,6 +24,8 @@ class TambahPertummbuhanPage extends StatefulWidget {
 class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
   var tambahPertumbuhanAnak = Get.put(TambahDataPertumbuhanController());
 
+  TextEditingController dateinput = TextEditingController();
+
   Future<void> _pickImage(ImageSource source) async {
     try {
       final imagePicker = ImagePicker();
@@ -59,7 +61,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
         onTap: () {
           tambahPertumbuhanAnak.addPertumbuhanAnak(
               anakID: widget.anakID,
-              selectedDate: DateTime.now(),
+              selectedDate: dateinput.text,
               pickedImage: tambahPertumbuhanAnak.pickedImage as File,
               beratBadan: double.parse(tambahPertumbuhanAnak.beratBadan.text),
               tinggiBadan: double.parse(tambahPertumbuhanAnak.tinggiBadan.text),
@@ -137,6 +139,98 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                   //   ),
                   // ),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: width,
+                  height: height * 0.1,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Row(
+                  children: [
+                    Text(
+                      'Tanggal Pertumbuhan',
+                      style: TextStyle(),
+                    ),
+                    Text(
+                      '*',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+                        ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: TextField(
+                  controller: dateinput, //editing controller of this TextField
+                  decoration: InputDecoration(
+                    hintText: 'Tanggal Pertumbuhan',
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: isClicked
+                            ? const Color.fromARGB(255, 188, 180, 179)
+                            : Colors.grey,
+                        width: 2.0,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                  readOnly:
+                      true, //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(
+                            2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101));
+
+                    if (pickedDate != null) {
+                      print(
+                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(
+                          formattedDate); //formatted date output using intl package =>  2021-03-16
+                      //you can implement different kind of Date Format here according to your requirement
+
+                      setState(() {
+                        dateinput.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
+                  },
+                  onSubmitted: (value) {
+                    setState(() {
+                      isClicked = false;
+                    });
+                  },
+                ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),

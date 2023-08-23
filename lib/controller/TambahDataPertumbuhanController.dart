@@ -22,7 +22,7 @@ class TambahDataPertumbuhanController extends GetxController {
 
   Future<void> addPertumbuhanAnak({
     required String anakID,
-    required DateTime selectedDate,
+    required String selectedDate,
     required File pickedImage,
     required double beratBadan,
     required double tinggiBadan,
@@ -31,11 +31,11 @@ class TambahDataPertumbuhanController extends GetxController {
     required String tinggiBadanAyah,
   }) async {
     try {
-      String formattedDate = selectedDate.toIso8601String();
+      // String formattedDate = selectedDate.toIso8601String();
 
       dio.FormData formData = dio.FormData.fromMap({
         'anak_id': anakID,
-        'tgl_pertumbuhan': formattedDate,
+        'tanggal_pertumbuhan': selectedDate,
         'berat_badan': beratBadan,
         'tinggi_badan': tinggiBadan,
         'lingkar_kepala': lingkarKepala,

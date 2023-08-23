@@ -24,6 +24,7 @@ class DetailPertumbuhanController extends GetxController {
 
       final response =
           await _dio.post('$api/getDetailPertumbuhanAnak', data: formData);
+
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = response.data;
         if (responseData.isNotEmpty) {

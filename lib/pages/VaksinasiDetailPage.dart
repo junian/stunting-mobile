@@ -149,7 +149,11 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                     onTap: () {
                       print('Pilihan: $_selectedOption');
                       // Navigator.of(context).pop();
-                      _showModalBottomSheetDetail(context);
+                      if(_selectedOption == 'Sudah'){
+                        _showModalBottomSheetDetail(context);
+                      } else {
+                        Get.back();
+                      }
                     },
                     child: Center(
                       child: Container(
@@ -332,6 +336,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       ],
                     ),
                     TextField(
+                      controller: nama_dokter,
                       decoration: InputDecoration(
                         hintText: 'Nama Dokter Anak',
                         border: UnderlineInputBorder(
@@ -377,6 +382,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       ],
                     ),
                     TextField(
+                      controller: tempat,
                       decoration: InputDecoration(
                         hintText: 'Tempat Vaksin',
                         border: UnderlineInputBorder(
@@ -422,6 +428,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       ],
                     ),
                     TextField(
+                      controller: no_batch,
                       decoration: InputDecoration(
                         hintText: 'Nomer Batch',
                         border: UnderlineInputBorder(
@@ -513,7 +520,8 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                     GestureDetector(
                       onTap: () {
                         print('Pilihan: $_selectedOption');
-                        Navigator.of(context).pop();
+                        vaksinasiController.addVaksinAnak(11.toString(), dateinput.text, nama_dokter.text, tempat.text, no_batch.text, this.image);
+                        // Navigator.of(context).pop();
                       },
                       child: Center(
                         child: Container(
@@ -714,7 +722,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showModalBottomSheetDetail(context);
+                      _showModalBottomSheet(context);
                     },
                     child: Container(
                       width: width * 0.9,

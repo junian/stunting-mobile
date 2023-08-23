@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:stantapp/controller/ArtikelController.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
@@ -726,6 +727,7 @@ class MyContainer2 {
     final childernController = Get.put(ChildernController());
     final sessionController = Get.put(SessionController());
     final authController = Get.put(AuthController());
+    final riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -968,6 +970,7 @@ class MyContainer2 {
                             ),
                             GestureDetector(
                               onTap: () {
+                                riwayatPertumbuhanController.getPertumbuhanAnak(childernController.anakList[0]['anak_id']);
                                 childernController.getAnakById(
                                     sessionController.user_id.value,
                                     childernController.anakList[0]['anak_id']);
