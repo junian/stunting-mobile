@@ -6,12 +6,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/JadwalVaksinasiController.dart';
 import 'package:get/get.dart';
+import 'package:stantapp/controller/VaksinasiController.dart';
+import 'package:stantapp/pages/VaksinasiAdd.dart';
+import 'package:stantapp/pages/WelcomePage.dart';
 
 class VaksinasiDetailPage extends StatefulWidget {
+  String anak_id;
+  String vaksin_id;
   String tgl_rekomendasi;
   String nama_vaksinasi;
+  String status;
   VaksinasiDetailPage(
-      {super.key, required this.tgl_rekomendasi, required this.nama_vaksinasi});
+      {super.key,
+      required this.anak_id,
+      required this.vaksin_id,
+      required this.tgl_rekomendasi,
+      required this.nama_vaksinasi,
+      required this.status});
 
   @override
   State<VaksinasiDetailPage> createState() => _VaksinasiDetailPageState();
@@ -19,6 +30,7 @@ class VaksinasiDetailPage extends StatefulWidget {
 
 class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
   var vaksinasiController = Get.put(JadwalVaksinasiController());
+  var vaksinasi = Get.put(VaksinasiController());
   String? _selectedOption;
 
   //image picker
@@ -149,8 +161,15 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                     onTap: () {
                       print('Pilihan: $_selectedOption');
                       // Navigator.of(context).pop();
-                      if(_selectedOption == 'Sudah'){
-                        _showModalBottomSheetDetail(context);
+                      if (_selectedOption == 'Sudah') {
+                        vaksinasi.dateinput.text = "";
+                        vaksinasi.nama_dokter.text = "";
+                        vaksinasi.no_batch.text = "";
+                        vaksinasi.tempat.text = "";
+                        Get.to(VaksinasiAddPage(
+                            anak_id: widget.anak_id,
+                            vaksin_id: widget.vaksin_id));
+                        ;
                       } else {
                         Get.back();
                       }
@@ -178,375 +197,6 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                     ),
                   ),
                 ],
-              ),
-            );
-          },
-        );
-      },
-    ).whenComplete(() {
-      // Inisialisasi ulang nilai _selectedOption
-      setState(() {
-        _selectedOption = null;
-      });
-    });
-  }
-
-  void _showModalBottomSheetDetail(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        bool isClicked = false;
-        TextEditingController dateinput = TextEditingController();
-        TextEditingController nama_dokter = TextEditingController();
-        TextEditingController tempat = TextEditingController();
-        TextEditingController no_batch = TextEditingController();
-
-        var width = MediaQuery.of(context).size.width;
-        var height = MediaQuery.of(context).size.height;
-
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            print(this.image);
-            return Container(
-              height: height * 0.7,
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: height * 0.04),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              color: const Color.fromARGB(255, 209, 209, 209),
-                              width: 1),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Edit Detail Vaksin',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Tanggal Imunisasi',
-                          style: TextStyle(),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      controller:
-                          dateinput, //editing controller of this TextField
-                      decoration: InputDecoration(
-                        hintText: 'Tanggal Imunisasi',
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: isClicked
-                                ? const Color.fromARGB(255, 188, 180, 179)
-                                : Colors.grey,
-                            width: 2.0,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
-                      readOnly:
-                          true, //set it true, so that user will not able to edit text
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(
-                                2000), //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime(2101));
-
-                        if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          //you can implement different kind of Date Format here according to your requirement
-
-                          setState(() {
-                            dateinput.text =
-                                formattedDate; //set output date to TextField value.
-                          });
-                        } else {
-                          print("Date is not selected");
-                        }
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          isClicked = false;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Text(
-                          'Dokter Anak',
-                          style: TextStyle(),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      controller: nama_dokter,
-                      decoration: InputDecoration(
-                        hintText: 'Nama Dokter Anak',
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: isClicked
-                                ? const Color.fromARGB(255, 188, 180, 179)
-                                : Colors.grey,
-                            width: 2.0,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          isClicked = true;
-                        });
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          isClicked = false;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Text(
-                          'Tepmat',
-                          style: TextStyle(),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      controller: tempat,
-                      decoration: InputDecoration(
-                        hintText: 'Tempat Vaksin',
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: isClicked
-                                ? const Color.fromARGB(255, 188, 180, 179)
-                                : Colors.grey,
-                            width: 2.0,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          isClicked = true;
-                        });
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          isClicked = false;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Text(
-                          'No Batch',
-                          style: TextStyle(),
-                        ),
-                        Text(
-                          '*',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      controller: no_batch,
-                      decoration: InputDecoration(
-                        hintText: 'Nomer Batch',
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: isClicked
-                                ? const Color.fromARGB(255, 188, 180, 179)
-                                : Colors.grey,
-                            width: 2.0,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          isClicked = true;
-                        });
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          isClicked = false;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 24),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          _pickImage();
-                        },
-                        child: DottedBorder(
-                          borderType: BorderType.RRect,
-                          color: Colors.blue,
-                          radius: Radius.circular(20),
-                          padding: EdgeInsets.all(1),
-                          child: Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 18),
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 220, 232, 243),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Unggah Foto',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: vaksinasiController.pickedImage == null
-                            ? SizedBox() // Tampilkan data kosong jika belum ada gambar terpilih
-                            : Image.file(
-                                vaksinasiController.pickedImage!,
-                                width: width,
-                                height: height * 0.2,
-                                fit: BoxFit.contain,
-                              ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print('Pilihan: $_selectedOption');
-                        vaksinasiController.addVaksinAnak(11.toString(), dateinput.text, nama_dokter.text, tempat.text, no_batch.text, this.image);
-                        // Navigator.of(context).pop();
-                      },
-                      child: Center(
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: height * 0.03),
-                          padding: EdgeInsets.all(10),
-                          width: width * 0.9,
-                          height: height * 0.05,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Simpan',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             );
           },
@@ -709,12 +359,16 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                             EdgeInsets.symmetric(vertical: 4, horizontal: 7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color.fromARGB(255, 235, 188, 185),
+                          color: widget.status == "Sudah"
+                              ? Colors.green[100]
+                              : Colors.red[100],
                         ),
                         child: Text(
-                          'Belum',
+                          widget.status,
                           style: TextStyle(
-                            color: const Color.fromARGB(255, 230, 98, 89),
+                            color: widget.status == "Sudah"
+                                ? Colors.green
+                                : Colors.red,
                           ),
                         ),
                       )
@@ -722,7 +376,13 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showModalBottomSheet(context);
+                      if (widget.status == "Sudah") {
+                        vaksinasi.getVaksinAnak(
+                            anak_id: widget.anak_id,
+                            vaksin_id: widget.vaksin_id);
+                      } else {
+                        _showModalBottomSheet(context);
+                      }
                     },
                     child: Container(
                       width: width * 0.9,

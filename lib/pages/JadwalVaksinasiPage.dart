@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/JadwalVaksinasiController.dart';
 import 'package:stantapp/controller/JadwalVaksinasiIDAIController.dart';
+import 'package:stantapp/controller/VaksinasiController.dart';
 import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
 import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 
@@ -17,6 +18,7 @@ class JadwalVaksinasiPage extends StatefulWidget {
 class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
   var jadwalVaksinasiController = Get.put(JadwalVaksinasiController());
   var jadwalVaksinasiIDAIController = Get.put(JadwalVaksinasiIDAIController());
+  var vaksinasiController = Get.put(VaksinasiController());
   int selectedMonth = 0;
   int selected = 0;
 
@@ -241,20 +243,31 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                                                 subItem['status'],
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    color: Colors.red),
+                                                    color: subItem['status'] ==
+                                                            "Sudah"
+                                                        ? Colors.green
+                                                        : Colors.red),
                                               ),
-                                              backgroundColor: Colors.red[100],
+                                              backgroundColor:
+                                                  subItem['status'] == "Sudah"
+                                                      ? Colors.green[100]
+                                                      : Colors.red[100],
                                             ),
                                             IconButton(
                                                 onPressed: () {
                                                   Get.to(
                                                     VaksinasiDetailPage(
+                                                      anak_id: widget.anak_id,
+                                                      vaksin_id:
+                                                          subItem['vaksin_id']
+                                                              .toString(),
                                                       tgl_rekomendasi:
                                                           item['rekomendasi']
                                                               .toString(),
                                                       nama_vaksinasi:
                                                           subItem['nama_vaksin']
                                                               .toString(),
+                                                      status: subItem['status'],
                                                     ),
                                                   );
                                                 },

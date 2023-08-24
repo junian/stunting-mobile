@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ParameterController.dart';
+import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/SnkPage.dart';
 import 'package:stantapp/pages/TetangAplikasiPage.dart';
 import 'package:get/get.dart';
@@ -68,19 +69,19 @@ class _SettingUserPageState extends State<SettingUserPage> {
                   //   '085649930202',
                   //   style: TextStyle(color: Colors.grey),
                   // ),
-                  trailing: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Ubah',
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
+                  // trailing: TextButton(
+                  //   onPressed: () {},
+                  //   child: Text(
+                  //     'Ubah',
+                  //     style: TextStyle(
+                  //       color: Colors.blueAccent,
+                  //       fontSize: 15,
+                  //     ),
+                  //   ),
+                  // ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 25),
                   child: Container(
                     alignment: Alignment.center,
                     width: width,
@@ -130,7 +131,9 @@ class _SettingUserPageState extends State<SettingUserPage> {
                             ),
                             IconButton(
                               icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(SetProfilePage());
+                              },
                             ),
                           ],
                         ),
@@ -184,22 +187,22 @@ class _SettingUserPageState extends State<SettingUserPage> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Bantuan',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_ios),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 8.0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Text(
+                        //         'Bantuan',
+                        //         style: TextStyle(fontSize: 18),
+                        //       ),
+                        //       IconButton(
+                        //         icon: Icon(Icons.arrow_forward_ios),
+                        //         onPressed: () {},
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -207,29 +210,29 @@ class _SettingUserPageState extends State<SettingUserPage> {
                 SizedBox(
                   height: hight * 0.1,
                 ),
-                Card(
-                  child: Container(
-                    width: width,
-                    color: Colors.white,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Pengaturan akun',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.arrow_forward_ios),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Card(
+                //   child: Container(
+                //     width: width,
+                //     color: Colors.white,
+                //     alignment: Alignment.center,
+                //     child: Padding(
+                //       padding: const EdgeInsets.only(left: 8.0),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Text(
+                //             'Pengaturan akun',
+                //             style: TextStyle(fontSize: 18),
+                //           ),
+                //           IconButton(
+                //             icon: Icon(Icons.arrow_forward_ios),
+                //             onPressed: () {},
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 GestureDetector(
                   onTap: () {},
                   child: Card(

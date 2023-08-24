@@ -35,14 +35,12 @@ class _ChildernPageState extends State<ChildernPage> {
     isHistoryGrow = riwayatPertumbuhanController.riwayatPertumbuhan;
     // await childernController.getAnakById(5.toString(), 5.toString());
     if (isChildern.isNotEmpty) {
-            setState(() {
-      isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
-    } );
+      setState(() {
+        isDataInitialized =
+            true; // Mengubah status inisialisasi data menjadi true
+      });
     }
-    
   }
-  
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -509,28 +507,29 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [ isHistoryGrow.isEmpty ?
-                                                                  Text(
-                                                                    '${isChildern[0]["berat_badan"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ) : Text(
-                                                                    '${isHistoryGrow.last["berat_badan"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ),
+                                                                children: [
+                                                                  isHistoryGrow
+                                                                          .isEmpty
+                                                                      ? Text(
+                                                                          '${isChildern[0]["berat_badan"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        )
+                                                                      : Text(
+                                                                          '${isHistoryGrow.last["berat_badan"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        ),
                                                                   Text(
                                                                     'Kg',
                                                                     style:
@@ -606,28 +605,29 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [ isHistoryGrow.isEmpty ?
-                                                                  Text(
-                                                                    '${isChildern[0]["tinggi_badan"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ) : Text(
-                                                                    '${isHistoryGrow.last["tinggi_badan"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ),
+                                                                children: [
+                                                                  isHistoryGrow
+                                                                          .isEmpty
+                                                                      ? Text(
+                                                                          '${isChildern[0]["tinggi_badan"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        )
+                                                                      : Text(
+                                                                          '${isHistoryGrow.last["tinggi_badan"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        ),
                                                                   Text(
                                                                     'Cm',
                                                                     style:
@@ -703,28 +703,29 @@ class _ChildernPageState extends State<ChildernPage> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [ isHistoryGrow.isEmpty ?
-                                                                  Text(
-                                                                    '${isChildern[0]["lingkar_kepala"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ) : Text(
-                                                                    '${isHistoryGrow.last["lingkar_kepala"]} ',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                  ),
+                                                                children: [
+                                                                  isHistoryGrow
+                                                                          .isEmpty
+                                                                      ? Text(
+                                                                          '${isChildern[0]["lingkar_kepala"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        )
+                                                                      : Text(
+                                                                          '${isHistoryGrow.last["lingkar_kepala"]} ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        ),
                                                                   Text(
                                                                     'Cm',
                                                                     style:
@@ -754,9 +755,12 @@ class _ChildernPageState extends State<ChildernPage> {
                                                       fontSize: 15,
                                                     ),
                                                   ),
-                                                  Text( isHistoryGrow.isEmpty ?
-                                                    isChildern[0]
-                                                        ['created_date'] : isHistoryGrow.last['created_date'],
+                                                  Text(
+                                                    isHistoryGrow.isEmpty
+                                                        ? isChildern[0]
+                                                            ['created_date']
+                                                        : isHistoryGrow.last[
+                                                            'created_date'],
                                                     style: TextStyle(
                                                       fontSize: 15,
                                                     ),
@@ -813,14 +817,18 @@ class _ChildernPageState extends State<ChildernPage> {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  Get.to(TambahPertummbuhanPage(anakID: isChildern[0]
-                                                          ['anak_id']
-                                                      .toString(), tinggiBadanAyah: isChildern[
-                                                              0]
-                                                          ['tinggi_badan_ayah']
-                                                      .toString(), tinggiBadanIbu: isChildern[
-                                                          0]['tinggi_badan_ibu']
-                                                      .toString()));
+                                                  Get.to(TambahPertummbuhanPage(
+                                                      anakID: isChildern[0]
+                                                              ['anak_id']
+                                                          .toString(),
+                                                      tinggiBadanAyah: isChildern[
+                                                                  0][
+                                                              'tinggi_badan_ayah']
+                                                          .toString(),
+                                                      tinggiBadanIbu: isChildern[
+                                                                  0][
+                                                              'tinggi_badan_ibu']
+                                                          .toString()));
                                                 },
                                                 child: Container(
                                                   width: width * 0.25,
@@ -828,7 +836,8 @@ class _ChildernPageState extends State<ChildernPage> {
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
-                                                        BorderRadius.circular(15),
+                                                        BorderRadius.circular(
+                                                            15),
                                                     border: Border.all(
                                                       color: Colors.blue,
                                                       width: 2.0,
@@ -930,8 +939,8 @@ class _ChildernPageState extends State<ChildernPage> {
                                             onTap: () {
                                               Get.to(
                                                 JadwalVaksinasiPage(
-                                                  anak_id: childernController
-                                                      .anakList[0]['anak_id'],
+                                                  anak_id: isChildern[0]
+                                                      ['anak_id'],
                                                 ),
                                               );
                                             },
