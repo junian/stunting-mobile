@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stantapp/controller/NotificationController.dart';
 
 enum NotificationType {
   InfoImmunizationSchedule,
@@ -20,6 +24,10 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  var notificationController = Get.put(NotificationController());
+
+  bool isDataInitialized = false;
+
   List<Child> children = [
     Child(name: 'Anak 1', age: 24), // Contoh data anak 1
     Child(name: 'Anak 2', age: 36), // Contoh data anak 2
@@ -28,9 +36,22 @@ class _NotificationPageState extends State<NotificationPage> {
 
   List<NotificationItem> notifications = [];
 
+  List<dynamic> isNotification = [];
+
+  Future<void> initializeData() async {
+    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    isNotification = jsonDecode(notificationController.notification.toString());
+
+    setState(() {
+      isDataInitialized =
+          true; // Mengubah status inisialisasi data menjadi true
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    initializeData();
     generateNotifications();
   }
 
@@ -153,11 +174,12 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(isDataInitialized);
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifikasi'),
       ),
-      body: ListView.builder(
+      body: isDataInitialized == true ? ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           NotificationItem notification = notifications[index];
@@ -173,6 +195,8 @@ class _NotificationPageState extends State<NotificationPage> {
             },
           );
         },
+      ) : Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

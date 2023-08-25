@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:stantapp/controller/ArtikelController.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/NotificationController.dart';
 import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
@@ -14,6 +15,7 @@ import 'package:stantapp/pages/ChildernDetail.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
+import '../firebase_api.dart';
 
 import '../controller/FirebaseController.dart';
 import '../models/MGetArtikel.dart';
@@ -35,11 +37,14 @@ class _HomePageState extends State<HomePage> {
   bool isDataInitialized = false;
   List<MGetArtikel> filteredList = [];
 
+  String fireBaseToken = '';
+
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2));
     await artikelController.getArtikel();
     await childernController.getAnak(sessionController.user_id.value, null);
     await authController.getOrangTua(sessionController.user_id.toString());
+    await FirebaseApi().initNotifications();
     await firebaseController.updateFirebaseToken();
 
     filteredList = artikelController.artikel.toList();
@@ -580,6 +585,8 @@ class _HomePageState extends State<HomePage> {
 class MyContainer {
   static Widget buildContainer(BuildContext context) {
     var authController = Get.put(AuthController());
+    var sessionController = Get.put(SessionController());
+    var notificationController = Get.put(NotificationController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -609,6 +616,7 @@ class MyContainer {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        notificationController.getNotifikasi(sessionController.user_id.toString());
                         Get.to(NotificationPage());
                       },
                       child: CircleAvatar(
@@ -728,6 +736,7 @@ class MyContainer2 {
     final sessionController = Get.put(SessionController());
     final authController = Get.put(AuthController());
     final riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+    final notificationController = Get.put(NotificationController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -812,6 +821,7 @@ class MyContainer2 {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        notificationController.getNotifikasi(sessionController.user_id.toString());
                         Get.to(NotificationPage());
                       },
                       child: CircleAvatar(

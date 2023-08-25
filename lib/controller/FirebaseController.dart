@@ -21,7 +21,7 @@ class FirebaseController extends GetxController {
         'firebase_token': sessionController.token,
       });
 
-      // print('ini user : ${sessionController.user_id} , token : ${sessionController.token}');
+      print('ini user : ${sessionController.user_id} , token : ${sessionController.token}');
 
       final response =
           await _dio.post('$api/updateFirebaseToken', data: formData);

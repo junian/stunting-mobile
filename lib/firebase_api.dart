@@ -8,6 +8,8 @@ class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
   final sessionController = Get.put(SessionController());
 
+  String firebaseToken = "";
+
   @pragma('vm:entry-point')
   Future<void> handleBackgroundMessage(RemoteMessage message) async {
     print("Title: ${message.notification?.title}");
@@ -30,6 +32,7 @@ class FirebaseApi {
   Future<void> initNotifications() async {
     // await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
+    firebaseToken = fCMToken.toString();
     sessionController.setToken(fCMToken.toString());
     print('token = $fCMToken');
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);

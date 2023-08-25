@@ -79,7 +79,7 @@ class AuthController extends GetxController {
         isAuthenticated.value = true;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(loggedInKey, true);
-        await FirebaseApi().initNotifications();
+
         // Data ditemukan
         String email = response.data['user']['email'];
         String user_id = response.data['user']['user_id'];
@@ -131,8 +131,6 @@ class AuthController extends GetxController {
         isAuthenticated.value = true;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(loggedInKey, true);
-
-        await FirebaseApi().initNotifications();
 
         // Data ditemukan
         String email = response.data['user']['email'];
