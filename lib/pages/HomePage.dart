@@ -616,8 +616,9 @@ class MyContainer {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        notificationController.getNotifikasi(sessionController.user_id.toString());
-                        Get.to(NotificationPage());
+                        notificationController.getNotifikasi(
+                            sessionController.user_id.toString());
+                        Get.to(NotifikasiPage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran
@@ -735,7 +736,8 @@ class MyContainer2 {
     final childernController = Get.put(ChildernController());
     final sessionController = Get.put(SessionController());
     final authController = Get.put(AuthController());
-    final riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+    final riwayatPertumbuhanController =
+        Get.put(RiwayatPertumbuhanController());
     final notificationController = Get.put(NotificationController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -821,8 +823,9 @@ class MyContainer2 {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        notificationController.getNotifikasi(sessionController.user_id.toString());
-                        Get.to(NotificationPage());
+                        notificationController.getNotifikasi(
+                            sessionController.user_id.toString());
+                        Get.to(NotifikasiPage());
                       },
                       child: CircleAvatar(
                         radius: 20, // Radius lingkaran
@@ -980,7 +983,8 @@ class MyContainer2 {
                             ),
                             GestureDetector(
                               onTap: () {
-                                riwayatPertumbuhanController.getPertumbuhanAnak(childernController.anakList[0]['anak_id']);
+                                riwayatPertumbuhanController.getPertumbuhanAnak(
+                                    childernController.anakList[0]['anak_id']);
                                 childernController.getAnakById(
                                     sessionController.user_id.value,
                                     childernController.anakList[0]['anak_id']);

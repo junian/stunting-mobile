@@ -44,8 +44,8 @@ class JadwalVaksinasiController extends GetxController {
     return "sukses";
   }
 
-  Future<String> addVaksinAnak(String anak_id, String tanggal_vaksin, String nama_dokter, String tempat, String no_batch, File? photo) async {
-
+  Future<String> addVaksinAnak(String anak_id, String tanggal_vaksin,
+      String nama_dokter, String tempat, String no_batch, File? photo) async {
     try {
       dio.FormData formData = dio.FormData.fromMap({
         'anak_id': anak_id,
@@ -59,10 +59,8 @@ class JadwalVaksinasiController extends GetxController {
 
       if (photo != null) {
         String fileName = photo.path.split('/').last;
-        formData.files.add(MapEntry(
-            'photo',
-            await dio.MultipartFile.fromFile(photo.path,
-                filename: fileName)));
+        formData.files.add(MapEntry('photo',
+            await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
       }
 
       // final response = await _dio.post('$api/addVaksinAnak', data: formData);

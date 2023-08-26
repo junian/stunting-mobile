@@ -6,23 +6,22 @@ class NotificationController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 
-  RxList<dynamic> notification =
-      <dynamic>[].obs;
+  RxList<Map<String, dynamic>> notification = RxList<Map<String, dynamic>>([]);
+  Future<void> getNotifikasi(String user_id) async {
+    notification.clear();
+    try {
+      dio.FormData formData = dio.FormData.fromMap({
+        'user_id': user_id,
+      });
 
-      Future<void> getNotifikasi(String user_id) async{
-        try {
-          dio.FormData formData = dio.FormData.fromMap({
-            'user_id': user_id,
-          });
+      final response = await _dio.post('$api/getNotifikasi', data: formData);
+      List allNotification = response.data;
 
-          final response = await _dio.post('$api/getNotifikasi', data: formData);
+      List<Map<String, dynamic>> convertedList =
+          allNotification.map((item) => item as Map<String, dynamic>).toList();
+      notification.value = convertedList;
 
-          if(response.statusCode == 200){
-                notification.value = response.data as List<dynamic>;
-          }
-
-        } catch (e) {
-          
-        }
-      }
+      print(response.data);
+    } catch (e) {}
+  }
 }
