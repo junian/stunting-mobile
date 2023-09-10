@@ -321,106 +321,106 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Container(
-                  width: width,
-                  height: height * 0.1,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'No Batch',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: vaksinasiController.no_batch,
-                          decoration: InputDecoration(
-                            hintStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            hintText: 'No Batch',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      // Aksi ketika tombol unggah foto ditekan
-                      _pickImage(ImageSource.gallery);
-                    },
-                    child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      color: Colors.blue,
-                      radius: Radius.circular(20),
-                      padding: EdgeInsets.all(3),
-                      child: Container(
-                        width: width * 0.9,
-                        height: height * 0.07,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Unggah Foto',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: width,
-                  height: height * 0.2,
-                  child: vaksinasiController.pickedImage == null
-                      ? SizedBox() // Tampilkan data kosong jika belum ada gambar terpilih
-                      : Image.file(vaksinasiController.pickedImage!),
-                ),
-              )
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 16.0),
+              //   child: Container(
+              //     width: width,
+              //     height: height * 0.1,
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             Text(
+              //               'No Batch',
+              //               style: TextStyle(color: Colors.grey),
+              //             ),
+              //             Text(
+              //               '*',
+              //               style: TextStyle(
+              //                 fontWeight: FontWeight.bold,
+              //                 color: Colors.red,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Container(
+              //           decoration: BoxDecoration(
+              //             border: Border(
+              //               bottom: BorderSide(
+              //                 color: Colors.black,
+              //                 width: 1.0,
+              //               ),
+              //             ),
+              //           ),
+              //           child: TextField(
+              //             controller: vaksinasiController.no_batch,
+              //             decoration: InputDecoration(
+              //               hintStyle:
+              //                   TextStyle(fontSize: 15, color: Colors.black),
+              //               hintText: 'No Batch',
+              //               border: InputBorder.none,
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 16),
+              //   child: Center(
+              //     child: GestureDetector(
+              //       onTap: () {
+              //         // Aksi ketika tombol unggah foto ditekan
+              //         _pickImage(ImageSource.gallery);
+              //       },
+              //       child: DottedBorder(
+              //         borderType: BorderType.RRect,
+              //         color: Colors.blue,
+              //         radius: Radius.circular(20),
+              //         padding: EdgeInsets.all(3),
+              //         child: Container(
+              //           width: width * 0.9,
+              //           height: height * 0.07,
+              //           padding:
+              //               EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+              //           decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(20),
+              //           ),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             children: [
+              //               Icon(
+              //                 Icons.add,
+              //                 color: Colors.blue,
+              //               ),
+              //               SizedBox(width: 8),
+              //               Text(
+              //                 'Unggah Foto',
+              //                 style: TextStyle(
+              //                   color: Colors.blue,
+              //                   fontWeight: FontWeight.bold,
+              //                   fontSize: 16,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Container(
+              //     width: width,
+              //     height: height * 0.2,
+              //     child: vaksinasiController.pickedImage == null
+              //         ? SizedBox() // Tampilkan data kosong jika belum ada gambar terpilih
+              //         : Image.file(vaksinasiController.pickedImage!),
+              //   ),
+              // )
             ],
           ),
         ),

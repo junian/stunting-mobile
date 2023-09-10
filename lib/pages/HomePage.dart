@@ -792,31 +792,31 @@ class MyContainer2 {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Text(
-                              'Naikan Level Membership ',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.01,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    // GestureDetector(
+                    //   onTap: () {},
+                    //   child: Container(
+                    //     child: Row(
+                    //       children: [
+                    //         Text(
+                    //           'Naikan Level Membership ',
+                    //           style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 12,
+                    //             fontWeight: FontWeight.w300,
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           width: width * 0.01,
+                    //         ),
+                    //         Icon(
+                    //           Icons.arrow_forward_ios_rounded,
+                    //           color: Colors.white,
+                    //           size: 10,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
                 Row(
@@ -877,16 +877,16 @@ class MyContainer2 {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    GestureDetector(
-                      child: Text(
-                        'Lihat Semua',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   child: Text(
+                    //     'Lihat Semua',
+                    //     style: TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(

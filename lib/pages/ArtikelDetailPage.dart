@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as html;
 
-class ArtikelDetailPage extends StatelessWidget {
+class ArtikelDetailPage extends StatefulWidget {
   String category;
   String title;
   String author;
@@ -23,8 +24,32 @@ class ArtikelDetailPage extends StatelessWidget {
   });
 
   @override
+  State<ArtikelDetailPage> createState() => _ArtikelDetailPageState();
+}
+
+class _ArtikelDetailPageState extends State<ArtikelDetailPage> {
+  late String cleanedDescription;
+
+  String cleanHtml(String htmlString) {
+    // Menguraikan teks HTML
+    final document = html.parse(htmlString);
+
+    // Mengambil teks dari elemen
+    final plainText = document.body?.text;
+
+    return plainText ??
+        ''; // Mengembalikan teks biasa, jika ada, atau string kosong jika tidak ada teks
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cleanedDescription = cleanHtml(widget.description);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(imageUrl.toString());
+    print("ini title: ${widget.description}");
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -102,10 +127,10 @@ class ArtikelDetailPage extends StatelessWidget {
               width: width,
               height: height * 0.3,
               decoration: BoxDecoration(
-                  image: imageUrl != 'null'
+                  image: widget.imageUrl != 'null'
                       ? DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(imageUrl),
+                          image: NetworkImage(widget.imageUrl),
                         )
                       : DecorationImage(
                           fit: BoxFit.contain,
@@ -124,13 +149,13 @@ class ArtikelDetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    date,
+                    widget.date,
                     style: TextStyle(color: Colors.grey),
                   ),
-                  Text(title,
+                  Text(widget.title,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  Text("Ditulis Oleh ${author}",
+                  Text("Ditulis Oleh ${widget.author}",
                       style: TextStyle(color: Colors.grey)),
                 ],
               ),
@@ -140,7 +165,7 @@ class ArtikelDetailPage extends StatelessWidget {
             padding: const EdgeInsets.only(right: 15, left: 15, top: 15),
             child: Container(
               child: Text(
-                description,
+                cleanedDescription,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 20,

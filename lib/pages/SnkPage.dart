@@ -21,7 +21,6 @@ class _SnkPageState extends State<SnkPage> {
     await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
     await parameterController.getParameter("1");
     isParams = parameterController.parameterValue.toString();
-
     setState(() {
       isDataInitialized =
           true; // Mengubah status inisialisasi data menjadi true

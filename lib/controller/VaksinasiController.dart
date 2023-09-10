@@ -39,7 +39,7 @@ class VaksinasiController extends GetxController {
         'tanggal_vaksin': tanggal_vaksin,
         'nama_dokter': name_dokter,
         'tempat': tempat,
-        'no_batch': no_batch,
+        'no_batch': Null,
         'vaksin_anak_id': vaksin_anak_id,
       });
 

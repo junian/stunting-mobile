@@ -47,7 +47,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: Column(
                     children: [
                       Text(
-                        'Selamat Datang di PrimaKu',
+                        'Selamat Datang di StantApp',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -56,18 +56,18 @@ class _WelcomePageState extends State<WelcomePage> {
                       Wrap(
                         alignment: WrapAlignment.center,
                         children: [
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text:
-                                  'Primaku merupakan pelopor aplikasi tumbuh kembang anak dari tahun 2017 yang bermitra resmi dengan ikatan dokter anak Indonesisa & Kementrian Kesehatan RI',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
-                              ),
-                            ),
-                          )
+                          // RichText(
+                          //   textAlign: TextAlign.center,
+                          //   text: TextSpan(
+                          //     text:
+                          //         'Primaku merupakan pelopor aplikasi tumbuh kembang anak dari tahun 2017 yang bermitra resmi dengan ikatan dokter anak Indonesisa & Kementrian Kesehatan RI',
+                          //     style: TextStyle(
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.normal,
+                          //       color: Colors.black,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ],

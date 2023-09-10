@@ -874,12 +874,22 @@ class _ChildernPageState extends State<ChildernPage> {
                                               color: Colors.black,
                                             ),
                                           ),
-                                          Text(
-                                            'Lihat Detil',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.blue,
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(
+                                                JadwalVaksinasiPage(
+                                                  anak_id: isChildern[0]
+                                                      ['anak_id'],
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Lihat Detail',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.blue,
+                                              ),
                                             ),
                                           )
                                         ],
@@ -977,12 +987,30 @@ class _ChildernPageState extends State<ChildernPage> {
                                               color: Colors.black,
                                             ),
                                           ),
-                                          Text(
-                                            'Lihat Detil',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.blue,
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(
+                                                RiwayatpertumbuhanPage(
+                                                  anak_id: isChildern[0]
+                                                          ['anak_id']
+                                                      .toString(),
+                                                  tinggi_badan_ayah: isChildern[
+                                                              0]
+                                                          ['tinggi_badan_ayah']
+                                                      .toString(),
+                                                  tinggi_badan_ibu: isChildern[
+                                                          0]['tinggi_badan_ibu']
+                                                      .toString(),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Lihat Detail',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.blue,
+                                              ),
                                             ),
                                           )
                                         ],

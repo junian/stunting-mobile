@@ -80,39 +80,39 @@ class _SettingUserPageState extends State<SettingUserPage> {
                   //   ),
                   // ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 25),
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: width,
-                    height: hight * 0.15,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.blueAccent,
-                          Color.fromARGB(204, 115, 164, 250),
-                        ],
-                      ),
-                    ),
-                    child: ListTile(
-                      trailing: Container(
-                        width: width * 0.15,
-                        height: hight * 0.12,
-                        child: Image(
-                          image: NetworkImage(
-                              "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"),
-                        ),
-                      ),
-                      title: Text(
-                        'Mau dapat voucher Konsultasi senilai Rp.10.000? Ajak teman untuk unduh PrimaKu!!',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 20, right: 20, top: 25),
+                //   child: Container(
+                //     alignment: Alignment.center,
+                //     width: width,
+                //     height: hight * 0.15,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(20),
+                //       gradient: LinearGradient(
+                //         begin: Alignment.centerLeft,
+                //         end: Alignment.centerRight,
+                //         colors: [
+                //           Colors.blueAccent,
+                //           Color.fromARGB(204, 115, 164, 250),
+                //         ],
+                //       ),
+                //     ),
+                //     child: ListTile(
+                //       trailing: Container(
+                //         width: width * 0.15,
+                //         height: hight * 0.12,
+                //         child: Image(
+                //           image: NetworkImage(
+                //               "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"),
+                //         ),
+                //       ),
+                //       title: Text(
+                //         'Mau dapat voucher Konsultasi senilai Rp.10.000? Ajak teman untuk unduh PrimaKu!!',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Card(
