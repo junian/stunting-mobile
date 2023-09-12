@@ -38,7 +38,7 @@ class AuthController extends GetxController {
 
       final response = await _dio.post('$api/reqAuthCode', data: formData);
 
-      print(response);
+      print(response.data);
       if (response.data['success'] == true) {
         String authCode = response.data['message'].toString();
         Get.to(
