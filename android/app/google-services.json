@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:534904344966:android:c94294b7c9fb39a1611c07",
         "android_client_info": {
-          "package_name": "com.example.stantapp"
+          "package_name": "com.bebasstunting.stantapp"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "534904344966-i41lf66kqpk2n2vge6utkasu94l824h4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.stantapp",
+            "package_name": "com.bebasstunting.stantapp",
             "certificate_hash": "33325d4d91ee710498585c3c391c2968321c051c"
           }
         },
