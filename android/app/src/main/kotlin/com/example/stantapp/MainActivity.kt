@@ -1,4 +1,4 @@
-package com.example.stantapp
+package com.bebasstunting.stantapp
 
 import io.flutter.embedding.android.FlutterActivity
 
