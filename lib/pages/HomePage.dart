@@ -1,12 +1,14 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stantapp/controller/ArtikelController.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
 import 'package:stantapp/controller/NotificationController.dart';
 import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
+import 'package:stantapp/controller/VideoController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ArtikelDetailPage.dart';
@@ -15,6 +17,8 @@ import 'package:stantapp/pages/ChildernDetail.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 import '../firebase_api.dart';
 
 import '../controller/FirebaseController.dart';
@@ -33,6 +37,13 @@ class _HomePageState extends State<HomePage> {
   final sessionController = Get.put(SessionController());
   final artikelController = Get.put(ArtikelController());
   final firebaseController = Get.put(FirebaseController());
+  final videoController = Get.put(VideoController());
+
+  //corousel
+  final controller = PageController(viewportFraction: 1, keepPage: true);
+
+  //video player
+  late VideoPlayerController _controller;
 
   bool isDataInitialized = false;
   List<MGetArtikel> filteredList = [];
@@ -44,6 +55,7 @@ class _HomePageState extends State<HomePage> {
     await artikelController.getArtikel();
     await childernController.getAnak(sessionController.user_id.value, null);
     await authController.getOrangTua(sessionController.user_id.toString());
+    await videoController.getParameterSplitted(parameter_id: "8");
     await FirebaseApi().initNotifications();
     await firebaseController.updateFirebaseToken();
 
@@ -58,6 +70,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initializeData();
+    // _controller = VideoPlayerController.networkUrl(Uri.parse(
+    //     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'))
+    _controller = VideoPlayerController.asset('images/tes.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
   }
 
   @override
@@ -67,19 +86,141 @@ class _HomePageState extends State<HomePage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
+    final pages = List.generate(
+      videoController.parameterData.length,
+      (index) => Container(
+        decoration: BoxDecoration(
+            // color: Color.fromARGB(255, 172, 113, 113),
+            // borderRadius: BorderRadius.circular(40),
+            ),
+        child: Container(
+          height: height * 0.13,
+          width: width * 0.45,
+          child: Center(
+            child: GestureDetector(
+              onTap: () {
+                videoController.parameterData.isNotEmpty
+                    ? launch("${videoController.parameterData[index]}")
+                    : Get.snackbar("Error", "No Video");
+              },
+              child: Container(
+                width: width * 0.6,
+                height: height * 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      10.0), // Sesuaikan dengan radius yang Anda inginkan
+                  child: Image.asset(
+                    'images/stuntingapp-$index.png',
+                    fit: BoxFit.cover, // Mengisi kontainer dengan gambar
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       _controller.value.isPlaying
+      //           ? _controller.pause()
+      //           : _controller.play();
+      //     });
+      //   },
+      //   child: Icon(
+      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      //   ),
+      // ),
       body: isDataInitialized == true
           ? Container(
               child: Stack(
                 children: [
                   Container(
-                    width: width,
-                    height: height * 0.37,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      color: Colors.blueAccent,
+                    height: height * 0.57,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: width,
+                          height: height * 0.34,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              // SizedBox(height: 16),
+                              Container(
+                                height: height * 0.13,
+                                width: width * 0.80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  // border:
+                                  //     Border.all(width: 2, color: Colors.black),
+                                ),
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    videoController.parameterData.isNotEmpty
+                                        ? PageView.builder(
+                                            controller: controller,
+                                            // itemCount: pages.length,
+                                            itemBuilder: (_, index) {
+                                              return pages[
+                                                  index % pages.length];
+                                            },
+                                          )
+                                        : Container(
+                                            child: Text("No Video Data"),
+                                          ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: SmoothPageIndicator(
+                                        controller: controller,
+                                        count: pages.length,
+                                        effect: const ExpandingDotsEffect(
+                                            dotHeight: 6,
+                                            dotWidth: 6,
+                                            dotColor: Colors.black
+                                            // type: WormType.thinUnderground,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Container(
+                        //   height: height * 0.13,
+                        //   width: width * 0.45,
+                        //   margin: EdgeInsets.only(bottom: height * 0.03),
+                        //   decoration: BoxDecoration(
+                        //       // color: Colors.green,
+                        //       border:
+                        //           Border.all(color: Colors.black, width: 2)),
+                        //   child: _controller.value.isInitialized
+                        //       ? AspectRatio(
+                        //           aspectRatio: _controller.value.aspectRatio,
+                        //           child: VideoPlayer(_controller),
+                        //         )
+                        //       : Container(
+                        //           height: height * 0.13,
+                        //           width: width * 0.45,
+                        //           child: CircularProgressIndicator(),
+                        //         ),
+                        // ),
+                      ],
                     ),
                   ),
                   Obx(
@@ -238,7 +379,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Container(
                         width: width,
-                        height: height * 0.37,
+                        height: height * 0.35,
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 187, 234, 240),
                           borderRadius: BorderRadius.only(
@@ -289,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                                 height: height * 0.02,
                               ),
                               Container(
-                                height: height * 0.3,
+                                height: height * 0.27,
                                 child: isDataInitialized == true
                                     ? ListView.builder(
                                         itemCount: filteredList.length > 5
@@ -304,15 +445,15 @@ class _HomePageState extends State<HomePage> {
                                               DateTime.parse(
                                                   artikel.createdDate));
                                           return Container(
-                                            width: width * 0.5,
+                                            width: width * 0.4,
                                             child: Card(
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    width: width * 0.5,
-                                                    height: height * 0.12,
+                                                    width: width * 0.4,
+                                                    height: height * 0.10,
                                                     child: artikel.thumbnail ==
                                                             null
                                                         ? Image.asset(
@@ -361,7 +502,8 @@ class _HomePageState extends State<HomePage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(height: 4),
+                                                  SizedBox(
+                                                      height: height * 0.002),
                                                   GestureDetector(
                                                     onTap: () {
                                                       Get.to(
@@ -400,7 +542,8 @@ class _HomePageState extends State<HomePage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(height: 4),
+                                                  SizedBox(
+                                                      height: height * 0.002),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -579,6 +722,12 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
 
@@ -862,7 +1011,7 @@ class MyContainer2 {
               ],
             ),
             SizedBox(
-              height: height * 0.06,
+              height: height * 0.03,
             ),
             Column(
               children: [
