@@ -39,7 +39,7 @@ class AuthController extends GetxController {
       final response = await _dio.post('$api/reqAuthCode', data: formData);
 
       print(response.data);
-      if (response.data['success'] == true) {
+      if (response.statusCode == 200) {
         String authCode = response.data['message'].toString();
         Get.to(
           VerivicationPage(
