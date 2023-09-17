@@ -72,11 +72,11 @@ class _HomePageState extends State<HomePage> {
     initializeData();
     // _controller = VideoPlayerController.networkUrl(Uri.parse(
     //     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'))
-    _controller = VideoPlayerController.asset('images/tes.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+    // _controller = VideoPlayerController.asset('images/tes.mp4')
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {});
+    //   });
   }
 
   @override
