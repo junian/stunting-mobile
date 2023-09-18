@@ -47,7 +47,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: Column(
                     children: [
                       Text(
-                        'Selamat Datang di StantApp',
+                        'Selamat Datang di STANTAPP',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           //   textAlign: TextAlign.center,
                           //   text: TextSpan(
                           //     text:
-                          //         'Primaku merupakan pelopor aplikasi tumbuh kembang anak dari tahun 2017 yang bermitra resmi dengan ikatan dokter anak Indonesisa & Kementrian Kesehatan RI',
+                          //         'STANTAPP merupakan pelopor aplikasi tumbuh kembang anak dari tahun 2017 yang bermitra resmi dengan ikatan dokter anak Indonesisa & Kementrian Kesehatan RI',
                           //     style: TextStyle(
                           //       fontSize: 14,
                           //       fontWeight: FontWeight.normal,

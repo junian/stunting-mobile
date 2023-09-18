@@ -107,7 +107,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                 //         ),
                 //       ),
                 //       title: Text(
-                //         'Mau dapat voucher Konsultasi senilai Rp.10.000? Ajak teman untuk unduh PrimaKu!!',
+                //         'Mau dapat voucher Konsultasi senilai Rp.10.000? Ajak teman untuk unduh STANTAPP!!',
                 //         style: TextStyle(color: Colors.white),
                 //       ),
                 //     ),

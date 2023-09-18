@@ -56,7 +56,7 @@ class _SnkPageState extends State<SnkPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Syarat dan Ketentuan penggunaan primaku'.toUpperCase(),
+                'Syarat dan Ketentuan penggunaan STANTAPP'.toUpperCase(),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

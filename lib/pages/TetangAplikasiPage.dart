@@ -36,28 +36,28 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Uri _urlIG = Uri.parse('https://instagram.com/official.primaku');
+    final Uri _urlIG = Uri.parse('https://instagram.com/');
     Future<void> _launchUrlIG() async {
       if (!await launchUrl(_urlIG)) {
         throw Exception('Could not launch $_urlIG');
       }
     }
 
-    final Uri _urlFB = Uri.parse('https://www.facebook.com/official.primaku/');
+    final Uri _urlFB = Uri.parse('https://www.facebook.com/');
     Future<void> _launchUrlFB() async {
       if (!await launchUrl(_urlFB)) {
         throw Exception('Could not launch $_urlFB');
       }
     }
 
-    final Uri _urlYT = Uri.parse('https://www.youtube.com/watch?v=1Bgbn6F_ON8');
+    final Uri _urlYT = Uri.parse('https://www.youtube.com/');
     Future<void> _launchUrlYT() async {
       if (!await launchUrl(_urlYT)) {
         throw Exception('Could not launch $_urlYT');
       }
     }
 
-    final Uri _urlWEB = Uri.parse('www.primaku.com');
+    final Uri _urlWEB = Uri.parse('www.bebasstunting.com');
     Future<void> _launchUrlWEB() async {
       if (!await launchUrl(_urlWEB)) {
         throw Exception('Could not launch $_urlWEB');
@@ -90,7 +90,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                 height: hight * 0.05,
               ),
               Text(
-                "Tentang PrimaKu",
+                "Tentang STANTAPP",
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(
@@ -111,7 +111,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                 width: width,
                 height: hight * 0.1,
                 child: Text(
-                  "Isi dan rekomendasi yang terdapat di dalam PrimaKu dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
+                  "Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -120,7 +120,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                 width: width,
                 height: hight * 0.1,
                 child: Text(
-                  "Temukan Primaku di media Sosial!",
+                  "Temukan STANTAPP di media Sosial!",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -133,7 +133,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Instagram: @official.primaku",
+                      "Instagram",
                       style: TextStyle(fontSize: 18),
                     ),
                     GestureDetector(
@@ -141,7 +141,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                         _launchUrlIG();
                       },
                       child: Text(
-                        "(www.instagram.com/official.primaku)",
+                        "(www.instagram.com/)",
                         style: TextStyle(fontSize: 15, color: Colors.blue),
                       ),
                     ),
@@ -157,7 +157,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Facebook: PrimaKu",
+                      "Facebook: STANTAPP",
                       style: TextStyle(fontSize: 18),
                     ),
                     GestureDetector(
@@ -165,7 +165,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                         _launchUrlFB();
                       },
                       child: Text(
-                        "(web.facebook.com/official.primaku)",
+                        "(web.facebook.com)",
                         style: TextStyle(fontSize: 15, color: Colors.blue),
                       ),
                     ),
@@ -181,7 +181,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Youtube: Officiak PrimaKu Channel",
+                      "Youtube: Official STANTAPP Channel",
                       style: TextStyle(fontSize: 18),
                     ),
                     GestureDetector(
@@ -189,7 +189,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                         _launchUrlYT();
                       },
                       child: Text(
-                        "(www.youtube.com/@officialprimakuchannel8943)",
+                        "(www.youtube.com/)",
                         style: TextStyle(fontSize: 15, color: Colors.blue),
                       ),
                     ),
@@ -213,7 +213,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                         _launchUrlWEB();
                       },
                       child: Text(
-                        "(www.primaku.com)",
+                        "(www.bebasstunting.com)",
                         style: TextStyle(fontSize: 15, color: Colors.blue),
                       ),
                     ),
