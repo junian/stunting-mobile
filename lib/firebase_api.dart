@@ -34,7 +34,7 @@ class FirebaseApi {
     final fCMToken = await _firebaseMessaging.getToken();
     firebaseToken = fCMToken.toString();
     sessionController.setToken(fCMToken.toString());
-    print('token = $fCMToken');
+    // print('token = $fCMToken');
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
   }
 }

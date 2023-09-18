@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/TambahDataPertumbuhanController.dart';
 import 'package:stantapp/controller/VaksinasiController.dart';
+import 'package:stantapp/pages/HomePage.dart';
+import 'package:stantapp/widget/BottomNavbar.dart';
 
 class VaksinasiAddPage extends StatefulWidget {
   String anak_id;
@@ -67,7 +69,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
               tempat: vaksinasiController.tempat.text,
               no_batch: vaksinasiController.no_batch.text,
               pickedImage: vaksinasiController.pickedImage);
-          Get.back();
+          Get.offAll(BottomNavbar());
         },
         child: Container(
             alignment: Alignment.center,

@@ -63,7 +63,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
         actions: [
           Container(
             alignment: Alignment.center,
-            width: width * 0.83,
+            width: width * 0.8,
             height: height * 0.1,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -84,12 +84,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
               ),
             ),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.bookmark_border_outlined,
-                size: 30,
-              ))
+          SizedBox(width: width * 0.1,)
         ],
       ),
       body: Column(
@@ -337,10 +332,10 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                  Icons.bookmark_add_outlined))
+                                          // IconButton(
+                                          //     onPressed: () {},
+                                          //     icon: Icon(
+                                          //         Icons.bookmark_add_outlined),)
                                         ],
                                       ),
                                     )

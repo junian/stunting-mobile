@@ -204,9 +204,9 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
       },
     ).whenComplete(() {
       // Inisialisasi ulang nilai _selectedOption
-      setState(() {
-        _selectedOption = null;
-      });
+      // setState(() {
+      //   _selectedOption = null;
+      // });
     });
   }
 

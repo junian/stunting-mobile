@@ -44,7 +44,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
       body: isDataInitialized == true
           ? Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
+              child: isNotification.isNotEmpty ? ListView.builder(
                 itemCount:
                     isNotification.length < 10 ? isNotification.length : 10,
                 itemBuilder: (context, index) {
@@ -71,6 +71,17 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                     ),
                   );
                 },
+              ) : Container(
+                child: Center(
+                  child: Text(
+                    "Belum ada notifikasi",
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w300
+                    ),
+                  ),
+                ),
               ),
             )
           : Center(
