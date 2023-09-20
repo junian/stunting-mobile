@@ -26,7 +26,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
           true; // Mengubah status inisialisasi data menjadi true
     });
   }
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -79,151 +79,155 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
           },
         ),
       ),
-      body: isDataInitialized == true ? SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: hight * 0.05,
-              ),
-              Text(
-                "Tentang PrimaKu",
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: hight * 0.02,
-              ),
-              Container(
-                width: width,
-                child: Text(
-                  isParams,
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              SizedBox(
-                height: hight * 0.02,
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: width,
-                height: hight * 0.1,
-                child: Text(
-                  "Isi dan rekomendasi yang terdapat di dalam PrimaKu dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Container(
-                alignment: Alignment.bottomLeft,
-                width: width,
-                height: hight * 0.1,
-                child: Text(
-                  "Temukan Primaku di media Sosial!",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
+      body: isDataInitialized == true
+          ? SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: hight * 0.05,
+                    ),
                     Text(
-                      "Instagram: @official.primaku",
+                      "Tentang Stant App",
                       style: TextStyle(fontSize: 18),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlIG();
-                      },
+                    SizedBox(
+                      height: hight * 0.02,
+                    ),
+                    Container(
+                      width: width,
                       child: Text(
-                        "(www.instagram.com/official.primaku)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                        isParams,
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
+                    SizedBox(
+                      height: hight * 0.02,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: width,
+                      height: hight * 0.1,
+                      child: Text(
+                        "Isi dan rekomendasi yang terdapat di dalam PrimaKu dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    // Container(
+                    //   alignment: Alignment.bottomLeft,
+                    //   width: width,
+                    //   height: hight * 0.1,
+                    //   child: Text(
+                    //     "Temukan Primaku di media Sosial!",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Instagram: @official.primaku",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlIG();
+                    //         },
+                    //         child: Text(
+                    //           "(www.instagram.com/official.primaku)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Facebook: PrimaKu",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlFB();
+                    //         },
+                    //         child: Text(
+                    //           "(web.facebook.com/official.primaku)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Youtube: Officiak PrimaKu Channel",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlYT();
+                    //         },
+                    //         child: Text(
+                    //           "(www.youtube.com/@officialprimakuchannel8943)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "website",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlWEB();
+                    //         },
+                    //         child: Text(
+                    //           "(www.primaku.com)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Facebook: PrimaKu",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlFB();
-                      },
-                      child: Text(
-                        "(web.facebook.com/official.primaku)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Youtube: Officiak PrimaKu Channel",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlYT();
-                      },
-                      child: Text(
-                        "(www.youtube.com/@officialprimakuchannel8943)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "website",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlWEB();
-                      },
-                      child: Text(
-                        "(www.primaku.com)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ) : Center(child: CircularProgressIndicator(),),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

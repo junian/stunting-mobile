@@ -184,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   // Misalnya, tampilkan dialog dengan informasi syarat dan ketentuan
                                 },
                             ),
-                            TextSpan(text: ' daari Tim Primaku.'),
+                            TextSpan(text: ' dari Tim Stant App'),
                           ],
                         ),
                       ),

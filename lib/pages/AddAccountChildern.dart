@@ -71,7 +71,6 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
     super.initState();
     _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
 
-
     if (widget.anak_id != null) {
       isChildern = jsonDecode(childernController.dataAnak.toString());
 
@@ -112,7 +111,6 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
         _selectedBloodGroup = bloodGroup;
       }
     }
-
   }
 
   @override
@@ -374,46 +372,46 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   ),
                 ),
                 SizedBox(height: 16),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      // Aksi ketika tombol unggah foto ditekan
-                    },
-                    child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      color: Colors.blue,
-                      radius: Radius.circular(20),
-                      padding: EdgeInsets.all(1),
-                      child: Container(
-                        width: 300,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 220, 232, 243),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Unggah Foto',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       // Aksi ketika tombol unggah foto ditekan
+                //     },
+                //     child: DottedBorder(
+                //       borderType: BorderType.RRect,
+                //       color: Colors.blue,
+                //       radius: Radius.circular(20),
+                //       padding: EdgeInsets.all(1),
+                //       child: Container(
+                //         width: 300,
+                //         padding:
+                //             EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+                //         decoration: BoxDecoration(
+                //           color: Color.fromARGB(255, 220, 232, 243),
+                //           borderRadius: BorderRadius.circular(20),
+                //         ),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.add,
+                //               color: Colors.blue,
+                //             ),
+                //             SizedBox(width: 8),
+                //             Text(
+                //               'Unggah Foto',
+                //               style: TextStyle(
+                //                 color: Colors.blue,
+                //                 fontWeight: FontWeight.bold,
+                //                 fontSize: 16,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: 16),
                 Row(
                   children: [
