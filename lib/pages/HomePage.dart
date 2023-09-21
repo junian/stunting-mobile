@@ -16,6 +16,7 @@ import 'package:stantapp/pages/ArtikelPage.dart';
 import 'package:stantapp/pages/ChildernDetail.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
+import 'package:stantapp/pages/VidioPlayerPage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -99,9 +100,24 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: GestureDetector(
               onTap: () {
-                videoController.parameterData.isNotEmpty
-                    ? launch("${videoController.parameterData[index]}")
-                    : Get.snackbar("Error", "No Video");
+                RegExp regExp = RegExp(
+                  r'^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=)?([a-zA-Z0-9_-]+)',
+                  caseSensitive: false,
+                );
+                Match? match = regExp
+                    .firstMatch('${videoController.parameterData[index]}');
+
+                if (match != null) {
+                  String videoId =
+                      match.group(4)!; // Extract the video ID from the match
+                  Get.to(VideoScreen(id: videoId));
+                } else {
+                  print('No match found.');
+                }
+                // Get.to(VideoScreen(
+                //     url: videoController.parameterData[index],
+                //     title: title,
+                //     desciption: desciption));
               },
               child: Container(
                 width: width * 0.6,
@@ -451,22 +467,45 @@ class _HomePageState extends State<HomePage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    width: width * 0.4,
-                                                    height: height * 0.10,
-                                                    child: artikel.thumbnail ==
-                                                            null
-                                                        ? Image.asset(
-                                                            'images/logo.png',
-                                                            fit: BoxFit.contain,
-                                                          )
-                                                        : Image.network(
-                                                            "https://stantapp.alalanusantara.com/" +
-                                                                artikel
-                                                                    .thumbnail
-                                                                    .toString(),
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        ArtikelDetailPage(
+                                                          category: artikel
+                                                              .namaKategori,
+                                                          title: artikel.judul,
+                                                          author:
+                                                              artikel.fullname,
+                                                          date: tglbuat,
+                                                          description:
+                                                              artikel.konten,
+                                                          imageUrl:
+                                                              "https://stantapp.alalanusantara.com" +
+                                                                  artikel
+                                                                      .thumbnail
+                                                                      .toString(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: width * 0.4,
+                                                      height: height * 0.10,
+                                                      child: artikel
+                                                                  .thumbnail ==
+                                                              null
+                                                          ? Image.asset(
+                                                              'images/logo.png',
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                            )
+                                                          : Image.network(
+                                                              "https://stantapp.alalanusantara.com/" +
+                                                                  artikel
+                                                                      .thumbnail
+                                                                      .toString(),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                    ),
                                                   ),
                                                   Padding(
                                                     padding:
@@ -1145,11 +1184,11 @@ class MyContainer2 {
                                 child: Container(
                                   child: CircleAvatar(
                                     radius: 15,
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 210, 208, 208),
+                                    backgroundColor:
+                                        Color.fromARGB(255, 210, 208, 208),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
-                                      size: 14,
+                                      size: 20,
                                       color: Colors.black,
                                     ),
                                   ),

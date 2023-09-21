@@ -26,7 +26,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
           true; // Mengubah status inisialisasi data menjadi true
     });
   }
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -50,7 +50,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
       }
     }
 
-    final Uri _urlYT = Uri.parse('https://www.youtube.com/');
+    final Uri _urlYT = Uri.parse('https://www.youtube.com/watch?v=1Bgbn6F_ON8');
     Future<void> _launchUrlYT() async {
       if (!await launchUrl(_urlYT)) {
         throw Exception('Could not launch $_urlYT');
@@ -79,151 +79,155 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
           },
         ),
       ),
-      body: isDataInitialized == true ? SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: hight * 0.05,
-              ),
-              Text(
-                "Tentang STANTAPP",
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: hight * 0.02,
-              ),
-              Container(
-                width: width,
-                child: Text(
-                  isParams,
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              SizedBox(
-                height: hight * 0.02,
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: width,
-                height: hight * 0.1,
-                child: Text(
-                  "Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Container(
-                alignment: Alignment.bottomLeft,
-                width: width,
-                height: hight * 0.1,
-                child: Text(
-                  "Temukan STANTAPP di media Sosial!",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
+      body: isDataInitialized == true
+          ? SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: hight * 0.05,
+                    ),
                     Text(
-                      "Instagram",
+                      "Tentang Stant App",
                       style: TextStyle(fontSize: 18),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlIG();
-                      },
+                    SizedBox(
+                      height: hight * 0.02,
+                    ),
+                    Container(
+                      width: width,
                       child: Text(
-                        "(www.instagram.com/)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                        isParams,
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
+                    SizedBox(
+                      height: hight * 0.02,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: width,
+                      height: hight * 0.1,
+                      child: Text(
+                        "Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    // Container(
+                    //   alignment: Alignment.bottomLeft,
+                    //   width: width,
+                    //   height: hight * 0.1,
+                    //   child: Text(
+                    //     "Temukan STANTAPP di media Sosial!",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Instagram: @bebasstunting",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlIG();
+                    //         },
+                    //         child: Text(
+                    //           "(www.instagram.com/bebasstunting)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Facebook: STANTAPP",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlFB();
+                    //         },
+                    //         child: Text(
+                    //           "(web.facebook.com/bebasstunting)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Youtube: Officiak STANTAPP Channel",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlYT();
+                    //         },
+                    //         child: Text(
+                    //           "(www.youtube.com/@bebasstunting)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   width: width,
+                    //   height: hight * 0.08,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "website",
+                    //         style: TextStyle(fontSize: 18),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           _launchUrlWEB();
+                    //         },
+                    //         child: Text(
+                    //           "(www.bebasstunting.com)",
+                    //           style: TextStyle(fontSize: 15, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Facebook: STANTAPP",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlFB();
-                      },
-                      child: Text(
-                        "(web.facebook.com)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Youtube: Official STANTAPP Channel",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlYT();
-                      },
-                      child: Text(
-                        "(www.youtube.com/)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: width,
-                height: hight * 0.08,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "website",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrlWEB();
-                      },
-                      child: Text(
-                        "(www.bebasstunting.com)",
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ) : Center(child: CircularProgressIndicator(),),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
