@@ -48,7 +48,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     child: authController.isParent[0]['photo'] != null
                         ? ClipOval(
                             child: Image.network(
-                              "https://stantapp.alalanusantara.com/" +
+                              "https://www.bebasstunting.com/" +
                                   authController.isParent[0]['photo'],
                               width: 55,
                               height: 55,
@@ -291,7 +291,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     alignment: Alignment.bottomLeft,
                     width: width,
                     child: Text(
-                      'Version 1.0.10',
+                      'Version 1.0.11',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),

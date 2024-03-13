@@ -218,7 +218,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         date: tglbuat,
                                         description: artikel.konten,
                                         imageUrl:
-                                            "https://stantapp.alalanusantara.com" +
+                                            "https://www.bebasstunting.com" +
                                                 artikel.thumbnail.toString(),
                                       ),
                                     );
@@ -231,7 +231,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                           ? DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                "https://stantapp.alalanusantara.com" +
+                                                "https://www.bebasstunting.com" +
                                                     artikel.thumbnail
                                                         .toString(),
                                               ),
@@ -255,7 +255,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         date: tglbuat,
                                         description: artikel.konten,
                                         imageUrl:
-                                            "https://stantapp.alalanusantara.com" +
+                                            "https://www.bebasstunting.com" +
                                                 artikel.thumbnail.toString(),
                                       ),
                                     );

@@ -3,5 +3,5 @@ class helper {
   static final String api = "https://www.bebasstunting.com/api"; 
   
   //Development
-  //static final String api = "http://stantapp.alalanusantara.com/api";
+  //static final String api = "http://www.bebasstunting.com/api";
 }
