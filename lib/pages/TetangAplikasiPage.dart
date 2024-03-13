@@ -50,7 +50,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
       }
     }
 
-    final Uri _urlYT = Uri.parse('https://www.youtube.com/watch?v=1Bgbn6F_ON8');
+    final Uri _urlYT = Uri.parse('https://www.youtube.com/watch?v=J2pgwT5LRnM');
     Future<void> _launchUrlYT() async {
       if (!await launchUrl(_urlYT)) {
         throw Exception('Could not launch $_urlYT');
