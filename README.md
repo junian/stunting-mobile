@@ -2,6 +2,16 @@
 
 A new Flutter project.
 
+## Development
+
+Install `fvm` using the [official instructions](https://fvm.app/documentation/getting-started/installation).
+
+Execute `init.sh`.
+
+To publish, execute `publish.sh`.
+
+Guide for keystore: https://docs.flutter.dev/deployment/android
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
