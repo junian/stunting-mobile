@@ -1,5 +1,5 @@
 #!/bin/sh
 
-flutter build appbundle
-flutter build apk
+fvm flutter build appbundle
+fvm flutter build apk
 
