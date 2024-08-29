@@ -291,7 +291,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     alignment: Alignment.bottomLeft,
                     width: width,
                     child: Text(
-                      'Version 1.0.11',
+                      'Version 1.1.0',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),
