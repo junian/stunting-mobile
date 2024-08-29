@@ -167,7 +167,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               authController.isParent[0]['photo'] != null
                           ? ClipOval(
                               child: Image.network(
-                                "https://www.bebasstunting.com/" +
+                                "https://app.bebasstunting.com/" +
                                     authController.isParent[0]['photo'],
                                 height: 60,
                                 width: 60,
@@ -416,7 +416,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                             )),
                                     onFind: (text) async {
                                       var response = await _dio.get(
-                                          "https://www.bebasstunting.com/api/getProvince");
+                                          "https://app.bebasstunting.com/api/getProvince");
                                       List<MGetProvince> allNameProvince = [];
 
                                       if (response.statusCode != 200) {
@@ -472,7 +472,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'province_id': idProv,
                                       });
                                       var response = await _dio.post(
-                                          "https://www.bebasstunting.com/api/getCity",
+                                          "https://app.bebasstunting.com/api/getCity",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetCity> allNameCity = [];
@@ -528,7 +528,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'city_id': idCity,
                                       });
                                       var response = await _dio.post(
-                                          "https://www.bebasstunting.com/api/getKecamatan",
+                                          "https://app.bebasstunting.com/api/getKecamatan",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetKecamatan> allNameKecamatan = [];
@@ -585,7 +585,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         'kecamatan_id': idKecamatan,
                                       });
                                       var response = await _dio.post(
-                                          "https://www.bebasstunting.com/api/getKelurahan",
+                                          "https://app.bebasstunting.com/api/getKelurahan",
                                           data: formData);
                                       // print(response.data);
                                       List<MGetKelurahan> allNameKelurahan = [];

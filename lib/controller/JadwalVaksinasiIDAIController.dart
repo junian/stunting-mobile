@@ -17,7 +17,7 @@ class JadwalVaksinasiIDAIController extends GetxController {
     Completer<File> completer = Completer();
     print("Start downloading file from the internet!");
     try {
-      final url = "https://www.bebasstunting.com/jadwal-imunisasi.pdf";
+      final url = "https://app.bebasstunting.com/jadwal-imunisasi.pdf";
       final filename = url.substring(url.lastIndexOf("/") + 1);
 
       var response = await _dio.get(url,

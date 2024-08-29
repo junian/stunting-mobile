@@ -276,7 +276,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
                                                 height: height * 0.03,
                                                 width: width * 0.06,
                                                 child: Image.network(
-                                                  "https://www.bebasstunting.com/" +
+                                                  "https://app.bebasstunting.com/" +
                                                       data['photo'],
                                                   fit: BoxFit.contain,
                                                 ),
