@@ -1,4 +1,4 @@
-<p align="center"><img height="128" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiG8W37V93fNqp8WQxWANGrGQq-mquRbIWRrW7vW-AgFmJg6t2vxo2Hg0I5qlemt9Em76dTAe4sNn0zYJzmS6bZcmFvWsDHW2o4sS8LJA1wY5G7PxYg_fsGYA6jFSMlpLAbpD1wYJViW8BfBt-6sw2o6eTh02vbFndnAiwUpUFF2WDB2-eyOk-x32U9Dbif/s1600/stantapp-logo.png"/></p>
+<p align="center"><img height="128" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-iWG3i6Mbkc2DDbziT5YW57HCfSqBTcRMNAPRYbsu5NWNmka-0XFVnZkxqgB4qDdE2w55cXpp7uxo2mSqCfmM1JLFpBTUhaI47U-umZ6dktfwmc08yPX9XKtZ5Xu6Xzy9JOuqFOd3tYDSunEtrURtFga4XKY4UXCnkCudqh3qgYmLzo4dHygZhs_ntNpr/s1600/stantapp-logo-256-mac.png"/></p>
 
 <h1 align="center">StantApp</h1>
 
