@@ -4,9 +4,15 @@
 
 <p align="center">A mobile app designed to prevent stunted growth in children.</p>
 
-## Installing
+<p align="center"><a href="https://play.google.com/store/apps/details?id=com.bebasstunting.stantapp"><img alt="Get STANTAPP from Play Store" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPQRuPE6aoa8aneS7OyFEBuF6xBtouqcHzSL34i0zN9CQVRoMRmyQEkLelz7Zuy6EzpuwOeZQOzg9b2oJrhTmsQu8ne6OT2t3u_LBowrfcyhdOsRUXjfu-PdBtdNn-yqyqbscLh3SSR940EQaLFxXbmb2LjfeIMmkmXo63mECIRRp8BjH8k4ULYm7GIiMk/s1600/stantapp-banner-play-store.jpg"/></a></p>
 
-<p><a href="https://play.google.com/store/apps/details?id=com.bebasstunting.stantapp"><img alt="Get StantApp on Google Play Store"  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgUxSioZMKkNVlMy96FrAQ-T8ALFReECpi0H9N2I5RN1HIK8TFfBQ_-RCjNRxwb6Ia0Mf3t5ih0JefMjDAUDYg0xZCACbEK-zcCG9k24BrWSNe4hehs-x0cyDP_qmerViReXovGmx4JR2rJoQfph8UEjxWRmPsEnpHILwqYjTgTwT4rV2_Vb3WhO_648exa/s1600/GetItOnGooglePlay_Badge_Web_color_English.png"/></a></p>
+## Features  
+
+- Manage records for multiple children.
+- Track children's height and weight over time.
+- Stay on top of vaccination schedules with timely reminders.
+- Access up-to-date health news directly within the app.
+- Enjoy secure and private cloud-based data storage.
 
 ## Development  
 
