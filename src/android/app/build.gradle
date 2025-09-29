@@ -11,6 +11,26 @@ if (flutterRoot == null) {
     throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = flutter.minSdkVersion
+}
+
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.compileSdkVersion')
+if (flutterCompileSdkVersion == null) {
+    flutterCompileSdkVersion = flutter.compileSdkVersion
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion')
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = flutter.targetSdkVersion
+}
+
+def flutterNdkVersion = localProperties.getProperty('flutter.ndkVersion')
+if (flutterNdkVersion == null) {
+    flutterNdkVersion = flutter.ndkVersion
+}
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -34,10 +54,11 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.bebasstunting.stantapp"
-    compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    compileSdkVersion flutterCompileSdkVersion.toInteger()
+    ndkVersion flutterNdkVersion
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -55,8 +76,8 @@ android {
         applicationId "com.bebasstunting.stantapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 19
-        targetSdkVersion 34 //flutter.targetSdkVersion
+        minSdkVersion flutterMinSdkVersion
+        targetSdkVersion flutterTargetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -91,5 +112,5 @@ dependencies {
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 }

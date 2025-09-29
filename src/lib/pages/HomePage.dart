@@ -480,7 +480,7 @@ class _HomePageState extends State<HomePage> {
                                                           description:
                                                               artikel.konten,
                                                           imageUrl:
-                                                              "https://app.bebasstunting.com" +
+                                                              "https://mystantapp.siuinsa.com" +
                                                                   artikel
                                                                       .thumbnail
                                                                       .toString(),
@@ -499,7 +499,7 @@ class _HomePageState extends State<HomePage> {
                                                                   .contain,
                                                             )
                                                           : Image.network(
-                                                              "https://app.bebasstunting.com/" +
+                                                              "https://mystantapp.siuinsa.com/" +
                                                                   artikel
                                                                       .thumbnail
                                                                       .toString(),
@@ -556,7 +556,7 @@ class _HomePageState extends State<HomePage> {
                                                           description:
                                                               artikel.konten,
                                                           imageUrl:
-                                                              "https://app.bebasstunting.com" +
+                                                              "https://mystantapp.siuinsa.com" +
                                                                   artikel
                                                                       .thumbnail
                                                                       .toString(),
@@ -1126,7 +1126,7 @@ class MyContainer2 {
                                           null
                                       ? ClipOval(
                                           child: Image.network(
-                                            "https://app.bebasstunting.com/" +
+                                            "https://mystantapp.siuinsa.com/" +
                                                 childernController.anakList[0]
                                                     ['photo'],
                                             width: 70,

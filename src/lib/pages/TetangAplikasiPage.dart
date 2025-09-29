@@ -57,7 +57,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
       }
     }
 
-    final Uri _urlWEB = Uri.parse('app.bebasstunting.com');
+    final Uri _urlWEB = Uri.parse('mystantapp.siuinsa.com');
     Future<void> _launchUrlWEB() async {
       if (!await launchUrl(_urlWEB)) {
         throw Exception('Could not launch $_urlWEB');
@@ -214,7 +214,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                     //           _launchUrlWEB();
                     //         },
                     //         child: Text(
-                    //           "(app.bebasstunting.com)",
+                    //           "(mystantapp.siuinsa.com)",
                     //           style: TextStyle(fontSize: 15, color: Colors.blue),
                     //         ),
                     //       ),

@@ -48,7 +48,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     child: authController.isParent[0]['photo'] != null
                         ? ClipOval(
                             child: Image.network(
-                              "https://app.bebasstunting.com/" +
+                              "https://mystantapp.siuinsa.com/" +
                                   authController.isParent[0]['photo'],
                               width: 55,
                               height: 55,

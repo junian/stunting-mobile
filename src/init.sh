@@ -11,3 +11,5 @@ if [ ! -f "$FILE" ]; then
     echo "keyAlias=upload" >> "$FILE"
     echo "storeFile=<keystore-file-location>" >> "$FILE"
 fi
+
+echo "Please set the values from this file: ./android/key.properties"
