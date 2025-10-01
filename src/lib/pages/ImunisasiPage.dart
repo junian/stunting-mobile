@@ -124,10 +124,11 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                     child: Column(
                       children: [
                         DottedBorder(
-                          borderType: BorderType.RRect,
-                          padding: EdgeInsets.all(0),
-                          strokeWidth: 2,
-                          radius: Radius.circular(10),
+                          options: RoundedRectDottedBorderOptions(
+                            padding: EdgeInsets.all(0),
+                            strokeWidth: 2,
+                            radius: Radius.circular(10),
+                          ),
                           child: Container(
                             width: width * 0.8,
                             height: height * 0.055,

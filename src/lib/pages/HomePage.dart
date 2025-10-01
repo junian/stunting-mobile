@@ -1226,10 +1226,11 @@ class MyContainer2 {
                               Get.to(AddAccountChildernPage(anak_id: null));
                             },
                             child: DottedBorder(
-                              borderType: BorderType.Circle,
-                              strokeWidth: 10,
-                              color: const Color.fromARGB(255, 134, 172, 237),
-                              padding: EdgeInsets.all(2),
+                              options: CircularDottedBorderOptions(
+                                strokeWidth: 10,
+                                color: const Color.fromARGB(255, 134, 172, 237),
+                                padding: EdgeInsets.all(2),
+                              ),
                               child: CircleAvatar(
                                 backgroundColor: Colors.blue,
                                 radius: 20,

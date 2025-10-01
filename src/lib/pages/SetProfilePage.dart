@@ -402,19 +402,25 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                     ],
                                   ),
                                   DropdownSearch<MGetProvince>(
-                                    mode: Mode.DIALOG,
-                                    showSearchBox: true,
+                                    mode: Mode.custom,
+                                    //showSearchBox: true,
+                                    compareFn: (item1, item2) => item1.provinceId == item2.provinceId,
                                     onChanged: (value) =>
                                         idProv = value?.provinceId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.provinceName ??
                                             "Belum Memilih Provinsi"),
-                                    popupItemBuilder:
-                                        ((context, item, isSelected) =>
-                                            ListTile(
-                                              title: Text(item.provinceName),
-                                            )),
-                                    onFind: (text) async {
+                                    popupProps: PopupProps.menu(
+                                      menuProps: MenuProps(align: MenuAlign.bottomCenter),
+                                      fit: FlexFit.loose,
+                                      itemBuilder: (context, item, isDisabled, isSelected) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          title: Text(item.provinceName),
+                                        )
+                                      ),
+                                    ),
+                                    items: (text, loadProps) async {
                                       var response = await _dio.get(
                                           "https://mystantapp.siuinsa.com/api/getProvince");
                                       List<MGetProvince> allNameProvince = [];
@@ -454,19 +460,25 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                     ],
                                   ),
                                   DropdownSearch<MGetCity>(
-                                    mode: Mode.DIALOG,
-                                    showSearchBox: true,
+                                    mode: Mode.custom,
+                                    // showSearchBox: true,
+                                    compareFn: (x, y) => x.cityId == y.cityId,
                                     onChanged: (value) =>
                                         idCity = value?.cityId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.cityName ??
                                             "Belum Memilih Kota/Kabupaten"),
-                                    popupItemBuilder:
-                                        ((context, item, isSelected) =>
-                                            ListTile(
-                                              title: Text(item.cityName),
-                                            )),
-                                    onFind: (text) async {
+                                    popupProps: PopupProps.menu(
+                                      menuProps: MenuProps(align: MenuAlign.bottomCenter),
+                                      fit: FlexFit.loose,
+                                      itemBuilder: (context, item, isDisabled, isSelected) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ListTile(
+                                            title: Text(item.cityName),
+                                          )
+                                      ),
+                                    ),
+                                    items: (text, loadProps) async {
                                       dio.FormData formData =
                                           dio.FormData.fromMap({
                                         'province_id': idProv,
@@ -510,19 +522,25 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                     ],
                                   ),
                                   DropdownSearch<MGetKecamatan>(
-                                    mode: Mode.DIALOG,
-                                    showSearchBox: true,
+                                    mode: Mode.custom,
+                                    //showSearchBox: true,
+                                    compareFn: (x,y)=>x.kecamatanId == y.kecamatanId,
                                     onChanged: (value) =>
                                         idKecamatan = value?.kecamatanId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.kecamatanName ??
                                             "Belum Memilih Kecamatan"),
-                                    popupItemBuilder:
-                                        ((context, item, isSelected) =>
-                                            ListTile(
-                                              title: Text(item.kecamatanName),
-                                            )),
-                                    onFind: (text) async {
+                                    popupProps: PopupProps.menu(
+                                      menuProps: MenuProps(align: MenuAlign.bottomCenter),
+                                      fit: FlexFit.loose,
+                                      itemBuilder: (context, item, isDisabled, isSelected) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ListTile(
+                                            title: Text(item.kecamatanName),
+                                          )
+                                      ),
+                                    ),
+                                    items: (text, loadProps) async {
                                       dio.FormData formData =
                                           dio.FormData.fromMap({
                                         'city_id': idCity,
@@ -567,19 +585,25 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                     ],
                                   ),
                                   DropdownSearch<MGetKelurahan>(
-                                    mode: Mode.DIALOG,
-                                    showSearchBox: true,
+                                    mode: Mode.custom,
+                                    // showSearchBox: true,
+                                    compareFn: (x, y) => x.kelurahanId == y.kelurahanId,
                                     onChanged: (value) =>
                                         idKelurahan = value?.kelurahanId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.kelurahanName ??
                                             "Belum Memilih Kelurahan/Desa"),
-                                    popupItemBuilder:
-                                        ((context, item, isSelected) =>
-                                            ListTile(
-                                              title: Text(item.kelurahanName),
-                                            )),
-                                    onFind: (text) async {
+                                    popupProps: PopupProps.menu(
+                                      menuProps: MenuProps(align: MenuAlign.bottomCenter),
+                                      fit: FlexFit.loose,
+                                      itemBuilder: (context, item, isDisabled, isSelected) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ListTile(
+                                            title: Text(item.kelurahanName),
+                                          )
+                                      ),
+                                    ),
+                                    items: (text, loadProps) async {
                                       dio.FormData formData =
                                           dio.FormData.fromMap({
                                         'kecamatan_id': idKecamatan,

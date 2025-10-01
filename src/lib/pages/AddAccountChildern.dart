@@ -152,10 +152,11 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   child: Column(
                     children: [
                       DottedBorder(
-                        borderType: BorderType.Circle,
-                        color: Colors.blue,
-                        strokeWidth: 1,
-                        padding: EdgeInsets.all(5),
+                        options: CircularDottedBorderOptions(
+                          color: Colors.blue,
+                          strokeWidth: 1,
+                          padding: EdgeInsets.all(5),
+                        ),
                         child: CircleAvatar(
                           radius: 30,
                           backgroundColor:

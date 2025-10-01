@@ -180,10 +180,11 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                               padding: const EdgeInsets.only(
                                   top: 2, right: 16, left: 16),
                               child: DottedBorder(
-                                borderType: BorderType.RRect,
-                                color: Colors.blue,
-                                radius: Radius.circular(20),
-                                padding: EdgeInsets.all(3),
+                                options: RoundedRectDottedBorderOptions(
+                                  color: Colors.blue,
+                                  radius: Radius.circular(20),
+                                  padding: EdgeInsets.all(3),
+                                ),
                                 child: Container(
                                   width: width * 0.9,
                                   height: height * 0.07,

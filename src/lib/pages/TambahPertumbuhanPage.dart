@@ -379,10 +379,11 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                       _pickImage(ImageSource.gallery);
                     },
                     child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      color: Colors.blue,
-                      radius: Radius.circular(20),
-                      padding: EdgeInsets.all(3),
+                      options: RoundedRectDottedBorderOptions(
+                        color: Colors.blue,
+                        radius: Radius.circular(20),
+                        padding: EdgeInsets.all(3),
+                      ),
                       child: Container(
                         width: width * 0.9,
                         height: height * 0.07,
