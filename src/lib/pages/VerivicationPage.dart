@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:stantapp/controller/RegionController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/helper/CountdownTimer.dart';
@@ -26,7 +26,7 @@ class VerivicationPage extends StatefulWidget {
 class _VerivicationPageState extends State<VerivicationPage> {
   var authController = Get.put(AuthController());
   var regionController = Get.put(RegionController());
-  var childernController = Get.put(ChildernController());
+  var childernController = Get.put(ChildrenController());
   var sessionController = Get.put(SessionController());
 
   bool _onEditing = true;

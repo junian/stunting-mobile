@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
@@ -20,7 +20,7 @@ class ChildernPage extends StatefulWidget {
 }
 
 class _ChildernPageState extends State<ChildernPage> {
-  var childernController = Get.put(ChildernController());
+  var childernController = Get.put(ChildrenController());
   var sessionController = Get.put(SessionController());
   var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
   bool isDataInitialized = false;

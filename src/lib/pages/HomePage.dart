@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stantapp/controller/ArticleController.dart';
 import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/ChildernController.dart';
+import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:stantapp/controller/NotificationController.dart';
 import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
 import 'package:stantapp/controller/SessionController.dart';
@@ -34,7 +34,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final authController = Get.put(AuthController());
-  final childernController = Get.put(ChildernController());
+  final childernController = Get.put(ChildrenController());
   final sessionController = Get.put(SessionController());
   final artikelController = Get.put(ArticleController());
   final firebaseController = Get.put(FirebaseController());
@@ -921,7 +921,7 @@ class MyContainer {
 
 class MyContainer2 {
   static Widget buildContainer(BuildContext context) {
-    final childernController = Get.put(ChildernController());
+    final childernController = Get.put(ChildrenController());
     final sessionController = Get.put(SessionController());
     final authController = Get.put(AuthController());
     final riwayatPertumbuhanController =

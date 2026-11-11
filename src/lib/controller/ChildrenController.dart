@@ -20,7 +20,7 @@ class Anak {
   Anak({required this.anak_id, required this.user_id});
 }
 
-class ChildernController extends GetxController {
+class ChildrenController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 
