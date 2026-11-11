@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/ChildrenController.dart';
-import 'package:stantapp/controller/SessionController.dart';
+import 'package:growthtracker/controller/ChildrenController.dart';
+import 'package:growthtracker/controller/SessionController.dart';
 import 'HomePage2.dart';
 
 class ChildrenEditorPage extends StatefulWidget {

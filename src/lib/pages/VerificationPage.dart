@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/ChildrenController.dart';
-import 'package:stantapp/controller/RegionController.dart';
-import 'package:stantapp/controller/SessionController.dart';
-import 'package:stantapp/helper/CountdownTimer.dart';
-import 'package:stantapp/pages/SetProfilePage.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/controller/ChildrenController.dart';
+import 'package:growthtracker/controller/RegionController.dart';
+import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/helper/CountdownTimer.dart';
+import 'package:growthtracker/pages/SetProfilePage.dart';
 
 class VerificationPage extends StatefulWidget {
   String email;

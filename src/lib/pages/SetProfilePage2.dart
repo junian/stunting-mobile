@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/controller/RegionController.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/pages/HomePage.dart';
+import 'package:growthtracker/controller/RegionController.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 enum Gender { male, female }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stantapp/controller/ParameterController.dart';
+import 'package:growthtracker/controller/ParameterController.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 

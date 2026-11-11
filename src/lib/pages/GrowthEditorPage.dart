@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/GrowthEditorController.dart';
+import 'package:growthtracker/controller/GrowthEditorController.dart';
 
 class GrowthEditorPage extends StatefulWidget {
   String anakID;

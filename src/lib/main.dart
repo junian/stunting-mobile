@@ -1,20 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:stantapp/firebase_api.dart';
-import 'package:stantapp/pages/ChildrenEditorPage.dart';
-import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/pages/VaccinationPage.dart';
-import 'package:stantapp/pages/VaccinationSchedulePage.dart';
-import 'package:stantapp/pages/SetProfilePage2.dart';
-import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/SplashScreenPage.dart';
-import 'package:stantapp/pages/WelcomePage.dart';
+import 'package:growthtracker/firebase_api.dart';
+import 'package:growthtracker/pages/ChildrenEditorPage.dart';
+import 'package:growthtracker/pages/HomePage.dart';
+import 'package:growthtracker/pages/VaccinationPage.dart';
+import 'package:growthtracker/pages/VaccinationSchedulePage.dart';
+import 'package:growthtracker/pages/SetProfilePage2.dart';
+import 'package:growthtracker/pages/SetProfilePage.dart';
+import 'package:growthtracker/pages/SplashScreenPage.dart';
+import 'package:growthtracker/pages/WelcomePage.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:stantapp/controller/LanguageController.dart';
-import 'package:stantapp/localization/AppTranslations.dart';
+import 'package:growthtracker/controller/LanguageController.dart';
+import 'package:growthtracker/localization/AppTranslations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

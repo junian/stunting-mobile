@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/GrowthDetailController.dart';
+import 'package:growthtracker/controller/GrowthDetailController.dart';
 import '../controller/GrowthHistoryController.dart';
 import '../controller/GrowthEditorController.dart';
 import 'GrowthDetailPage.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/LanguageController.dart';
-import 'package:stantapp/controller/ParameterController.dart';
-import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/TermsOfServicePage.dart';
-import 'package:stantapp/pages/AboutPage.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/controller/LanguageController.dart';
+import 'package:growthtracker/controller/ParameterController.dart';
+import 'package:growthtracker/pages/SetProfilePage.dart';
+import 'package:growthtracker/pages/TermsOfServicePage.dart';
+import 'package:growthtracker/pages/AboutPage.dart';
 import 'package:get/get.dart';
 
 class SettingUserPage extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/LoginPage.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/pages/WelcomePage.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/pages/LoginPage.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/pages/WelcomePage.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 import 'HomePage.dart';
 

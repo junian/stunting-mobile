@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/models/MGetArticle.dart';
-import 'package:stantapp/models/MGetArticleCategory.dart';
+import 'package:growthtracker/models/MGetArticle.dart';
+import 'package:growthtracker/models/MGetArticleCategory.dart';
 import '../controller/ArticleController.dart';
 import 'ArticleDetailPage.dart';
 

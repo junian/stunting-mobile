@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:stantapp/helper/Constant.dart';
+import 'package:growthtracker/helper/Constant.dart';
 import 'package:dio/dio.dart' as dio;
 
 class NotificationController extends GetxController {

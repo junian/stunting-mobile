@@ -1,8 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:stantapp/pages/ChildrenEditorPage.dart';
+import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/ChildrenDetailPage.dart';
+import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 
 class HomePage2 extends StatelessWidget {
   List<dynamic> anak = [];

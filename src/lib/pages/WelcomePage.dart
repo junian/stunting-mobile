@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/LoginPage.dart';
-import 'package:stantapp/pages/RegisterPage.dart';
+import 'package:growthtracker/pages/LoginPage.dart';
+import 'package:growthtracker/pages/RegisterPage.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({super.key});

@@ -1,11 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/VaccinationScheduleController.dart';
-import 'package:stantapp/controller/VaccinationScheduleByIdaiController.dart';
-import 'package:stantapp/controller/VaccinationController.dart';
-import 'package:stantapp/pages/VaccinationScheduleByIdaiPage.dart';
-import 'package:stantapp/pages/VaccinationDetailPage.dart';
+import 'package:growthtracker/controller/VaccinationScheduleController.dart';
+import 'package:growthtracker/controller/VaccinationScheduleByIdaiController.dart';
+import 'package:growthtracker/controller/VaccinationController.dart';
+import 'package:growthtracker/pages/VaccinationScheduleByIdaiPage.dart';
+import 'package:growthtracker/pages/VaccinationDetailPage.dart';
 
 class VaccinationSchedulePage extends StatefulWidget {
   String anak_id;

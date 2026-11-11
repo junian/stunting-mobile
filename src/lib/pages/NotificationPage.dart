@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/NotificationController.dart';
+import 'package:growthtracker/controller/NotificationController.dart';
 
 class NotifikasiPage extends StatefulWidget {
   const NotifikasiPage({super.key});

@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:stantapp/helper.dart';
+import 'package:growthtracker/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:stantapp/helper/Constant.dart';
+import 'package:growthtracker/helper/Constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stantapp/models/ChildrenModel.dart';
-import 'package:stantapp/pages/HomePage2.dart';
-import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/VerificationPage.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/models/ChildrenModel.dart';
+import 'package:growthtracker/pages/HomePage2.dart';
+import 'package:growthtracker/pages/SetProfilePage.dart';
+import 'package:growthtracker/pages/VerificationPage.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 class ParameterController extends GetxController {
   final api = helper.api;

@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:stantapp/helper.dart';
+import 'package:growthtracker/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:stantapp/helper/Constant.dart';
+import 'package:growthtracker/helper/Constant.dart';
 
 class VaccinationScheduleController extends GetxController {
   final api = helper.api;

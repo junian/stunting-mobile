@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/pages/TermsOfServicePage.dart';
-import 'package:stantapp/pages/VerificationPage.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/pages/TermsOfServicePage.dart';
+import 'package:growthtracker/pages/VerificationPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

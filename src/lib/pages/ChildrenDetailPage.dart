@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/ChildrenController.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/GrowthHistoryController.dart';
-import 'package:stantapp/controller/SessionController.dart';
-import 'package:stantapp/models/ChildrenModel.dart';
-import 'package:stantapp/pages/ChildrenEditorPage.dart';
-import 'package:stantapp/pages/VaccinationSchedulePage.dart';
-import 'package:stantapp/pages/GrowthHistoryPage.dart';
-import 'package:stantapp/pages/GrowthEditorPage.dart';
+import 'package:growthtracker/controller/GrowthHistoryController.dart';
+import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/models/ChildrenModel.dart';
+import 'package:growthtracker/pages/ChildrenEditorPage.dart';
+import 'package:growthtracker/pages/VaccinationSchedulePage.dart';
+import 'package:growthtracker/pages/GrowthHistoryPage.dart';
+import 'package:growthtracker/pages/GrowthEditorPage.dart';
 
 class ChildrenDetailPage extends StatefulWidget {
   ChildrenDetailPage({super.key});

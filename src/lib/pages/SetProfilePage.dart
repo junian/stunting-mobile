@@ -6,15 +6,15 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/controller/RegionController.dart';
-import 'package:stantapp/controller/SessionController.dart';
-import 'package:stantapp/models/MGetCity.dart';
-import 'package:stantapp/models/MGetDistrict.dart';
-import 'package:stantapp/models/MGetSubdistrict.dart';
-import 'package:stantapp/models/MGetProvince.dart';
-import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/controller/RegionController.dart';
+import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/models/MGetCity.dart';
+import 'package:growthtracker/models/MGetDistrict.dart';
+import 'package:growthtracker/models/MGetSubdistrict.dart';
+import 'package:growthtracker/models/MGetProvince.dart';
+import 'package:growthtracker/pages/HomePage.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 enum Gender { male, female }
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/ParameterController.dart';
+import 'package:growthtracker/controller/ParameterController.dart';
 
 class TermsOfServicePage extends StatefulWidget {
   const TermsOfServicePage({super.key});

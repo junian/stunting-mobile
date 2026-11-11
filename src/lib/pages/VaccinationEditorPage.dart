@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/GrowthEditorController.dart';
-import 'package:stantapp/controller/VaccinationController.dart';
-import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/widget/BottomNavbar.dart';
+import 'package:growthtracker/controller/GrowthEditorController.dart';
+import 'package:growthtracker/controller/VaccinationController.dart';
+import 'package:growthtracker/pages/HomePage.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 class VaccinationEditorPage extends StatefulWidget {
   String anak_id;

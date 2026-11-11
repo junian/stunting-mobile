@@ -5,17 +5,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:stantapp/controller/AuthController.dart';import 'package:stantapp/controller/ChildrenController.dart';
+import 'package:growthtracker/controller/AuthController.dart';import 'package:growthtracker/controller/ChildrenController.dart';
 
 
-import 'package:stantapp/pages/ArticlePage.dart';
-import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/pages/HomePage2.dart';
-import 'package:stantapp/pages/ConsultationPage.dart';
-import 'package:stantapp/pages/LoginPage.dart';
-import 'package:stantapp/pages/RegisterPage.dart';
-import 'package:stantapp/pages/SettingUserPage.dart';
-import 'package:stantapp/pages/WelcomePage.dart';
+import 'package:growthtracker/pages/ArticlePage.dart';
+import 'package:growthtracker/pages/HomePage.dart';
+import 'package:growthtracker/pages/HomePage2.dart';
+import 'package:growthtracker/pages/ConsultationPage.dart';
+import 'package:growthtracker/pages/LoginPage.dart';
+import 'package:growthtracker/pages/RegisterPage.dart';
+import 'package:growthtracker/pages/SettingUserPage.dart';
+import 'package:growthtracker/pages/WelcomePage.dart';
 import 'package:get/get.dart';
 
 class BottomNavbar extends StatefulWidget {

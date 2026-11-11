@@ -2,9 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/pages/RegisterPage.dart';
-import 'package:stantapp/pages/SetProfilePage.dart';
+import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/pages/RegisterPage.dart';
+import 'package:growthtracker/pages/SetProfilePage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

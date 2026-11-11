@@ -1,7 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:stantapp/controller/ImmunizationController.dart';
-import 'package:stantapp/pages/VaccinationDetailPage.dart';
+import 'package:growthtracker/controller/ImmunizationController.dart';
+import 'package:growthtracker/pages/VaccinationDetailPage.dart';
 import 'package:get/get.dart';
 
 class VaccinationPage extends StatefulWidget {
