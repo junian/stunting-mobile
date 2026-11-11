@@ -8,7 +8,7 @@ import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 
-class ArtikelController extends GetxController {
+class ArticleController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 

@@ -2,7 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:stantapp/controller/ArtikelController.dart';
+import 'package:stantapp/controller/ArticleController.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildernController.dart';
 import 'package:stantapp/controller/NotificationController.dart';
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   final authController = Get.put(AuthController());
   final childernController = Get.put(ChildernController());
   final sessionController = Get.put(SessionController());
-  final artikelController = Get.put(ArtikelController());
+  final artikelController = Get.put(ArticleController());
   final firebaseController = Get.put(FirebaseController());
   final videoController = Get.put(VideoController());
 

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
-import '../controller/ArtikelController.dart';
+import '../controller/ArticleController.dart';
 import 'ArtikelDetailPage.dart';
 
 class ArtikelPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class ArtikelPage extends StatefulWidget {
 class _ArtikelPageState extends State<ArtikelPage> {
   String selectedCategory = "Semua";
   TextEditingController searchController = TextEditingController();
-  var artikelController = Get.put(ArtikelController());
+  var artikelController = Get.put(ArticleController());
 
   List<MGetArtikel> filteredList = [];
   List<MGetArtikelKategori> categories = [];
