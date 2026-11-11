@@ -13,7 +13,7 @@ import 'package:stantapp/models/MGetArtikelKategori.dart';
 import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
 import 'package:stantapp/pages/VaksinasiAdd.dart';
 
-class VaksinasiController extends GetxController {
+class VaccinationController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
   File? pickedImage;

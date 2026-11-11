@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/JadwalVaksinasiController.dart';
 import 'package:stantapp/controller/JadwalVaksinasiIDAIController.dart';
-import 'package:stantapp/controller/VaksinasiController.dart';
+import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
 import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 
@@ -18,7 +18,7 @@ class JadwalVaksinasiPage extends StatefulWidget {
 class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
   var jadwalVaksinasiController = Get.put(JadwalVaksinasiController());
   var jadwalVaksinasiIDAIController = Get.put(JadwalVaksinasiIDAIController());
-  var vaksinasiController = Get.put(VaksinasiController());
+  var vaksinasiController = Get.put(VaccinationController());
   int selectedMonth = 0;
   int selected = 0;
 

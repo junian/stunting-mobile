@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/TambahDataPertumbuhanController.dart';
-import 'package:stantapp/controller/VaksinasiController.dart';
+import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
@@ -25,7 +25,7 @@ class VaksinasiAddPage extends StatefulWidget {
 }
 
 class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
-  var vaksinasiController = Get.put(VaksinasiController());
+  var vaksinasiController = Get.put(VaccinationController());
 
   Future<void> _pickImage(ImageSource source) async {
     try {
