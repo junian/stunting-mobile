@@ -10,15 +10,15 @@ import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'HomePage2.dart';
 
-class AddAccountChildernPage extends StatefulWidget {
+class ChildrenEditorPage extends StatefulWidget {
   var anak_id;
-  AddAccountChildernPage({super.key, required this.anak_id});
+  ChildrenEditorPage({super.key, required this.anak_id});
 
   @override
-  State<AddAccountChildernPage> createState() => _AddAccountChildernPageState();
+  State<ChildrenEditorPage> createState() => _ChildrenEditorPageState();
 }
 
-class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
+class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
   var childernController = Get.put(ChildrenController());
   var sessionController = Get.put(SessionController());
 

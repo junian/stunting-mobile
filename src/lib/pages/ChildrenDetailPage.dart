@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
-import 'package:stantapp/pages/AddAccountChildern.dart';
+import 'package:stantapp/pages/ChildrenEditorPage.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/GrowthHistoryPage.dart';
 import 'package:stantapp/pages/GrowthEditorPage.dart';
@@ -263,7 +263,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                     sessionController.user_id.value,
                                     isChildern[0]['anak_id']);
                                 Get.to(
-                                  AddAccountChildernPage(
+                                  ChildrenEditorPage(
                                     anak_id: isChildern[0]['anak_id'],
                                   ),
                                 );

@@ -9,7 +9,7 @@ import 'package:stantapp/controller/NotificationController.dart';
 import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/controller/VideoController.dart';
-import 'package:stantapp/pages/AddAccountChildern.dart';
+import 'package:stantapp/pages/ChildrenEditorPage.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ArticleDetailPage.dart';
 import 'package:stantapp/pages/ArticlePage.dart';
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> {
                   //               onTap: () {
                   //                 // Action to run when the button is pressed
                   //                 Get.to(
-                  //                   AddAccountChildernPage(),
+                  //                   ChildrenEditorPage(),
                   //                 );
                   //               },
                   //               child: Container(
@@ -877,7 +877,7 @@ class MyContainer {
                     onTap: () {
                       // Action to run when the button is pressed
                       Get.to(
-                        AddAccountChildernPage(
+                        ChildrenEditorPage(
                           anak_id: null,
                         ),
                       );
@@ -1227,7 +1227,7 @@ class MyContainer2 {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(AddAccountChildernPage(anak_id: null));
+                              Get.to(ChildrenEditorPage(anak_id: null));
                             },
                             child: DottedBorder(
                               options: CircularDottedBorderOptions(

@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stantapp/firebase_api.dart';
-import 'package:stantapp/pages/AddAccountChildern.dart';
+import 'package:stantapp/pages/ChildrenEditorPage.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/VaccinationPage.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';

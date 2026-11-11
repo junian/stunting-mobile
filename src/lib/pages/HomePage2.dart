@@ -1,6 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:stantapp/pages/AddAccountChildern.dart';
+import 'package:stantapp/pages/ChildrenEditorPage.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ChildrenDetailPage.dart';
 
