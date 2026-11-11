@@ -1,26 +1,26 @@
 // To parse this JSON data, do
 //
-//     final mGetKecamatan = mGetKecamatanFromJson(jsonString);
+//     final mGetDistrict = mGetDistrictFromJson(jsonString);
 
 import 'dart:convert';
 
-MGetKecamatan mGetKecamatanFromJson(String str) =>
-    MGetKecamatan.fromJson(json.decode(str));
+MGetDistrict mGetDistrictFromJson(String str) =>
+    MGetDistrict.fromJson(json.decode(str));
 
-String mGetKecamatanToJson(MGetKecamatan data) => json.encode(data.toJson());
+String mGetDistrictToJson(MGetDistrict data) => json.encode(data.toJson());
 
-class MGetKecamatan {
+class MGetDistrict {
   String kecamatanId;
   String kecamatanName;
   String cityId;
 
-  MGetKecamatan({
+  MGetDistrict({
     required this.kecamatanId,
     required this.kecamatanName,
     required this.cityId,
   });
 
-  factory MGetKecamatan.fromJson(Map<String, dynamic> json) => MGetKecamatan(
+  factory MGetDistrict.fromJson(Map<String, dynamic> json) => MGetDistrict(
         kecamatanId: json["kecamatan_id"],
         kecamatanName: json["kecamatan_name"],
         cityId: json["city_id"],

@@ -10,7 +10,7 @@ import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/RegionController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/MGetCity.dart';
-import 'package:stantapp/models/MGetKecamatan.dart';
+import 'package:stantapp/models/MGetDistrict.dart';
 import 'package:stantapp/models/MGetKelurahan.dart';
 import 'package:stantapp/models/MGetProvince.dart';
 import 'package:stantapp/pages/HomePage.dart';
@@ -557,7 +557,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                       ),
                                     ],
                                   ),
-                                  DropdownSearch<MGetKecamatan>(
+                                  DropdownSearch<MGetDistrict>(
                                     mode: Mode.custom,
                                     //showSearchBox: true,
                                     compareFn: (x,y)=>x.kecamatanId == y.kecamatanId,
@@ -585,7 +585,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                           "https://mystantapp.siuinsa.com/api/getKecamatan",
                                           data: formData);
                                       // print(response.data);
-                                      List<MGetKecamatan> allNameKecamatan = [];
+                                      List<MGetDistrict> allNameKecamatan = [];
 
                                       if (response.statusCode != 200) {
                                         return [];
@@ -593,7 +593,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         List allKecamatan = response.data;
 
                                         allKecamatan.forEach((element) {
-                                          allNameKecamatan.add(MGetKecamatan(
+                                          allNameKecamatan.add(MGetDistrict(
                                               kecamatanId:
                                                   element['kecamatan_id'],
                                               kecamatanName:
