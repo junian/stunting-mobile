@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
     filteredList = artikelController.artikel.toList();
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int dataLength = 0; // Ganti dengan panjang data aktual Anda
+    int dataLength = 0; // Replace with your actual data length
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -124,10 +124,10 @@ class _HomePageState extends State<HomePage> {
                 height: height * 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
-                      10.0), // Sesuaikan dengan radius yang Anda inginkan
+                      10.0), // Adjust to the radius you want
                   child: Image.asset(
                     'images/stuntingapp-$index.png',
-                    fit: BoxFit.cover, // Mengisi kontainer dengan gambar
+                    fit: BoxFit.cover, // Fill the container with the image
                   ),
                 ),
               ),
@@ -281,8 +281,8 @@ class _HomePageState extends State<HomePage> {
                   //             children: [
                   //               GestureDetector(
                   //                 onTap: () {
-                  //                   // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                  //                   // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                  //                   // Action to run when the notification bell icon is pressed
+                  //                   // For example, show a notification or navigate to the notification page
                   //                 },
                   //                 child: CircleAvatar(
                   //                   radius: 20, // Radius lingkaran
@@ -299,8 +299,8 @@ class _HomePageState extends State<HomePage> {
                   //               ),
                   //               GestureDetector(
                   //                 onTap: () {
-                  //                   // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                  //                   // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                  //                   // Action to run when the notification bell icon is pressed
+                  //                   // For example, show a notification or navigate to the notification page
                   //                 },
                   //                 child: CircleAvatar(
                   //                   radius: 20, // Radius lingkaran
@@ -330,7 +330,7 @@ class _HomePageState extends State<HomePage> {
                   //               color: Colors.grey.withOpacity(0.5),
                   //               spreadRadius: 1,
                   //               blurRadius: 10,
-                  //               offset: Offset(0, 2), // Menggeser bayangan ke bawah
+                  //               offset: Offset(0, 2), // Shift the shadow downward
                   //             ),
                   //           ],
                   //         ),
@@ -352,7 +352,7 @@ class _HomePageState extends State<HomePage> {
                   //             SizedBox(height: 16),
                   //             GestureDetector(
                   //               onTap: () {
-                  //                 // Aksi yang akan dijalankan ketika tombol ditekan
+                  //                 // Action to run when the button is pressed
                   //                 Get.to(
                   //                   AddAccountChildernPage(),
                   //                 );
@@ -428,7 +428,7 @@ class _HomePageState extends State<HomePage> {
                                   //     });
                                   //     Future.delayed(
                                   //         Duration(milliseconds: 500), () {
-                                  //       // Navigasi ke halaman BottomNavbar menggunakan Get.to()
+                                  //       // Navigate to the BottomNavbar page using Get.to()
                                   //       Get.to(BottomNavbar());
                                   //     });
                                   //   },
@@ -853,7 +853,7 @@ class MyContainer {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 10,
-                    offset: Offset(0, 2), // Menggeser bayangan ke bawah
+                    offset: Offset(0, 2), // Shift the shadow downward
                   ),
                 ],
               ),
@@ -875,7 +875,7 @@ class MyContainer {
                   SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      // Aksi yang akan dijalankan ketika tombol ditekan
+                      // Action to run when the button is pressed
                       Get.to(
                         AddAccountChildernPage(
                           anak_id: null,
@@ -930,20 +930,20 @@ class MyContainer2 {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    // Tanggal saat ini
+    // Current date
     DateTime currentDate = DateTime.now();
-// Tanggal kelahiran
+// Birth date
     DateTime birthDate =
         DateTime.parse(childernController.anakList[0]['tanggal_lahir']);
-// Hitung selisih antara tanggal saat ini dan tanggal kelahiran
+// Calculate the difference between the current date and the birth date
     Duration ageDifference = currentDate.difference(birthDate);
 
-// Hitung tahun, bulan, dan hari dari selisih yang dihitung
+// Calculate years, months, and days from the computed difference
     int years = ageDifference.inDays ~/ 365;
     int remainingMonths = (ageDifference.inDays % 365) ~/ 30;
     int remainingDays = ageDifference.inDays % 30;
 
-// Format hasil
+// Format the result
     String formattedAge = '';
     if (years > 0) {
       formattedAge += 'age_years'.trParams({'count': '$years'});
@@ -1111,7 +1111,7 @@ class MyContainer2 {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(0, 2), // Menggeser bayangan ke bawah
+                            offset: Offset(0, 2), // Shift the shadow downward
                           ),
                         ],
                       ),
@@ -1218,7 +1218,7 @@ class MyContainer2 {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(0, 2), // Menggeser bayangan ke bawah
+                            offset: Offset(0, 2), // Shift the shadow downward
                           ),
                         ],
                       ),

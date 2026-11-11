@@ -55,14 +55,14 @@ class GrowthEditorController extends GetxController {
           await _dio.post('$api/addPertumbuhanAnak', data: formData);
 
       if (response.statusCode == 200) {
-        // Data berhasil terkirim
+        // Data sent successfully
         print('Data berhasil terkirim');
       } else {
-        // Gagal mengirim data
+        // Failed to send data
         print('Gagal mengirim data');
       }
     } catch (e) {
-      // Error ketika mengirim data
+      // Error while sending data
       print('Error: $e');
     }
   }

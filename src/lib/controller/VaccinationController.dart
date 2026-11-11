@@ -54,16 +54,16 @@ class VaccinationController extends GetxController {
       final response = await _dio.post('$api/addVaksinAnak', data: formData);
 
       if (response.statusCode == 200) {
-        // Data berhasil terkirim
+        // Data sent successfully
         print('Data berhasil terkirim');
         Get.snackbar("success".tr, "vaccine_added_success".tr);
       } else {
         Get.snackbar("failed".tr, "vaccine_added_failed".tr);
-        // Gagal mengirim data
+        // Failed to send data
         print('Gagal mengirim data');
       }
     } catch (e) {
-      // Error ketika mengirim data
+      // Error while sending data
       print('Error: $e');
     }
   }
@@ -95,7 +95,7 @@ class VaccinationController extends GetxController {
         print('gk ada  data ');
       }
     } catch (e) {
-      // Error ketika mengirim data
+      // Error while sending data
       print('Error: $e');
     }
   }

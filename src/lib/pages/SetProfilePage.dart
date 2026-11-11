@@ -78,7 +78,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
       final image = await imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        // Mengambil file gambar yang dipilih
+        // Get the selected image file
         File imageTemporary = File(image.path);
 
         setState(() {
@@ -101,7 +101,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
         _lastEducation.isNotEmpty ? _lastEducation[0] : null;
     _selectedWorkType = _workType.isNotEmpty ? _workType[0] : null;
 
-    // Set nilai pada TextEditingControllers berdasarkan nilai dari isParent
+    // Set the TextEditingControllers values based on isParent
     if (authController.isParent.isNotEmpty) {
       nama_orang_tua.text = authController.isParent[0]['nama_orang_tua'] ?? '';
       alamat.text = authController.isParent[0]['alamat'] ?? '';
@@ -174,9 +174,9 @@ class _SetProfilePageState extends State<SetProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -189,9 +189,9 @@ class _SetProfilePageState extends State<SetProfilePage> {
               children: [
                 ListTile(
                   leading: image !=
-                          null // Cek apakah image tidak null (berarti gambar dari galeri telah dipilih)
+                          null // Check that image is not null (an image from the gallery has been selected)
                       ? ClipOval(
-                          // Jika ada gambar dari galeri, tampilkan gambar menggunakan ClipOval
+                          // If there is an image from the gallery, display it using ClipOval
                           child: Image(
                             image: FileImage(image!),
                             height: 60,
@@ -921,7 +921,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Aksi ketika tombol submit ditekan
+                          // Action when the submit button is pressed
                           if (authController.isParent.isNotEmpty) {
                             authController.registerOrangtua(
                                 authController.isParent[0]['orang_tua_id'],
@@ -949,7 +949,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                 pendapatan.text,
                                 image);
                           }
-                          // Anda dapat menambahkan logika atau tindakan lain di sini
+                          // You can add logic or another action here
                         },
                         child: Container(
                           width: double.infinity,

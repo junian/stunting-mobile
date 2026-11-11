@@ -45,9 +45,9 @@ class _VerificationPageState extends State<VerificationPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -140,7 +140,7 @@ class _VerificationPageState extends State<VerificationPage> {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          // Tindakan yang dijalankan ketika GestureDetector ditekan
+          // Action performed when the GestureDetector is pressed
           if (_onEditing == false) {
             regionController.getProvince();
             if (widget.phone_no.isNotEmpty) {

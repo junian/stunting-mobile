@@ -24,20 +24,20 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
   var sessionController = Get.put(SessionController());
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
   bool isDataInitialized = false;
-  String selectedAnak = ''; // Nilai anak yang dipilih
+  String selectedAnak = ''; // Selected child value
 
   List<dynamic> isChildern = [];
   List<Map<String, dynamic>> isHistoryGrow = [];
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
     isChildern = jsonDecode(childernController.dataAnak.toString());
     isHistoryGrow = riwayatPertumbuhanController.riwayatPertumbuhan;
     // await childernController.getAnakById(5.toString(), 5.toString());
     if (isChildern.isNotEmpty) {
       setState(() {
         isDataInitialized =
-            true; // Mengubah status inisialisasi data menjadi true
+            true; // Set the data initialization status to true
       });
     }
   }
@@ -87,7 +87,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                       childernController.getAnakById(
                           sessionController.user_id.value, data['anak_id']);
                     }
-                    Get.back(); // Menutup bottom sheet setelah aksi selesai
+                    Get.back(); // Close the bottom sheet after the action completes
                     isDataInitialized = false;
                     initializeData();
                     selectedAnak = data['anak_id'];
@@ -137,18 +137,18 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
     // }
     // }
 
-    // Tanggal saat ini
+    // Current date
     DateTime currentDate = DateTime.now();
-    // Tanggal kelahiran
+    // Birth date
     DateTime birthDate =
         DateTime.parse(childernController.anakList[0]['tanggal_lahir']);
-    // Hitung selisih bulan
+    // Calculate the month difference
     int diffMonths = (currentDate.year - birthDate.year) * 12 +
         currentDate.month -
         birthDate.month;
-    // Hitung selisih tahun
+    // Calculate the year difference
     int diffYears = diffMonths ~/ 12;
-    // Format hasil
+    // Format the result
     String formattedAge;
     if (diffYears > 0) {
       int remainingMonths = diffMonths % 12;
@@ -172,14 +172,14 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                           children: [
                             Container(
                               width:
-                                  40, // Sesuaikan dengan radius pada CircleAvatar
+                                  40, // Match the radius of the CircleAvatar
                               height:
-                                  40, // Sesuaikan dengan radius pada CircleAvatar
+                                  40, // Match the radius of the CircleAvatar
                               decoration: BoxDecoration(
                                 shape: BoxShape
-                                    .circle, // Membuat container berbentuk bulat
+                                    .circle, // Make the container circular
                                 color: Colors
-                                    .blue, // Ganti dengan warna latar belakang yang Anda inginkan
+                                    .blue, // Replace with your preferred background color
                               ),
                               child: isChildern[0]['photo'] != null
                                   ? ClipOval(

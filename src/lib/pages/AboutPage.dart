@@ -17,13 +17,13 @@ class _AboutPageState extends State<AboutPage> {
   String isParams = "";
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
     await parameterController.getParameter("5");
     isParams = parameterController.parameterValue.toString();
 
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 

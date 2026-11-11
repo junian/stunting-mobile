@@ -36,7 +36,7 @@ class VideoController extends GetxController {
         print('gk ada  data ');
       }
     } catch (e) {
-      // Error ketika mengirim data
+      // Error while sending data
       print('Error: $e');
     }
   }

@@ -33,12 +33,12 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
   List<Map<String, dynamic>> filteredList = [];
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
     await riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
     filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 
@@ -55,7 +55,7 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
       filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
 
       filteredList.sort((a, b) {
-        // Membandingkan nilai berdasarkan tanggal pembuatan (created_date)
+        // Compare values by creation date (created_date)
         DateTime dateA = DateTime.parse(a['created_date']);
         DateTime dateB = DateTime.parse(b['created_date']);
 
@@ -69,7 +69,7 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
   }
 
   Future<void> _refreshData() async {
-    // Simulasikan proses pembaruan data (misalnya: pengambilan data baru dari server)
+    // Simulate the data refresh process (e.g. fetching new data from the server)
     riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
     await Future.delayed(Duration(seconds: 2));
 

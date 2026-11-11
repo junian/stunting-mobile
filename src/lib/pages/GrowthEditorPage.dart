@@ -32,7 +32,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
       final pickedFile = await imagePicker.pickImage(source: source);
 
       if (pickedFile != null) {
-        // Mengambil file gambar yang dipilih
+        // Get the selected image file
         File pickedImageFile = File(pickedFile.path);
 
         setState(() {
@@ -375,7 +375,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                 child: Center(
                   child: GestureDetector(
                     onTap: () {
-                      // Aksi ketika tombol unggah foto ditekan
+                      // Action when the upload photo button is pressed
                       _pickImage(ImageSource.gallery);
                     },
                     child: DottedBorder(
@@ -422,7 +422,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                   width: width,
                   height: height * 0.2,
                   child: tambahPertumbuhanAnak.pickedImage == null
-                      ? SizedBox() // Tampilkan data kosong jika belum ada gambar terpilih
+                      ? SizedBox() // Show an empty placeholder if no image has been selected
                       : Image.file(tambahPertumbuhanAnak.pickedImage!),
                 ),
               )

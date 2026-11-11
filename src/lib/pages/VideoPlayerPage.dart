@@ -22,7 +22,7 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget
-          .id, // Ganti VIDEO_ID dengan ID video YouTube yang ingin Anda tampilkan.
+          .id, // Replace VIDEO_ID with the ID of the YouTube video you want to display.
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: false,

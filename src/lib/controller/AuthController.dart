@@ -49,7 +49,7 @@ class AuthController extends GetxController {
           ),
         );
       } else {
-        // Data tidak ditemukan
+        // Data not found
         // Fluttertoast.showToast(
         //   msg: 'User not found',
         //   toastLength: Toast.LENGTH_LONG,
@@ -80,16 +80,16 @@ class AuthController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(loggedInKey, true);
 
-        // Data ditemukan
+        // Data found
         String email = response.data['user']['email'];
         String user_id = response.data['user']['user_id'];
         sessionController.setData(email, user_id);
         await prefs.setString('email', email);
         await prefs.setString('user_id', user_id);
 
-        //cek apakah ada orang tua atau tidak
+        // Check whether a parent exists
         await getOrangTua(user_id);
-        // Set nilai variabel list dengan response data
+        // Set the list variable values with the response data
         if (isParent.isEmpty) {
           var regionController = Get.put(RegionController());
           return Get.offAll(SetProfilePage(
@@ -99,7 +99,7 @@ class AuthController extends GetxController {
           Get.offAll(BottomNavbar());
         }
       } else {
-        // Data tidak ditemukan
+        // Data not found
         Fluttertoast.showToast(
           msg: response.data['message'].toString(),
           toastLength: Toast.LENGTH_LONG,
@@ -132,16 +132,16 @@ class AuthController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(loggedInKey, true);
 
-        // Data ditemukan
+        // Data found
         String email = response.data['user']['email'];
         String user_id = response.data['user']['user_id'];
         sessionController.setData(email, user_id);
         await prefs.setString('email', email);
         await prefs.setString('user_id', user_id);
 
-        //cek apakah ada orang tua atau tidak
+        // Check whether a parent exists
         await getOrangTua(user_id);
-        // Set nilai variabel list dengan response data
+        // Set the list variable values with the response data
         if (isParent.isEmpty) {
           var regionController = Get.put(RegionController());
           return Get.offAll(SetProfilePage(
@@ -151,7 +151,7 @@ class AuthController extends GetxController {
           Get.offAll(BottomNavbar());
         }
       } else {
-        // Data tidak ditemukan
+        // Data not found
         Fluttertoast.showToast(
           msg: response.data['message'].toString(),
           toastLength: Toast.LENGTH_LONG,

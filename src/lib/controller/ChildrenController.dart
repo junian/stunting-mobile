@@ -25,10 +25,10 @@ class ChildrenController extends GetxController {
   final dio.Dio _dio = dio.Dio();
 
   RxList<dynamic> anakList =
-      <dynamic>[].obs; // Variabel RxList untuk menyimpan data anak
+      <dynamic>[].obs; // RxList variable to store child data
 
   final RxList<dynamic> dataAnak =
-      RxList<dynamic>([]); // Variabel RxList untuk menyimpan data anak
+      RxList<dynamic>([]); // RxList variable to store child data
 
   Future<void> registerAnak(
     String user_id,

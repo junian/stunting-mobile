@@ -19,7 +19,7 @@ class CountdownTimer extends StatefulWidget {
 class _CountdownTimerState extends State<CountdownTimer> {
   var authController = Get.put(AuthController());
 
-  int countdown = 10 * 60; // Jumlah detik dalam 10 menit
+  int countdown = 10 * 60; // Number of seconds in 10 minutes
   Timer? timer;
 
   @override
@@ -61,10 +61,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
     return GestureDetector(
       onTap: () {
         if (countdown == 0) {
-          // Tindakan yang dijalankan ketika teks "Kirim Ulang Kode" ditekan
+          // Action performed when the "Kirim Ulang Kode" text is pressed
           authController.reqAuthCode(widget.email, widget.phone_no);
-          // Misalnya, mengirim ulang kode verifikasi
-          startTimer(); // Memulai timer kembali setelah dikirim ulang
+          // For example, resending the verification code
+          startTimer(); // Restart the timer after resending
         }
       },
       child: Text(

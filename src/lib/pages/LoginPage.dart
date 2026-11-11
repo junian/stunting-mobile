@@ -33,9 +33,9 @@ class _LoginPageState extends State<LoginPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: height / 24),
                 GestureDetector(
                   onTap: () {
-                    // Aksi ketika tombol submit ditekan
+                    // Action when the submit button is pressed
                     if (emailController.text.isEmpty) {
                       // Fluttertoast.showToast(
                       //   msg: 'Field Cant null',
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Get.to(
                     //   SetProfilePage(),
                     // );
-                    // Anda dapat menambahkan logika atau tindakan lain di sini
+                    // You can add logic or another action here
                   },
                   child: Container(
                     width: double.infinity,
@@ -141,11 +141,11 @@ class _LoginPageState extends State<LoginPage> {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      // Tindakan yang dijalankan ketika teks "Daftar" ditekan
+                      // Action performed when the "Register" text is pressed
                       Get.to(
                         RegisterPage(),
                       );
-                      // Misalnya, pindah ke halaman pendaftaran
+                      // For example, navigate to the registration page
                     },
                     child: RichText(
                       text: TextSpan(

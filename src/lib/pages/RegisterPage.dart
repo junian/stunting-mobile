@@ -33,9 +33,9 @@ class _RegisterPageState extends State<RegisterPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -161,8 +161,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   Flexible(
                     child: GestureDetector(
                       onTap: () {
-                        // Tindakan yang dijalankan ketika tautan teks "Syarat dan Ketentuan" ditekan
-                        // Misalnya, tampilkan dialog dengan informasi syarat dan ketentuan
+                        // Action performed when the "Terms and Conditions" text link is pressed
+                        // For example, show a dialog with the terms and conditions
                       },
                       child: RichText(
                         text: TextSpan(
@@ -177,11 +177,11 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // Tindakan yang dijalankan ketika tautan teks "Syarat dan Ketentuan" ditekan
+                                  // Action performed when the "Terms and Conditions" text link is pressed
                                   Get.to(
                                     SnkPage(),
                                   );
-                                  // Misalnya, tampilkan dialog dengan informasi syarat dan ketentuan
+                                  // For example, show a dialog with the terms and conditions
                                 },
                             ),
                             TextSpan(text: 'terms_suffix'.tr),
@@ -195,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: height / 80),
               GestureDetector(
                 onTap: () {
-                  // Aksi ketika tombol submit ditekan
+                  // Action when the submit button is pressed
                   if (emailController.text.isNotEmpty &&
                       phone_noController.text.isNotEmpty &&
                       agreeToTerms == true) {
@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   } else {
                     Get.snackbar("warning".tr, "fill_required_fields".tr);
                   }
-                  // Anda dapat menambahkan logika atau tindakan lain di sini
+                  // You can add logic or another action here
                 },
                 child: Container(
                   width: double.infinity,

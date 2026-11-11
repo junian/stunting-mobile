@@ -41,7 +41,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
       final image = await imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        // Mengambil file gambar yang dipilih
+        // Get the selected image file
         File imageTemporary = File(image.path);
 
         setState(() {
@@ -203,7 +203,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
         );
       },
     ).whenComplete(() {
-      // Inisialisasi ulang nilai _selectedOption
+      // Reinitialize the _selectedOption value
       // setState(() {
       //   _selectedOption = null;
       // });

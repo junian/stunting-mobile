@@ -93,7 +93,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             children: [
               Offstage(
                 offstage:
-                    _bottomNavIndex != 0, // Mengatur visibilitas halaman ke-0
+                    _bottomNavIndex != 0, // Control the visibility of page 0
                 child: Container(
                   height: availableHeight,
                   child: HomePage(),
@@ -101,12 +101,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
               Offstage(
                 offstage:
-                    _bottomNavIndex != 1, // Mengatur visibilitas halaman ke-1
+                    _bottomNavIndex != 1, // Control the visibility of page 1
                 child: ArticlePage(),
               ),
               Offstage(
                 offstage:
-                    _bottomNavIndex != 2, // Mengatur visibilitas halaman ke-3
+                    _bottomNavIndex != 2, // Control the visibility of page 3
                 child: SettingUserPage(),
               ),
             ],

@@ -41,9 +41,9 @@ class _SetProfilePage2State extends State<SetProfilePage2> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -247,11 +247,11 @@ class _SetProfilePage2State extends State<SetProfilePage2> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Aksi ketika tombol submit ditekan
+                        // Action when the submit button is pressed
                         Get.to(
                           BottomNavbar(),
                         );
-                        // Anda dapat menambahkan logika atau tindakan lain di sini
+                        // You can add logic or another action here
                       },
                       child: Container(
                         width: double.infinity,

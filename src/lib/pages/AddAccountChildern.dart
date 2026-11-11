@@ -54,7 +54,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
       final image = await imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        // Mengambil file gambar yang dipilih
+        // Get the selected image file
         File imageTemporary = File(image.path);
 
         setState(() {
@@ -74,7 +74,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
     if (widget.anak_id != null) {
       isChildern = jsonDecode(childernController.dataAnak.toString());
 
-      // Set nilai pada TextEditingControllers berdasarkan nilai dari isChildern
+      // Set the TextEditingControllers values based on isChildern
       nama_anak.text = isChildern[0]['nama_anak'] ?? '';
       dateinput.text = isChildern[0]['tanggal_lahir'] ?? '';
       // jenis_kelamin.text = isChildern[0]['jenis_kelamin'] ?? '';
@@ -127,9 +127,9 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),
@@ -376,7 +376,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 // Center(
                 //   child: GestureDetector(
                 //     onTap: () {
-                //       // Aksi ketika tombol unggah foto ditekan
+                //       // Action when the upload photo button is pressed
                 //     },
                 //     child: DottedBorder(
                 //       borderType: BorderType.RRect,

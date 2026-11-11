@@ -221,12 +221,12 @@ class _VaccinationScheduleByIdaiPageState
                     if (previousPage! >= 0 && previousPage! < pages!) {
                       _controller.future.then((controller) {
                         int nextPage =
-                            previousPage! - 1; // Mengurangi 1 dari previousPage
+                            previousPage! - 1; // Subtract 1 from previousPage
                         controller.setPage(nextPage);
                         setState(() {
                           currentPage = nextPage;
                           previousPage =
-                              nextPage - 1; // Mengurangi 1 dari nextPage
+                              nextPage - 1; // Subtract 1 from nextPage
                         });
                       });
                     }

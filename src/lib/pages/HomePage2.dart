@@ -86,8 +86,8 @@ class HomePage2 extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                              // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                              // Action to run when the notification bell icon is pressed
+                              // For example, show a notification or navigate to the notification page
                             },
                             child: CircleAvatar(
                               radius: 20, // Radius lingkaran
@@ -104,8 +104,8 @@ class HomePage2 extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Aksi yang akan dijalankan ketika ikon lonceng notifikasi ditekan
-                              // Misalnya, tampilkan notifikasi atau navigasikan ke halaman notifikasi
+                              // Action to run when the notification bell icon is pressed
+                              // For example, show a notification or navigate to the notification page
                             },
                             child: CircleAvatar(
                               radius: 20, // Radius lingkaran
@@ -180,7 +180,7 @@ class HomePage2 extends StatelessWidget {
                                   spreadRadius: 1,
                                   blurRadius: 10,
                                   offset: Offset(
-                                      0, 2), // Menggeser bayangan ke bawah
+                                      0, 2), // Shift the shadow downward
                                 ),
                               ],
                             ),
@@ -271,7 +271,7 @@ class HomePage2 extends StatelessWidget {
                                   spreadRadius: 1,
                                   blurRadius: 10,
                                   offset: Offset(
-                                      0, 2), // Menggeser bayangan ke bawah
+                                      0, 2), // Shift the shadow downward
                                 ),
                               ],
                             ),

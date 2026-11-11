@@ -23,14 +23,14 @@ class _ArticlePageState extends State<ArticlePage> {
   bool isDataInitialized = false;
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 3)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 3)); // Wait for 2 seconds
     // await artikelController.getArtikel();
     await artikelController.getArtikelKategori();
     filteredList = artikelController.artikel.toList();
     categories = artikelController.kategori.toList();
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 
@@ -271,7 +271,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                 subtitle: Text("author_by".trParams(
                                     {"author": artikel.fullname})),
                                 onTap: () {
-                                  // Tambahkan aksi ketika artikel diklik di sini
+                                  // Add the action for when an article is clicked here
                                 },
                               ),
                               Container(

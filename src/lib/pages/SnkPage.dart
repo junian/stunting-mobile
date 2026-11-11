@@ -18,12 +18,12 @@ class _SnkPageState extends State<SnkPage> {
   String isParams = "";
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
     await parameterController.getParameter("1");
     isParams = parameterController.parameterValue.toString();
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 
@@ -43,9 +43,9 @@ class _SnkPageState extends State<SnkPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi ketika ikon kembali ditekan
+            // Action when the back icon is pressed
             Get.back();
-            // Anda dapat menambahkan Navigator.pop atau tindakan lain di sini
+            // You can add Navigator.pop or another action here
           },
         ),
       ),

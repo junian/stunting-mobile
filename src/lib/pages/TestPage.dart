@@ -17,10 +17,10 @@ class _TestPageState extends State<TestPage> {
   List<dynamic> _dataProvince = [];
   void getProvince() async {
     final respose = await http
-        .get((_baseUrl) as Uri); //untuk melakukan request ke webservice
-    var listData = jsonDecode(respose.body); //lalu kita decode hasil datanya
+        .get((_baseUrl) as Uri); // make a request to the web service
+    var listData = jsonDecode(respose.body); // then we decode the resulting data
     setState(() {
-      _dataProvince = listData; // dan kita set kedalam variable _dataProvince
+      _dataProvince = listData; // and assign it to the _dataProvince variable
     });
     print("data : $listData");
   }
@@ -29,7 +29,7 @@ class _TestPageState extends State<TestPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getProvince(); //Ketika pertama kali membuka home screen makan method ini dijalankan untuk pertama kalinya juga
+    getProvince(); // When the home screen is first opened, this method also runs for the first time
   }
 
   @override

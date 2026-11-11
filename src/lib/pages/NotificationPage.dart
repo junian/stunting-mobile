@@ -19,11 +19,11 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
   List<dynamic> isNotification = [];
 
   Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 3)); // Menunggu selama 2 detik
+    await Future.delayed(Duration(seconds: 3)); // Wait for 2 seconds
 
     setState(() {
       isDataInitialized =
-          true; // Mengubah status inisialisasi data menjadi true
+          true; // Set the data initialization status to true
     });
   }
 

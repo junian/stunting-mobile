@@ -36,10 +36,10 @@ class _WelcomePageState extends State<WelcomePage> {
                 Container(
                   padding: EdgeInsets.only(top: height * 0.1),
                   child: Image.asset(
-                    // 'images/image_$index.png', // Ganti dengan path atau nama file gambar yang Anda miliki
+                    // 'images/image_$index.png', // Replace with the path or filename of the image you have
                     'images/logo.png',
-                    width: width * 0.5, // Atur lebar gambar sesuai kebutuhan
-                    height: height * 0.4, // Atur tinggi gambar sesuai kebutuhan
+                    width: width * 0.5, // Set the image width as needed
+                    height: height * 0.4, // Set the image height as needed
                   ),
                 ),
                 Padding(
@@ -155,7 +155,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Tambahkan logika untuk aksi ketika tombol "Login" ditekan
+                              // Add logic for the action when the "Login" button is pressed
                               Get.to(
                                 LoginPage(),
                               );

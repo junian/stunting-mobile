@@ -15,7 +15,7 @@ class ImmunizationController extends GetxController {
   final dio.Dio _dio = dio.Dio();
 
   RxList<dynamic> jadwalVaksin =
-      <dynamic>[].obs; // Variabel RxList untuk menyimpan data anak
+      <dynamic>[].obs; // RxList variable to store child data
 
   Future<void> getJadwalVaksin(String anak_id) async {
     try {

@@ -32,14 +32,14 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
   late String cleanedDescription;
 
   String cleanHtml(String htmlString) {
-    // Menguraikan teks HTML
+    // Parse the HTML text
     final document = html.parse(htmlString);
 
-    // Mengambil teks dari elemen
+    // Get the text from the element
     final plainText = document.body?.text;
 
     return plainText ??
-        ''; // Mengembalikan teks biasa, jika ada, atau string kosong jika tidak ada teks
+        ''; // Return the plain text, if any, or an empty string if there is no text
   }
 
   @override

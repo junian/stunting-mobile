@@ -43,7 +43,7 @@ class _VaccinationSchedulePageState extends State<VaccinationSchedulePage> {
   }
 
   Future<void> _refreshData() async {
-    // Simulasikan proses pembaruan data (misalnya: pengambilan data baru dari server)
+    // Simulate the data refresh process (e.g. fetching new data from the server)
     await jadwalVaksinasiController.getJadwalVaksin(widget.anak_id);
     await Future.delayed(Duration(seconds: 2));
   }
