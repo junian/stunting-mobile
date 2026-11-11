@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:growthtracker/controller/GrowthEditorController.dart';
 
 class GrowthEditorPage extends StatefulWidget {
@@ -58,15 +59,29 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
         title: Text('add_growth_data'.tr),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          tambahPertumbuhanAnak.addPertumbuhanAnak(
+        onTap: () async {
+          final berat =
+              double.tryParse(tambahPertumbuhanAnak.beratBadan.text);
+          final tinggi =
+              double.tryParse(tambahPertumbuhanAnak.tinggiBadan.text);
+          final lingkar =
+              double.tryParse(tambahPertumbuhanAnak.lingkarKepala.text);
+
+          if (berat == null ||
+              tinggi == null ||
+              lingkar == null ||
+              dateinput.text.isEmpty) {
+            Fluttertoast.showToast(msg: 'complete_form_message'.tr);
+            return;
+          }
+
+          await tambahPertumbuhanAnak.addPertumbuhanAnak(
               anakID: widget.anakID,
               selectedDate: dateinput.text,
-              pickedImage: tambahPertumbuhanAnak.pickedImage as File,
-              beratBadan: double.parse(tambahPertumbuhanAnak.beratBadan.text),
-              tinggiBadan: double.parse(tambahPertumbuhanAnak.tinggiBadan.text),
-              lingkarKepala:
-                  double.parse(tambahPertumbuhanAnak.lingkarKepala.text),
+              pickedImage: tambahPertumbuhanAnak.pickedImage,
+              beratBadan: berat,
+              tinggiBadan: tinggi,
+              lingkarKepala: lingkar,
               tinggiBadanIbu: widget.tinggiBadanIbu,
               tinggiBadanAyah: widget.tinggiBadanAyah);
           Get.back();

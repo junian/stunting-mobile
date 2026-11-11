@@ -92,7 +92,8 @@ class _SettingUserPageState extends State<SettingUserPage> {
                   leading: CircleAvatar(
                     radius: 40,
                     backgroundColor: Colors.grey,
-                    child: authController.isParent?[0]?['photo'] != null
+                    child: authController.isParent.isNotEmpty &&
+                            authController.isParent[0]['photo'] != null
                         ? ClipOval(
                             child: Image.network(
                               "https://mystantapp.siuinsa.com/" +
@@ -109,7 +110,9 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           ),
                   ),
                   title: Text(
-                    '${authController.isParent[0]["nama_orang_tua"]}',
+                    authController.isParent.isNotEmpty
+                        ? '${authController.isParent[0]["nama_orang_tua"]}'
+                        : '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),

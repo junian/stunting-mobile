@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:growthtracker/controller/GrowthEditorController.dart';
 
 class GrowthDetailPage extends StatelessWidget {
   String pertumbuhanAnakId;
@@ -40,6 +41,36 @@ class GrowthDetailPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text('growth_detail'.tr),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete_outline),
+            onPressed: () async {
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: Text('delete'.tr),
+                  content: Text('delete_growth_message'.tr),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext, false),
+                      child: Text('cancel'.tr),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext, true),
+                      child: Text('delete'.tr),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirmed != true) return;
+
+              await GrowthEditorController()
+                  .deletePertumbuhanAnak(pertumbuhanAnakId);
+              Get.back();
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

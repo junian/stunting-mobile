@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/pages/LoginPage.dart';
 import 'package:growthtracker/controller/AuthController.dart';
-import 'package:growthtracker/pages/WelcomePage.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 
 import 'HomePage.dart';
@@ -14,15 +13,12 @@ class SplashScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     authController.checkAuthentication();
 
-    // Delay splash screen for 2 seconds
+    // Delay splash screen for 2 seconds, then go straight to the main page:
+    // an account is not required to use the app.
     Future.delayed(
       Duration(seconds: 2),
       () {
-        if (authController.isAuthenticated.value) {
-          Get.offAll((BottomNavbar()));
-        } else {
-          Get.offAll(WelcomePage());
-        }
+        Get.offAll(BottomNavbar());
       },
     );
 

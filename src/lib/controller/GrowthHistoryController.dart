@@ -1,43 +1,46 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:growthtracker/helper/Constant.dart';
-import 'package:growthtracker/models/MGetArticle.dart';
-import 'package:growthtracker/models/MGetArticleCategory.dart';
-// import 'package:growthtracker/models/MGetJadwalVaksinasi.dart';
-import 'package:growthtracker/models/MGetGrowthRecord.dart';
+import 'package:growthtracker/helper/AgeHelper.dart';
+import 'package:growthtracker/services/LocalStore.dart';
 
+/// Reads the growth records this device has stored for a child.
 class GrowthHistoryController extends GetxController {
-  final api = helper.api;
-  final dio.Dio _dio = dio.Dio();
+  final LocalStore _store = LocalStore();
+
   RxList<Map<String, dynamic>> riwayatPertumbuhan =
       RxList<Map<String, dynamic>>([]);
 
   Future<String> getPertumbuhanAnak(String anakID) async {
     riwayatPertumbuhan.clear();
     try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'anak_id': anakID,
-      });
+      final records = await _store.growthRecords();
+      final birth = _parse((await _store.childById(anakID))?['tanggal_lahir']);
 
-      final response =
-          await _dio.post('$api/getPertumbuhanAnak', data: formData);
-
-      if (response.statusCode == 200) {
-        List riwayatAnak = response.data;
-
-        List<Map<String, dynamic>> convertedList =
-            riwayatAnak.map((item) => item as Map<String, dynamic>).toList();
-        riwayatPertumbuhan.value = convertedList;
-      } else {
-        print("erorr");
-      }
+      riwayatPertumbuhan.value = records
+          .where((record) => record['anak_id'] == anakID)
+          .map((record) => _withAge(record, birth))
+          .toList();
     } catch (e) {
-      print(e);
+      print('Could not load growth records: $e');
     }
 
     return "sukses";
+  }
+
+  /// The age is recalculated on read so it follows edits to the birth date.
+  Map<String, dynamic> _withAge(Map<String, dynamic> record, DateTime? birth) {
+    final result = Map<String, dynamic>.from(record);
+    final measured = _parse(record['tanggal_pertumbuhan']) ??
+        _parse(record['created_date']);
+    result['umur'] = ageLabel(birth, measured ?? DateTime.now());
+    return result;
+  }
+
+  DateTime? _parse(dynamic value) {
+    if (value is! String || value.isEmpty) return null;
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
+    }
   }
 }

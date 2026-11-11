@@ -1,19 +1,14 @@
 import 'dart:io';
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:growthtracker/helper/Constant.dart';
-import 'package:growthtracker/models/MGetArticle.dart';
-import 'package:growthtracker/models/MGetArticleCategory.dart';
-// import 'package:growthtracker/models/MGetJadwalVaksinasi.dart';
-import 'package:growthtracker/models/MGetGrowthRecord.dart';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:growthtracker/helper/AgeHelper.dart';
+import 'package:growthtracker/services/LocalStore.dart';
+
+/// Creates, reads and deletes the growth records stored on this device.
 class GrowthEditorController extends GetxController {
-  final api = helper.api;
-  final dio.Dio _dio = dio.Dio();
+  final LocalStore _store = LocalStore();
+
   File? pickedImage;
   TextEditingController beratBadan = TextEditingController();
   TextEditingController tinggiBadan = TextEditingController();
@@ -22,7 +17,7 @@ class GrowthEditorController extends GetxController {
   Future<void> addPertumbuhanAnak({
     required String anakID,
     required String selectedDate,
-    required File pickedImage,
+    File? pickedImage,
     required double beratBadan,
     required double tinggiBadan,
     required double lingkarKepala,
@@ -30,61 +25,74 @@ class GrowthEditorController extends GetxController {
     required String tinggiBadanAyah,
   }) async {
     try {
-      // String formattedDate = selectedDate.toIso8601String();
+      String? photoPath;
+      if (pickedImage != null) {
+        photoPath = await _store.savePhoto(pickedImage);
+      }
 
-      dio.FormData formData = dio.FormData.fromMap({
+      final measuredAt = _parse(selectedDate) ?? DateTime.now();
+      final record = <String, dynamic>{
+        'pertumbuhan_anak_id': _store.newId('pertumbuhan_'),
         'anak_id': anakID,
         'tanggal_pertumbuhan': selectedDate,
         'berat_badan': beratBadan,
         'tinggi_badan': tinggiBadan,
         'lingkar_kepala': lingkarKepala,
         'tinggi_badan_ibu': tinggiBadanIbu,
-        'tinggi_badan_ayah': tinggiBadanAyah
-      });
+        'tinggi_badan_ayah': tinggiBadanAyah,
+        'photo': photoPath,
+        'created_date': DateTime.now().toIso8601String(),
+        'umur': ageLabel(
+            _parse((await _store.childById(anakID))?['tanggal_lahir']),
+            measuredAt),
+        // Growth status needs the WHO reference tables, which this app does
+        // not carry offline yet.
+        'status_pertumbuhan_berat': null,
+        'status_pertumbuhan_tinggi': null,
+        'status_pertumbuhan_lingkar_kepala': null,
+      };
 
-      if (pickedImage != null) {
-        String fileName = pickedImage.path.split('/').last;
-        formData.files.add(MapEntry(
-            'photo',
-            await dio.MultipartFile.fromFile(pickedImage.path,
-                filename: fileName)));
-      }
-
-      final response =
-          await _dio.post('$api/addPertumbuhanAnak', data: formData);
-
-      if (response.statusCode == 200) {
-        // Data sent successfully
-        print('Data berhasil terkirim');
-      } else {
-        // Failed to send data
-        print('Gagal mengirim data');
-      }
+      final records = await _store.growthRecords();
+      records.add(record);
+      await _store.saveGrowthRecords(records);
     } catch (e) {
-      // Error while sending data
-      print('Error: $e');
+      print('Could not save growth record: $e');
     }
   }
 
-  Future editPertumbuhanAnak(String pertumbuhanAnakId) async {
-    try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'pertumbuhan_anak_id': pertumbuhanAnakId,
-      });
-
-      final response =
-          await _dio.post('$api/getDetailPertumbuhanAnak', data: formData);
-      if (response.statusCode == 200) {
-        Map<String, dynamic> responseData = response.data;
-        if (responseData.isNotEmpty) {
-          print(responseData);
-        }
-        return response.data;
-      } else {
-        print("erorr");
+  Future<Map<String, dynamic>?> editPertumbuhanAnak(
+      String pertumbuhanAnakId) async {
+    final records = await _store.growthRecords();
+    for (final record in records) {
+      if (record['pertumbuhan_anak_id'] == pertumbuhanAnakId) {
+        return Map<String, dynamic>.from(record);
       }
-    } catch (e) {
-      print(e);
+    }
+    return null;
+  }
+
+  Future<void> deletePertumbuhanAnak(String pertumbuhanAnakId) async {
+    final records = await _store.growthRecords();
+    Map<String, dynamic>? removed;
+    for (final record in records) {
+      if (record['pertumbuhan_anak_id'] == pertumbuhanAnakId) {
+        removed = record;
+        break;
+      }
+    }
+
+    records.removeWhere(
+        (record) => record['pertumbuhan_anak_id'] == pertumbuhanAnakId);
+    await _store.saveGrowthRecords(records);
+    await _store.deletePhoto(removed?['photo'] as String?);
+  }
+
+  DateTime? _parse(dynamic value) {
+    if (value is! String || value.isEmpty) return null;
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
     }
   }
 }

@@ -17,6 +17,7 @@ import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 import 'package:growthtracker/pages/NotificationPage.dart';
 import 'package:growthtracker/pages/SetProfilePage.dart';
 import 'package:growthtracker/pages/VideoPlayerPage.dart';
+import 'package:growthtracker/widget/AppPhoto.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -49,8 +50,11 @@ class _HomePageState extends State<HomePage> {
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2));
     await artikelController.getArtikel();
+    // Children live on the device, so they load for guests as well.
     await childernController.getAnak(sessionController.user_id.value, null);
-    await authController.getOrangTua(sessionController.user_id.toString());
+    if (sessionController.user_id.value.isNotEmpty) {
+      await authController.getOrangTua(sessionController.user_id.value);
+    }
     await videoController.getParameterSplitted(parameter_id: "8");
 
     filteredList = artikelController.artikel.toList();
@@ -783,7 +787,9 @@ class MyContainer {
                 Container(
                   width: width * 0.5,
                   child: Text(
-                    'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
+                    authController.isParent.isNotEmpty
+                        ? 'Hai, ${authController.isParent[0]["nama_orang_tua"]}'
+                        : 'Hai',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -966,7 +972,9 @@ class MyContainer2 {
                       child: Text(
                         'greeting'.trParams({
                           'name':
-                              '${authController.isParent[0]["nama_orang_tua"]}'
+                              authController.isParent.isNotEmpty
+                                  ? '${authController.isParent[0]["nama_orang_tua"]}'
+                                  : 'Hai'
                         }),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -1122,13 +1130,11 @@ class MyContainer2 {
                                               ['photo'] !=
                                           null
                                       ? ClipOval(
-                                          child: Image.network(
-                                            "https://mystantapp.siuinsa.com/" +
-                                                childernController.anakList[0]
-                                                    ['photo'],
+                                          child: AppPhoto(
+                                            childernController.anakList[0]
+                                                ['photo'],
                                             width: 70,
                                             height: 70,
-                                            fit: BoxFit.cover,
                                           ),
                                         )
                                       : Icon(

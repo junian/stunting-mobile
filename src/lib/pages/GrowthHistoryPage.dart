@@ -6,6 +6,7 @@ import '../controller/GrowthHistoryController.dart';
 import '../controller/GrowthEditorController.dart';
 import 'GrowthDetailPage.dart';
 import 'GrowthEditorPage.dart';
+import 'package:growthtracker/widget/AppPhoto.dart';
 
 class GrowthHistoryPage extends StatefulWidget {
   String anak_id;
@@ -98,7 +99,9 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
           Get.to(GrowthEditorPage(
               anakID: widget.anak_id,
               tinggiBadanAyah: widget.tinggi_badan_ayah,
-              tinggiBadanIbu: widget.tinggi_badan_ibu));
+              tinggiBadanIbu: widget.tinggi_badan_ibu))?.then(
+            (_) => _refreshData(),
+          );
         },
         child: Container(
             alignment: Alignment.center,
@@ -270,15 +273,15 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
                                           detailRiwayatPertumbuhanController
                                               .getDetailPertumbuhan(
                                                   data['pertumbuhan_anak_id'],
-                                                  data['umur']);
+                                                  data['umur'])
+                                              .then((_) => _refreshData());
                                         },
                                         child: data['photo'] != null
                                             ? Container(
                                                 height: height * 0.03,
                                                 width: width * 0.06,
-                                                child: Image.network(
-                                                  "https://mystantapp.siuinsa.com/" +
-                                                      data['photo'],
+                                                child: AppPhoto(
+                                                  data['photo'],
                                                   fit: BoxFit.contain,
                                                 ),
                                                 // child: Icon(
@@ -303,7 +306,8 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
                                           detailRiwayatPertumbuhanController
                                               .getDetailPertumbuhan(
                                                   data['pertumbuhan_anak_id'],
-                                                  data['umur']);
+                                                  data['umur'])
+                                              .then((_) => _refreshData());
                                         },
                                         child: Icon(
                                           Icons.arrow_forward_ios,

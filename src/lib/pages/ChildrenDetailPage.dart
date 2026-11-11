@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
@@ -11,6 +9,8 @@ import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:growthtracker/pages/VaccinationSchedulePage.dart';
 import 'package:growthtracker/pages/GrowthHistoryPage.dart';
 import 'package:growthtracker/pages/GrowthEditorPage.dart';
+import 'package:growthtracker/widget/AppPhoto.dart';
+import 'package:growthtracker/widget/BottomNavbar.dart';
 
 class ChildrenDetailPage extends StatefulWidget {
   ChildrenDetailPage({super.key});
@@ -31,7 +31,15 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
-    isChildern = jsonDecode(childernController.dataAnak.toString());
+    isChildern = List<dynamic>.from(childernController.dataAnak);
+
+    if (selectedAnak.isEmpty && childernController.anakList.isNotEmpty) {
+      selectedAnak = childernController.anakList[0]['anak_id'];
+    }
+    if (selectedAnak.isNotEmpty) {
+      await riwayatPertumbuhanController.getPertumbuhanAnak(selectedAnak);
+    }
+
     isHistoryGrow = riwayatPertumbuhanController.riwayatPertumbuhan;
     // await childernController.getAnakById(5.toString(), 5.toString());
     if (isChildern.isNotEmpty) {
@@ -40,6 +48,31 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
             true; // Set the data initialization status to true
       });
     }
+  }
+
+  Future<void> _deleteChild(BuildContext context, String anakId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('delete'.tr),
+        content: Text('delete_child_message'.tr),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text('cancel'.tr),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text('delete'.tr),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    await childernController.deleteAnak('$anakId');
+    Get.offAll(BottomNavbar());
   }
 
   void _showModalBottomSheet(BuildContext context) {
@@ -183,12 +216,10 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                               ),
                               child: isChildern[0]['photo'] != null
                                   ? ClipOval(
-                                      child: Image.network(
-                                        "https://mystantapp.siuinsa.com/" +
-                                            isChildern[0]['photo'],
+                                      child: AppPhoto(
+                                        isChildern[0]['photo'],
                                         width: 40,
                                         height: 40,
-                                        fit: BoxFit.cover,
                                       ),
                                     )
                                   : Icon(
@@ -257,24 +288,45 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                childernController.getAnakById(
-                                    sessionController.user_id.value,
-                                    isChildern[0]['anak_id']);
-                                Get.to(
-                                  ChildrenEditorPage(
-                                    anak_id: isChildern[0]['anak_id'],
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    childernController.getAnakById(
+                                        sessionController.user_id.value,
+                                        isChildern[0]['anak_id']);
+                                    Get.to(
+                                      ChildrenEditorPage(
+                                        anak_id: isChildern[0]['anak_id'],
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    child: CircleAvatar(
+                                      radius: 16,
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 211, 209, 209),
+                                      child:
+                                          Icon(Icons.edit, size: 16),
+                                    ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 211, 209, 209),
-                                  child: Icon(Icons.edit),
                                 ),
-                              ),
+                                SizedBox(height: 6),
+                                GestureDetector(
+                                  onTap: () => _deleteChild(
+                                      context, isChildern[0]['anak_id']),
+                                  child: Container(
+                                    child: CircleAvatar(
+                                      radius: 16,
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 211, 209, 209),
+                                      child: Icon(Icons.delete_outline,
+                                          size: 16),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             )
                           ],
                         ),
@@ -414,7 +466,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                                           0]['tinggi_badan_ibu']
                                                       .toString(),
                                                 ),
-                                              );
+                                              )?.then((_) => initializeData());
                                             },
                                             child: Text(
                                               'see_all'.tr,
@@ -1003,7 +1055,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                                           0]['tinggi_badan_ibu']
                                                       .toString(),
                                                 ),
-                                              );
+                                              )?.then((_) => initializeData());
                                             },
                                             child: Text(
                                               'see_detail'.tr,
@@ -1082,7 +1134,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                                           0]['tinggi_badan_ibu']
                                                       .toString(),
                                                 ),
-                                              );
+                                              )?.then((_) => initializeData());
                                             },
                                             child: Container(
                                               child: CircleAvatar(

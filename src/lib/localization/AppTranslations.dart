@@ -22,6 +22,11 @@ class AppTranslations extends Translations {
     'ok': 'OK',
     'yes': 'Yes',
     'no': 'No',
+    'delete': 'Delete',
+    'delete_child_message':
+        'Delete this child and all of its growth records?',
+    'delete_growth_message': 'Delete this growth record?',
+    'complete_form_message': 'Please complete the form first.',
     'save': 'Save',
     'update': 'Update',
     'choose': 'Choose',
@@ -249,6 +254,11 @@ class AppTranslations extends Translations {
     'ok': 'OK',
     'yes': 'Ya',
     'no': 'Tidak',
+    'delete': 'Hapus',
+    'delete_child_message':
+        'Hapus anak ini beserta seluruh catatan pertumbuhannya?',
+    'delete_growth_message': 'Hapus catatan pertumbuhan ini?',
+    'complete_form_message': 'Mohon lengkapi formulir terlebih dahulu.',
     'save': 'Simpan',
     'update': 'Update',
     'choose': 'Pilih',

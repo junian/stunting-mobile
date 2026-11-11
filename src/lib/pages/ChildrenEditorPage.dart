@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -8,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/widget/AppPhoto.dart';
 import 'HomePage2.dart';
 
 class ChildrenEditorPage extends StatefulWidget {
@@ -72,7 +72,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
     _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
 
     if (widget.anak_id != null) {
-      isChildern = jsonDecode(childernController.dataAnak.toString());
+      isChildern = List<dynamic>.from(childernController.dataAnak);
 
       // Set the TextEditingControllers values based on isChildern
       nama_anak.text = isChildern[0]['nama_anak'] ?? '';
@@ -165,12 +165,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                               ? isChildern.isNotEmpty &&
                                       isChildern[0]['photo'] != null
                                   ? ClipOval(
-                                      child: Image.network(
-                                        "https://mystantapp.siuinsa.com/" +
-                                            isChildern[0]['photo'],
+                                      child: AppPhoto(
+                                        isChildern[0]['photo'],
                                         height: 60,
                                         width: 60,
-                                        fit: BoxFit.cover,
                                       ),
                                     )
                                   : Icon(

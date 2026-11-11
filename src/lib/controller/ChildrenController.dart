@@ -1,33 +1,19 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:growthtracker/helper/Constant.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:growthtracker/models/ChildrenModel.dart';
-import 'package:growthtracker/pages/HomePage2.dart';
-import 'package:growthtracker/pages/SetProfilePage.dart';
-import 'package:growthtracker/pages/VerificationPage.dart';
+import 'package:growthtracker/helper/AgeHelper.dart';
+import 'package:growthtracker/services/LocalStore.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 
-class Anak {
-  final String anak_id;
-  final int user_id;
-
-  Anak({required this.anak_id, required this.user_id});
-}
-
+/// Manages the children kept on this device.
 class ChildrenController extends GetxController {
-  final api = helper.api;
-  final dio.Dio _dio = dio.Dio();
+  final LocalStore _store = LocalStore();
 
-  RxList<dynamic> anakList =
-      <dynamic>[].obs; // RxList variable to store child data
+  /// Children shown by the home and detail pages.
+  RxList<dynamic> anakList = <dynamic>[].obs;
 
-  final RxList<dynamic> dataAnak =
-      RxList<dynamic>([]); // RxList variable to store child data
+  /// The child currently opened in the detail page.
+  final RxList<dynamic> dataAnak = RxList<dynamic>([]);
 
   Future<void> registerAnak(
     String user_id,
@@ -46,12 +32,30 @@ class ChildrenController extends GetxController {
     File? photo,
   ) async {
     try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'user_id': user_id,
-        'anak_id': anak_id,
+      final children = await _store.children();
+      final existingIndex = anak_id == null
+          ? -1
+          : children.indexWhere((child) => child['anak_id'] == anak_id);
+      final existing = existingIndex >= 0 ? children[existingIndex] : null;
+
+      var photoPath = existing?['photo'] as String?;
+      if (photo != null) {
+        final savedPath = await _store.savePhoto(photo);
+        if (savedPath != null) {
+          await _store.deletePhoto(photoPath);
+          photoPath = savedPath;
+        }
+      }
+
+      final now = DateTime.now().toIso8601String();
+      final owner = user_id.isEmpty ? 'local' : user_id;
+      final child = <String, dynamic>{
+        'anak_id': existing?['anak_id'] ?? _store.newId('anak_'),
+        'user_id': owner,
         'nama_anak': nama_anak,
         'tanggal_lahir': tanggal_lahir,
         'jenis_kelamin': jenis_kelamin,
+        'photo': photoPath,
         'berat_badan': berat_badan,
         'tinggi_badan': tinggi_badan,
         'lingkar_kepala': lingkar_kepala,
@@ -60,80 +64,94 @@ class ChildrenController extends GetxController {
         'gol_darah': gol_darah,
         'alergi': alergi,
         'prematur': prematur,
-      });
+        'is_active': '1',
+        'created_by': existing?['created_by'] ?? owner,
+        'created_date': existing?['created_date'] ?? now,
+        'updated_by': owner,
+        'updated_date': now,
+      };
 
-      if (photo != null) {
-        String fileName = photo.path.split('/').last;
-        formData.files.add(MapEntry('photo',
-            await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
+      if (existingIndex >= 0) {
+        children[existingIndex] = child;
+      } else {
+        children.add(child);
       }
-      // print(nama_anak);
-      final response = await _dio.post('$api/registerAnak', data: formData);
-      var data = response.data;
-      if (data['success'] == true) {
-        Get.off(BottomNavbar());
-      } else {}
-    } catch (e) {}
+      await _store.saveChildren(children);
+
+      await getAnak(owner, null);
+      Get.off(BottomNavbar());
+    } catch (e) {
+      print('Could not save child: $e');
+    }
   }
 
   Future<void> getAnak(String user_id, String? anak_id) async {
     try {
-      dio.FormData formData;
-      if (anak_id != null) {
-        formData = dio.FormData.fromMap({
-          'user_id': user_id,
-          'anak_id': anak_id,
-        });
-      } else {
-        formData = dio.FormData.fromMap({
-          'user_id': user_id,
-        });
-      }
+      final children = await _store.children();
+      final selected = anak_id == null
+          ? children
+          : children.where((child) => child['anak_id'] == anak_id).toList();
 
-      final response = await _dio.post('$api/getAnak', data: formData);
-      // print(response);
-      // Get.to(HomePage2(anak: response.data as List<dynamic>));
-      anakList.value = response.data as List<dynamic>;
-    } catch (e) {}
+      final now = DateTime.now();
+      anakList.value =
+          selected.map((child) => _withAge(child, now)).toList();
+    } catch (e) {
+      print('Could not load children: $e');
+    }
   }
 
-  // Future<List<dynamic>> getAnak(String user_id, String? anak_id) async {
-  //   try {
-  //     dio.FormData formData;
-  //     if (anak_id != null) {
-  //       formData = dio.FormData.fromMap({
-  //         'user_id': user_id,
-  //         'anak_id': anak_id,
-  //       });
-  //     } else {
-  //       formData = dio.FormData.fromMap({
-  //         'user_id': user_id,
-  //       });
-  //     }
+  Future<Map<String, dynamic>?> getAnakById(
+      String user_id, String? anak_id) async {
+    final child = await _store.childById('$anak_id');
+    if (child == null) {
+      dataAnak.value = [];
+      return null;
+    }
 
-  //     final response = await _dio.post('$api/getAnak', data: formData);
-  //     List<dynamic> anakList = response.data as List<dynamic>;
-  //     return anakList;
-  //   } catch (e) {
-  //     // Handle error here
-  //     return []; // Return empty list on error
-  //   }
-  // }
+    final withAge = _withAge(child, DateTime.now());
+    dataAnak.value = [withAge];
+    return withAge;
+  }
 
-  Future<void> getAnakById(String user_id, String? anak_id) async {
+  /// Removes the child together with its growth records and photos.
+  Future<void> deleteAnak(String anakId) async {
     try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'user_id': user_id,
-        'anak_id': anak_id,
-      });
+      final children = await _store.children();
+      final child = await _store.childById(anakId);
 
-      final response = await _dio.post('$api/getAnak', data: formData);
-      List<dynamic> nyoba = [];
-      nyoba.add(response);
-      if (nyoba.isNotEmpty) {
-        dataAnak.value = nyoba;
+      children.removeWhere((item) => item['anak_id'] == anakId);
+      await _store.saveChildren(children);
+
+      final records = await _store.growthRecords();
+      final removed = records
+          .where((record) => record['anak_id'] == anakId)
+          .toList();
+      records.removeWhere((record) => record['anak_id'] == anakId);
+      await _store.saveGrowthRecords(records);
+
+      for (final record in removed) {
+        await _store.deletePhoto(record['photo'] as String?);
       }
-      return response.data;
-    } catch (e) {}
+      await _store.deletePhoto(child?['photo'] as String?);
+
+      await getAnak('', null);
+    } catch (e) {
+      print('Could not delete child: $e');
+    }
+  }
+
+  Map<String, dynamic> _withAge(Map<String, dynamic> child, DateTime at) {
+    final result = Map<String, dynamic>.from(child);
+    result['umur'] = ageLabel(_parse(child['tanggal_lahir']), at);
+    return result;
+  }
+
+  DateTime? _parse(dynamic value) {
+    if (value is! String || value.isEmpty) return null;
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
+    }
   }
 }

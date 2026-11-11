@@ -237,8 +237,8 @@ class AuthController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(loggedInKey, false);
 
-    // Navigate to Login Page
-    Get.offAll(WelcomePage());
+    // The app keeps working without an account.
+    Get.offAll(BottomNavbar());
   }
 
   Future<void> checkAuthentication() async {
