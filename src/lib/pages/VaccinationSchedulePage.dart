@@ -7,15 +7,16 @@ import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
 import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 
-class JadwalVaksinasiPage extends StatefulWidget {
+class VaccinationSchedulePage extends StatefulWidget {
   String anak_id;
-  JadwalVaksinasiPage({super.key, required this.anak_id});
+  VaccinationSchedulePage({super.key, required this.anak_id});
 
   @override
-  State<JadwalVaksinasiPage> createState() => _JadwalVaksinasiPageState();
+  State<VaccinationSchedulePage> createState() =>
+      _VaccinationSchedulePageState();
 }
 
-class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
+class _VaccinationSchedulePageState extends State<VaccinationSchedulePage> {
   var jadwalVaksinasiController = Get.put(VaccinationScheduleController());
   var jadwalVaksinasiIDAIController =
       Get.put(VaccinationScheduleByIdaiController());

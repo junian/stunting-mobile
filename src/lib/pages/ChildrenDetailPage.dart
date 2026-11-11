@@ -8,7 +8,7 @@ import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
-import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
+import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/RiwayatPertumbuhan.dart';
 import 'package:stantapp/pages/TambahPertumbuhanPage.dart';
 
@@ -878,7 +878,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                JadwalVaksinasiPage(
+                                                VaccinationSchedulePage(
                                                   anak_id: isChildern[0]
                                                       ['anak_id'],
                                                 ),
@@ -949,7 +949,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                JadwalVaksinasiPage(
+                                                VaccinationSchedulePage(
                                                   anak_id: isChildern[0]
                                                       ['anak_id'],
                                                 ),

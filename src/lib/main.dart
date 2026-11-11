@@ -5,7 +5,7 @@ import 'package:stantapp/firebase_api.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/ImunisasiPage.dart';
-import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
+import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/SetProfilePage%202.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/SplashScreen.dart';
