@@ -7,7 +7,7 @@ import 'package:stantapp/widget/BottomNavbar.dart';
 
 import 'HomePage.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreenPage extends StatelessWidget {
   final authController = Get.put(AuthController());
 
   @override

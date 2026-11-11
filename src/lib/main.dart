@@ -8,7 +8,7 @@ import 'package:stantapp/pages/VaccinationPage.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/SetProfilePage2.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/SplashScreen.dart';
+import 'package:stantapp/pages/SplashScreenPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
@@ -68,8 +68,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      // home: SplashScreen(),
-      home: SplashScreen(),
+      // home: SplashScreenPage(),
+      home: SplashScreenPage(),
       // home: SetProfilePage(),
     );
   }
