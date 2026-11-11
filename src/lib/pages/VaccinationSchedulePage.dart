@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:stantapp/controller/VaccinationScheduleController.dart';
 import 'package:stantapp/controller/VaccinationScheduleByIdaiController.dart';
 import 'package:stantapp/controller/VaccinationController.dart';
-import 'package:stantapp/pages/JadwalImunisasiIDAI.dart';
+import 'package:stantapp/pages/VaccinationScheduleByIdaiPage.dart';
 import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 
 class VaccinationSchedulePage extends StatefulWidget {
@@ -100,7 +100,8 @@ class _VaccinationSchedulePageState extends State<VaccinationSchedulePage> {
                             IconButton(
                               onPressed: () {
                                 Get.to(
-                                    JadwalImunisaiIDAI(path: landscapePathPdf));
+                                    VaccinationScheduleByIdaiPage(
+                                        path: landscapePathPdf));
                               },
                               icon: Icon(Icons.table_chart_outlined),
                             ),

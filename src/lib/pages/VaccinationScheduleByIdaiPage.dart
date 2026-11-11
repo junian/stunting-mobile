@@ -3,16 +3,19 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
-class JadwalImunisaiIDAI extends StatefulWidget {
+class VaccinationScheduleByIdaiPage extends StatefulWidget {
   final String? path;
 
-  JadwalImunisaiIDAI({Key? key, required this.path}) : super(key: key);
+  VaccinationScheduleByIdaiPage({Key? key, required this.path})
+      : super(key: key);
 
   @override
-  _JadwalImunisaiIDAIState createState() => _JadwalImunisaiIDAIState();
+  _VaccinationScheduleByIdaiPageState createState() =>
+      _VaccinationScheduleByIdaiPageState();
 }
 
-class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
+class _VaccinationScheduleByIdaiPageState
+    extends State<VaccinationScheduleByIdaiPage>
     with WidgetsBindingObserver {
   final Completer<PDFViewController> _controller =
       Completer<PDFViewController>();
