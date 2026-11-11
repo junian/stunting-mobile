@@ -1,7 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:growthtracker/firebase_api.dart';
 import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:growthtracker/pages/HomePage.dart';
 import 'package:growthtracker/pages/VaccinationPage.dart';
@@ -18,8 +16,6 @@ import 'package:growthtracker/localization/AppTranslations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await FirebaseApi().requestPermission();
 
   await GetStorage.init();
 

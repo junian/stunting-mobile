@@ -16,8 +16,6 @@ import 'package:growthtracker/pages/VerificationPage.dart';
 import 'package:growthtracker/pages/WelcomePage.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 
-import '../firebase_api.dart';
-
 class AuthController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();

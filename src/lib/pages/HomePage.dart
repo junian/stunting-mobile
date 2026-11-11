@@ -20,9 +20,7 @@ import 'package:growthtracker/pages/VideoPlayerPage.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-import '../firebase_api.dart';
 
-import '../controller/FirebaseController.dart';
 import '../models/MGetArticle.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   final childernController = Get.put(ChildrenController());
   final sessionController = Get.put(SessionController());
   final artikelController = Get.put(ArticleController());
-  final firebaseController = Get.put(FirebaseController());
   final videoController = Get.put(VideoController());
 
   //corousel
@@ -49,16 +46,12 @@ class _HomePageState extends State<HomePage> {
   bool isDataInitialized = false;
   List<MGetArticle> filteredList = [];
 
-  String fireBaseToken = '';
-
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2));
     await artikelController.getArtikel();
     await childernController.getAnak(sessionController.user_id.value, null);
     await authController.getOrangTua(sessionController.user_id.toString());
     await videoController.getParameterSplitted(parameter_id: "8");
-    await FirebaseApi().initNotifications();
-    await firebaseController.updateFirebaseToken();
 
     filteredList = artikelController.artikel.toList();
     setState(() {
