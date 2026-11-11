@@ -12,14 +12,14 @@ import 'package:stantapp/pages/JadwalVaksinasiPage.dart';
 import 'package:stantapp/pages/RiwayatPertumbuhan.dart';
 import 'package:stantapp/pages/TambahPertumbuhanPage.dart';
 
-class ChildernPage extends StatefulWidget {
-  ChildernPage({super.key});
+class ChildrenDetailPage extends StatefulWidget {
+  ChildrenDetailPage({super.key});
 
   @override
-  State<ChildernPage> createState() => _ChildernPageState();
+  State<ChildrenDetailPage> createState() => _ChildrenDetailPageState();
 }
 
-class _ChildernPageState extends State<ChildernPage> {
+class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
   var childernController = Get.put(ChildrenController());
   var sessionController = Get.put(SessionController());
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());

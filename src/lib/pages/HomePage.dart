@@ -13,7 +13,7 @@ import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ArtikelDetailPage.dart';
 import 'package:stantapp/pages/ArticlePage.dart';
-import 'package:stantapp/pages/ChildernDetail.dart';
+import 'package:stantapp/pages/ChildrenDetailPage.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/VidioPlayerPage.dart';
@@ -1181,7 +1181,7 @@ class MyContainer2 {
                                     sessionController.user_id.value,
                                     childernController.anakList[0]['anak_id']);
                                 Get.to(
-                                  ChildernPage(),
+                                  ChildrenDetailPage(),
                                 );
                               },
                               child: Center(

@@ -2,7 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/ChildernDetail.dart';
+import 'package:stantapp/pages/ChildrenDetailPage.dart';
 
 class HomePage2 extends StatelessWidget {
   List<dynamic> anak = [];
@@ -233,7 +233,7 @@ class HomePage2 extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                        ChildernPage(),
+                                        ChildrenDetailPage(),
                                       );
                                     },
                                     child: Center(
