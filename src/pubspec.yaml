@@ -1,5 +1,5 @@
 name: growthtracker
-description: A new Flutter project.
+description: Kid Growth Tracker App. Offline-first, easy to use, and simple. Track your kid's growth and development with ease.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
