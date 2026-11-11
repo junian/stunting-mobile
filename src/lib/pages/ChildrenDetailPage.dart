@@ -9,7 +9,7 @@ import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
-import 'package:stantapp/pages/RiwayatPertumbuhan.dart';
+import 'package:stantapp/pages/GrowthHistoryPage.dart';
 import 'package:stantapp/pages/TambahPertumbuhanPage.dart';
 
 class ChildrenDetailPage extends StatefulWidget {
@@ -402,7 +402,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                RiwayatpertumbuhanPage(
+                                                GrowthHistoryPage(
                                                   anak_id: isChildern[0]
                                                           ['anak_id']
                                                       .toString(),
@@ -991,7 +991,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                RiwayatpertumbuhanPage(
+                                                GrowthHistoryPage(
                                                   anak_id: isChildern[0]
                                                           ['anak_id']
                                                       .toString(),
@@ -1070,7 +1070,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                RiwayatpertumbuhanPage(
+                                                GrowthHistoryPage(
                                                   anak_id: isChildern[0]
                                                           ['anak_id']
                                                       .toString(),

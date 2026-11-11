@@ -7,11 +7,11 @@ import '../controller/GrowthEditorController.dart';
 import 'GrowthDetailPage.dart';
 import 'TambahPertumbuhanPage.dart';
 
-class RiwayatpertumbuhanPage extends StatefulWidget {
+class GrowthHistoryPage extends StatefulWidget {
   String anak_id;
   String tinggi_badan_ibu;
   String tinggi_badan_ayah;
-  RiwayatpertumbuhanPage(
+  GrowthHistoryPage(
       {Key? key,
       required this.anak_id,
       required this.tinggi_badan_ayah,
@@ -19,10 +19,10 @@ class RiwayatpertumbuhanPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<RiwayatpertumbuhanPage> createState() => _RiwayatpertumbuhanPageState();
+  State<GrowthHistoryPage> createState() => _GrowthHistoryPageState();
 }
 
-class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
+class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
   bool isAscending = false;
   bool isDataInitialized = false;
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
