@@ -1,26 +1,28 @@
 // To parse this JSON data, do
 //
-//     final mGetKelurahan = mGetKelurahanFromJson(jsonString);
+//     final mGetSubdistrict = mGetSubdistrictFromJson(jsonString);
 
 import 'dart:convert';
 
-MGetKelurahan mGetKelurahanFromJson(String str) =>
-    MGetKelurahan.fromJson(json.decode(str));
+MGetSubdistrict mGetSubdistrictFromJson(String str) =>
+    MGetSubdistrict.fromJson(json.decode(str));
 
-String mGetKelurahanToJson(MGetKelurahan data) => json.encode(data.toJson());
+String mGetSubdistrictToJson(MGetSubdistrict data) =>
+    json.encode(data.toJson());
 
-class MGetKelurahan {
+class MGetSubdistrict {
   String kelurahanId;
   String kelurahanName;
   String kecamatanId;
 
-  MGetKelurahan({
+  MGetSubdistrict({
     required this.kelurahanId,
     required this.kelurahanName,
     required this.kecamatanId,
   });
 
-  factory MGetKelurahan.fromJson(Map<String, dynamic> json) => MGetKelurahan(
+  factory MGetSubdistrict.fromJson(Map<String, dynamic> json) =>
+      MGetSubdistrict(
         kelurahanId: json["kelurahan_id"],
         kelurahanName: json["kelurahan_name"],
         kecamatanId: json["kecamatan_id"],

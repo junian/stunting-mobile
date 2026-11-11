@@ -11,7 +11,7 @@ import 'package:stantapp/controller/RegionController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/MGetCity.dart';
 import 'package:stantapp/models/MGetDistrict.dart';
-import 'package:stantapp/models/MGetKelurahan.dart';
+import 'package:stantapp/models/MGetSubdistrict.dart';
 import 'package:stantapp/models/MGetProvince.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
@@ -620,7 +620,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                       ),
                                     ],
                                   ),
-                                  DropdownSearch<MGetKelurahan>(
+                                  DropdownSearch<MGetSubdistrict>(
                                     mode: Mode.custom,
                                     // showSearchBox: true,
                                     compareFn: (x, y) => x.kelurahanId == y.kelurahanId,
@@ -648,7 +648,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                           "https://mystantapp.siuinsa.com/api/getKelurahan",
                                           data: formData);
                                       // print(response.data);
-                                      List<MGetKelurahan> allNameKelurahan = [];
+                                      List<MGetSubdistrict> allNameKelurahan = [];
 
                                       if (response.statusCode != 200) {
                                         return [];
@@ -656,7 +656,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         List allKelurahan = response.data;
 
                                         allKelurahan.forEach((element) {
-                                          allNameKelurahan.add(MGetKelurahan(
+                                          allNameKelurahan.add(MGetSubdistrict(
                                               kelurahanId:
                                                   element['kelurahan_id'],
                                               kelurahanName:
