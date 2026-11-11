@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
-import 'package:stantapp/models/MGetArtikel.dart';
+import 'package:stantapp/models/MGetArticle.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 // import 'package:stantapp/models/MGetJadwalVaksinasi.dart';
 import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';

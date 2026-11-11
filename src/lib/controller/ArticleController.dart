@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
-import 'package:stantapp/models/MGetArtikel.dart';
+import 'package:stantapp/models/MGetArticle.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 
 class ArticleController extends GetxController {
@@ -13,7 +13,7 @@ class ArticleController extends GetxController {
   final dio.Dio _dio = dio.Dio();
 
   RxList<MGetArtikelKategori> kategori = RxList<MGetArtikelKategori>([]);
-  RxList<MGetArtikel> artikel = RxList<MGetArtikel>([]);
+  RxList<MGetArticle> artikel = RxList<MGetArticle>([]);
 
   Future<String> getArtikel() async {
     artikel.clear();
@@ -24,7 +24,7 @@ class ArticleController extends GetxController {
         List allArtikel = response.data;
 
         allArtikel.forEach((element) {
-          artikel.add(MGetArtikel(
+          artikel.add(MGetArticle(
               thumbnail: element['thumbnail'],
               artikelId: element['artikel_id'],
               artikelKategoriId: element['artikel_kategori_id'],

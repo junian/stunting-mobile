@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final mGetArtikel = mGetArtikelFromJson(jsonString);
+//     final mGetArticle = mGetArticleFromJson(jsonString);
 
 import 'dart:convert';
 
-MGetArtikel mGetArtikelFromJson(String str) =>
-    MGetArtikel.fromJson(json.decode(str));
+MGetArticle mGetArticleFromJson(String str) =>
+    MGetArticle.fromJson(json.decode(str));
 
-String mGetArtikelToJson(MGetArtikel data) => json.encode(data.toJson());
+String mGetArticleToJson(MGetArticle data) => json.encode(data.toJson());
 
-class MGetArtikel {
+class MGetArticle {
   String? thumbnail;
   String artikelId;
   String artikelKategoriId;
@@ -21,7 +21,7 @@ class MGetArtikel {
   String namaKategori;
   String fullname;
 
-  MGetArtikel({
+  MGetArticle({
     this.thumbnail,
     required this.artikelId,
     required this.artikelKategoriId,
@@ -33,7 +33,7 @@ class MGetArtikel {
     required this.fullname,
   });
 
-  factory MGetArtikel.fromJson(Map<String, dynamic> json) => MGetArtikel(
+  factory MGetArticle.fromJson(Map<String, dynamic> json) => MGetArticle(
         thumbnail: json["thumbnail"],
         artikelId: json["artikel_id"],
         artikelKategoriId: json["artikel_kategori_id"],

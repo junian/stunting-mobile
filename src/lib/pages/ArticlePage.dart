@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/models/MGetArtikel.dart';
+import 'package:stantapp/models/MGetArticle.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 import '../controller/ArticleController.dart';
 import 'ArticleDetailPage.dart';
@@ -18,7 +18,7 @@ class _ArticlePageState extends State<ArticlePage> {
   TextEditingController searchController = TextEditingController();
   var artikelController = Get.put(ArticleController());
 
-  List<MGetArtikel> filteredList = [];
+  List<MGetArticle> filteredList = [];
   List<MGetArtikelKategori> categories = [];
   bool isDataInitialized = false;
 
@@ -192,7 +192,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   child: ListView.builder(
                     itemCount: filteredList.length,
                     itemBuilder: (context, index) {
-                      MGetArtikel artikel = filteredList[index];
+                      MGetArticle artikel = filteredList[index];
                       DateFormat dateFormat = DateFormat('d MMM y');
                       String tglbuat = dateFormat
                           .format(DateTime.parse(artikel.createdDate));

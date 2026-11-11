@@ -23,7 +23,7 @@ import 'package:video_player/video_player.dart';
 import '../firebase_api.dart';
 
 import '../controller/FirebaseController.dart';
-import '../models/MGetArtikel.dart';
+import '../models/MGetArticle.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   late VideoPlayerController _controller;
 
   bool isDataInitialized = false;
-  List<MGetArtikel> filteredList = [];
+  List<MGetArticle> filteredList = [];
 
   String fireBaseToken = '';
 
@@ -453,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                                             ? 5
                                             : filteredList.length,
                                         itemBuilder: (context, index) {
-                                          MGetArtikel artikel =
+                                          MGetArticle artikel =
                                               filteredList[index];
                                           DateFormat dateFormat =
                                               DateFormat('d MMM y');
