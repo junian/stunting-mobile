@@ -8,7 +8,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/VerivicationPage.dart';
+import 'package:stantapp/pages/VerificationPage.dart';
 
 class RegionController extends GetxController {
   final api = helper.api;

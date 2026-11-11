@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/pages/SnkPage.dart';
-import 'package:stantapp/pages/VerivicationPage.dart';
+import 'package:stantapp/pages/VerificationPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

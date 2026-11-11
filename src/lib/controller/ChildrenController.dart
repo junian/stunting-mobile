@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/HomePage2.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/VerivicationPage.dart';
+import 'package:stantapp/pages/VerificationPage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
 class Anak {

@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/LoginPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/VerivicationPage.dart';
+import 'package:stantapp/pages/VerificationPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
@@ -42,7 +42,7 @@ class AuthController extends GetxController {
       if (response.statusCode == 200) {
         String authCode = response.data['message'].toString();
         Get.to(
-          VerivicationPage(
+          VerificationPage(
             email: email,
             authCode: authCode,
             phone_no: phone_no,

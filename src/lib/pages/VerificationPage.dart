@@ -8,11 +8,11 @@ import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/helper/CountdownTimer.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 
-class VerivicationPage extends StatefulWidget {
+class VerificationPage extends StatefulWidget {
   String email;
   String phone_no;
   String authCode;
-  VerivicationPage({
+  VerificationPage({
     super.key,
     required this.email,
     required this.phone_no,
@@ -20,10 +20,10 @@ class VerivicationPage extends StatefulWidget {
   });
 
   @override
-  State<VerivicationPage> createState() => _VerivicationPageState();
+  State<VerificationPage> createState() => _VerificationPageState();
 }
 
-class _VerivicationPageState extends State<VerivicationPage> {
+class _VerificationPageState extends State<VerificationPage> {
   var authController = Get.put(AuthController());
   var regionController = Get.put(RegionController());
   var childernController = Get.put(ChildrenController());
