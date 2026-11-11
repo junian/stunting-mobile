@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(MaterialApp(
-      home: HomeScreen(),
+      home: TestPage(),
     ));
 
-class HomeScreen extends StatefulWidget {
+class TestPage extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _TestPageState createState() => _TestPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TestPageState extends State<TestPage> {
   String _baseUrl = "https://mystantapp.siuinsa.com/api/getProvince";
   late String? _valProvince = "null";
   List<dynamic> _dataProvince = [];
