@@ -4,14 +4,14 @@ import 'package:stantapp/controller/ImmunizationController.dart';
 import 'package:stantapp/pages/VaccinationDetailPage.dart';
 import 'package:get/get.dart';
 
-class ImunisasiPage extends StatefulWidget {
-  const ImunisasiPage({super.key});
+class VaccinationPage extends StatefulWidget {
+  const VaccinationPage({super.key});
 
   @override
-  State<ImunisasiPage> createState() => _ImunisasiPageState();
+  State<VaccinationPage> createState() => _VaccinationPageState();
 }
 
-class _ImunisasiPageState extends State<ImunisasiPage> {
+class _VaccinationPageState extends State<VaccinationPage> {
   var imunisasiController = Get.put(ImmunizationController());
 
   List<dynamic> jadwalVaksin = [];

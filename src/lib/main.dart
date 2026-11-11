@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:stantapp/firebase_api.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/HomePage.dart';
-import 'package:stantapp/pages/ImunisasiPage.dart';
+import 'package:stantapp/pages/VaccinationPage.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/SetProfilePage2.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
