@@ -11,7 +11,7 @@ import 'package:stantapp/controller/AuthController.dart';import 'package:stantap
 import 'package:stantapp/pages/ArticlePage.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/HomePage2.dart';
-import 'package:stantapp/pages/KonsultasiPage.dart';
+import 'package:stantapp/pages/ConsultationPage.dart';
 import 'package:stantapp/pages/LoginPage.dart';
 import 'package:stantapp/pages/RegisterPage.dart';
 import 'package:stantapp/pages/SettingUserPage.dart';
