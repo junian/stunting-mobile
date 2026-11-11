@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/TambahDataPertumbuhanController.dart';
+import 'package:stantapp/controller/GrowthEditorController.dart';
 import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';

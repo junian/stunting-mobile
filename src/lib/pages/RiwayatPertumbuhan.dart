@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/DetailPertumbuhanController.dart';
 import '../controller/GrowthHistoryController.dart';
-import '../controller/TambahDataPertumbuhanController.dart';
+import '../controller/GrowthEditorController.dart';
 import 'DetailPertumbuhan.dart';
 import 'TambahPertumbuhanPage.dart';
 
@@ -26,7 +26,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
   bool isAscending = false;
   bool isDataInitialized = false;
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
-  var tambahPertumbuhanAnak = Get.put(TambahDataPertumbuhanController());
+  var tambahPertumbuhanAnak = Get.put(GrowthEditorController());
   var detailRiwayatPertumbuhanController =
       Get.put(DetailPertumbuhanController());
 
