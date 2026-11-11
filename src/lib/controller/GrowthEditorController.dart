@@ -10,7 +10,7 @@ import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArticle.dart';
 import 'package:stantapp/models/MGetArticleCategory.dart';
 // import 'package:stantapp/models/MGetJadwalVaksinasi.dart';
-import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
+import 'package:stantapp/models/MGetGrowthRecord.dart';
 
 class GrowthEditorController extends GetxController {
   final api = helper.api;

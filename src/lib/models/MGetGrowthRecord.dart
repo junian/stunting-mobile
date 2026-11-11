@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-List<MRiwayatPertumbuhan> mRiwayatPertumbuhanFromJsonList(String str) =>
-    List<MRiwayatPertumbuhan>.from(
-        json.decode(str).map((x) => MRiwayatPertumbuhan.fromJson(x)));
+List<MGrowthRecord> mGrowthRecordFromJsonList(String str) =>
+    List<MGrowthRecord>.from(
+        json.decode(str).map((x) => MGrowthRecord.fromJson(x)));
 
-String mRiwayatPertumbuhanListToJson(List<MRiwayatPertumbuhan> data) =>
+String mGrowthRecordListToJson(List<MGrowthRecord> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class MRiwayatPertumbuhan {
+class MGrowthRecord {
   int pertumbuhanAnakId;
   int anakId;
   double beratBadan;
@@ -20,7 +20,7 @@ class MRiwayatPertumbuhan {
   int? updatedBy;
   DateTime? updatedDate;
 
-  MRiwayatPertumbuhan({
+  MGrowthRecord({
     required this.pertumbuhanAnakId,
     required this.anakId,
     required this.beratBadan,
@@ -34,8 +34,8 @@ class MRiwayatPertumbuhan {
     this.updatedDate,
   });
 
-  factory MRiwayatPertumbuhan.fromJson(Map<String, dynamic> json) =>
-      MRiwayatPertumbuhan(
+  factory MGrowthRecord.fromJson(Map<String, dynamic> json) =>
+      MGrowthRecord(
         pertumbuhanAnakId: json["pertumbuhan_anak_id"],
         anakId: json["anak_id"],
         beratBadan: json["berat_badan"].toDouble(),

@@ -10,7 +10,7 @@ import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArticle.dart';
 import 'package:stantapp/models/MGetArticleCategory.dart';
 
-import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
+import 'package:stantapp/models/MGetGrowthRecord.dart';
 import 'package:stantapp/pages/VaccinationEditorPage.dart';
 
 class VaccinationController extends GetxController {
