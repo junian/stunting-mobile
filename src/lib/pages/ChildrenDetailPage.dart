@@ -10,7 +10,7 @@ import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/GrowthHistoryPage.dart';
-import 'package:stantapp/pages/TambahPertumbuhanPage.dart';
+import 'package:stantapp/pages/GrowthEditorPage.dart';
 
 class ChildrenDetailPage extends StatefulWidget {
   ChildrenDetailPage({super.key});
@@ -818,7 +818,7 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  Get.to(TambahPertummbuhanPage(
+                                                  Get.to(GrowthEditorPage(
                                                       anakID: isChildern[0]
                                                               ['anak_id']
                                                           .toString(),

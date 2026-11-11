@@ -5,7 +5,7 @@ import 'package:stantapp/controller/GrowthDetailController.dart';
 import '../controller/GrowthHistoryController.dart';
 import '../controller/GrowthEditorController.dart';
 import 'GrowthDetailPage.dart';
-import 'TambahPertumbuhanPage.dart';
+import 'GrowthEditorPage.dart';
 
 class GrowthHistoryPage extends StatefulWidget {
   String anak_id;
@@ -95,7 +95,7 @@ class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
 
           riwayatPertumbuhanController.riwayatPertumbuhan;
 
-          Get.to(TambahPertummbuhanPage(
+          Get.to(GrowthEditorPage(
               anakID: widget.anak_id,
               tinggiBadanAyah: widget.tinggi_badan_ayah,
               tinggiBadanIbu: widget.tinggi_badan_ibu));

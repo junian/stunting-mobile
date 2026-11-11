@@ -7,21 +7,21 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/GrowthEditorController.dart';
 
-class TambahPertummbuhanPage extends StatefulWidget {
+class GrowthEditorPage extends StatefulWidget {
   String anakID;
   String tinggiBadanAyah;
   String tinggiBadanIbu;
-  TambahPertummbuhanPage(
+  GrowthEditorPage(
       {super.key,
       required this.anakID,
       required this.tinggiBadanAyah,
       required this.tinggiBadanIbu});
 
   @override
-  State<TambahPertummbuhanPage> createState() => _TambahPertummbuhanPageState();
+  State<GrowthEditorPage> createState() => _GrowthEditorPageState();
 }
 
-class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
+class _GrowthEditorPageState extends State<GrowthEditorPage> {
   var tambahPertumbuhanAnak = Get.put(GrowthEditorController());
 
   TextEditingController dateinput = TextEditingController();
