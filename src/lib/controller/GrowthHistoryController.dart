@@ -10,7 +10,7 @@ import 'package:stantapp/models/MGetArtikelKategori.dart';
 // import 'package:stantapp/models/MGetJadwalVaksinasi.dart';
 import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
 
-class RiwayatPertumbuhanController extends GetxController {
+class GrowthHistoryController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
   RxList<Map<String, dynamic>> riwayatPertumbuhan =

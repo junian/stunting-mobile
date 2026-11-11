@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
+import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/models/ChildernModel.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
@@ -22,7 +22,7 @@ class ChildernPage extends StatefulWidget {
 class _ChildernPageState extends State<ChildernPage> {
   var childernController = Get.put(ChildrenController());
   var sessionController = Get.put(SessionController());
-  var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+  var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
   bool isDataInitialized = false;
   String selectedAnak = ''; // Nilai anak yang dipilih
 

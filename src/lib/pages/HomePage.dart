@@ -6,7 +6,7 @@ import 'package:stantapp/controller/ArticleController.dart';
 import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:stantapp/controller/NotificationController.dart';
-import 'package:stantapp/controller/RiwayatPertumbuhanController.dart';
+import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/controller/VideoController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
@@ -925,7 +925,7 @@ class MyContainer2 {
     final sessionController = Get.put(SessionController());
     final authController = Get.put(AuthController());
     final riwayatPertumbuhanController =
-        Get.put(RiwayatPertumbuhanController());
+        Get.put(GrowthHistoryController());
     final notificationController = Get.put(NotificationController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/controller/DetailPertumbuhanController.dart';
-import '../controller/RiwayatPertumbuhanController.dart';
+import '../controller/GrowthHistoryController.dart';
 import '../controller/TambahDataPertumbuhanController.dart';
 import 'DetailPertumbuhan.dart';
 import 'TambahPertumbuhanPage.dart';
@@ -25,7 +25,7 @@ class RiwayatpertumbuhanPage extends StatefulWidget {
 class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
   bool isAscending = false;
   bool isDataInitialized = false;
-  var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+  var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
   var tambahPertumbuhanAnak = Get.put(TambahDataPertumbuhanController());
   var detailRiwayatPertumbuhanController =
       Get.put(DetailPertumbuhanController());

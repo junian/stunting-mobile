@@ -9,12 +9,12 @@ import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 import 'package:stantapp/pages/DetailPertumbuhan.dart';
 
-import 'RiwayatPertumbuhanController.dart';
+import 'GrowthHistoryController.dart';
 
 class DetailPertumbuhanController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
-  var riwayatPertumbuhanController = Get.put(RiwayatPertumbuhanController());
+  var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
 
   Future getDetailPertumbuhan(String pertumbuhanAnakId, String umur) async {
     try {
