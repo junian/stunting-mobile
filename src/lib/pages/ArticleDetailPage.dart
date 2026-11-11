@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as html;
 import 'package:get/get.dart';
 
-class ArtikelDetailPage extends StatefulWidget {
+class ArticleDetailPage extends StatefulWidget {
   String category;
   String title;
   String author;
@@ -12,7 +12,7 @@ class ArtikelDetailPage extends StatefulWidget {
   String description;
   String imageUrl;
 
-  ArtikelDetailPage({
+  ArticleDetailPage({
     super.key,
     required this.category,
     required this.title,
@@ -25,10 +25,10 @@ class ArtikelDetailPage extends StatefulWidget {
   });
 
   @override
-  State<ArtikelDetailPage> createState() => _ArtikelDetailPageState();
+  State<ArticleDetailPage> createState() => _ArticleDetailPageState();
 }
 
-class _ArtikelDetailPageState extends State<ArtikelDetailPage> {
+class _ArticleDetailPageState extends State<ArticleDetailPage> {
   late String cleanedDescription;
 
   String cleanHtml(String htmlString) {

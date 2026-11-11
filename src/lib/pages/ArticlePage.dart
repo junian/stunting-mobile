@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 import '../controller/ArticleController.dart';
-import 'ArtikelDetailPage.dart';
+import 'ArticleDetailPage.dart';
 
 class ArticlePage extends StatefulWidget {
   ArticlePage({super.key});
@@ -211,7 +211,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                 trailing: GestureDetector(
                                   onTap: () {
                                     Get.to(
-                                      ArtikelDetailPage(
+                                      ArticleDetailPage(
                                         category: artikel.namaKategori,
                                         title: artikel.judul,
                                         author: artikel.fullname,
@@ -248,7 +248,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                 title: GestureDetector(
                                   onTap: () {
                                     Get.to(
-                                      ArtikelDetailPage(
+                                      ArticleDetailPage(
                                         category: artikel.namaKategori,
                                         title: artikel.judul,
                                         author: artikel.fullname,

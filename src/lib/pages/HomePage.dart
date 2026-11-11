@@ -11,7 +11,7 @@ import 'package:stantapp/controller/SessionController.dart';
 import 'package:stantapp/controller/VideoController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
-import 'package:stantapp/pages/ArtikelDetailPage.dart';
+import 'package:stantapp/pages/ArticleDetailPage.dart';
 import 'package:stantapp/pages/ArticlePage.dart';
 import 'package:stantapp/pages/ChildrenDetailPage.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
@@ -470,7 +470,7 @@ class _HomePageState extends State<HomePage> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       Get.to(
-                                                        ArtikelDetailPage(
+                                                        ArticleDetailPage(
                                                           category: artikel
                                                               .namaKategori,
                                                           title: artikel.judul,
@@ -546,7 +546,7 @@ class _HomePageState extends State<HomePage> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       Get.to(
-                                                        ArtikelDetailPage(
+                                                        ArticleDetailPage(
                                                           category: artikel
                                                               .namaKategori,
                                                           title: artikel.judul,
