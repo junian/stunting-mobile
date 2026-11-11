@@ -121,7 +121,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            widget.anak_id != null ? 'Edit Akun Anak' : 'Set Profile Anda'),
+            widget.anak_id != null ? 'edit_child_account'.tr : 'set_profile'.tr),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -196,7 +196,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                           _pickImage();
                         },
                         child: Text(
-                          'Unggah Foto',
+                          'upload_photo'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -213,7 +213,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Nama Lengkap',
+                      'full_name'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -228,7 +228,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 TextField(
                   controller: nama_anak,
                   decoration: InputDecoration(
-                    hintText: 'Nama Lengkap',
+                    hintText: 'full_name'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -259,7 +259,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Tanggal Lahir',
+                      'birth_date'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -274,7 +274,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 TextField(
                   controller: dateinput, //editing controller of this TextField
                   decoration: InputDecoration(
-                    hintText: 'Tanggal Lahir',
+                    hintText: 'birth_date'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -327,7 +327,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Jenis Kelamin',
+                      'gender'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -350,7 +350,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Laki-Laki'),
+                    Text('male'.tr),
                     SizedBox(width: 16),
                     Radio(
                       value: 'Perempuan',
@@ -361,12 +361,12 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Perempuan'),
+                    Text('female'.tr),
                   ],
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Data Kelahiran',
+                  'birth_data'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -417,7 +417,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Apakah anak anda lahir prematur',
+                      'is_premature'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -440,7 +440,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Ya'),
+                    Text('yes'.tr),
                     SizedBox(width: 16),
                     Radio(
                       value: 'Tidak',
@@ -451,14 +451,14 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Tidak'),
+                    Text('no'.tr),
                   ],
                 ),
                 SizedBox(height: 16),
                 Row(
                   children: [
                     Text(
-                      'Input Berat Badan Saat Lahir (kg)',
+                      'birth_weight_label'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -474,7 +474,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   controller: berat_badan,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'Input Berat Badan dalam Kg',
+                    hintText: 'birth_weight_hint'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -505,7 +505,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Input Tinggi Badan Saat Lahir (Cm)',
+                      'birth_height_label'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -521,7 +521,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   controller: tinggi_badan,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'Input Tinggi Badan dalam cm',
+                    hintText: 'birth_height_hint'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -552,7 +552,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Input Lingkar Kepala Saat Lahir (Cm)',
+                      'birth_head_label'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -568,7 +568,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   controller: lingkar_kepala,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'Input Lingkar Kepala Saat Lahir (Cm)',
+                    hintText: 'birth_head_label'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -597,7 +597,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Profil Tambahan',
+                  'additional_profile'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -607,7 +607,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Golongan Darah',
+                      'blood_group'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -624,7 +624,9 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   items: _blood.map((blood) {
                     return DropdownMenuItem(
                       value: blood,
-                      child: Text(blood),
+                      child: Text(blood == 'Pilih Golongan Darah'
+                          ? 'select_blood_group'.tr
+                          : blood),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -645,7 +647,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Apakah anak anda Mempunyai Alergi',
+                      'has_allergy'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -668,7 +670,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Ya'),
+                    Text('yes'.tr),
                     SizedBox(width: 16),
                     Radio(
                       value: 'Tidak',
@@ -679,19 +681,19 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                         });
                       },
                     ),
-                    Text('Tidak'),
+                    Text('no'.tr),
                   ],
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Tinggi Badan Orang Tua',
+                  'parent_height'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Keterangan: Data tinggi badang orang tua akan digunakan untuk mengukur potensial tinggi badan anak saat dewasa',
+                  'parent_height_note'.tr,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.red,
@@ -702,7 +704,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Tinggi Badan Ibu (Cm)',
+                      'mother_height'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -718,7 +720,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   controller: tinggi_badan_ibu,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'Tinggi Badan Ibu (Cm)',
+                    hintText: 'mother_height'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -749,7 +751,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                 Row(
                   children: [
                     Text(
-                      'Tinggi Badan Ayah (Cm)',
+                      'father_height'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -765,7 +767,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
                   controller: tinggi_badan_ayah,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'Tinggi Badan Ayah (Cm)',
+                    hintText: 'father_height'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -831,7 +833,7 @@ class _AddAccountChildernPageState extends State<AddAccountChildernPage> {
               color: Colors.blue,
             ),
             child: Text(
-              "Simpan",
+              "save".tr,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

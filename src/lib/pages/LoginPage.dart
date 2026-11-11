@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Masuk Dengan Email',
+                  'login_with_email'.tr,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    'Email',
+                    'email'.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: Center(
                       child: Text(
-                        'Masuk',
+                        'login'.tr,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -149,14 +149,14 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: 'Belum memiliki akun? ',
+                        text: 'no_account'.tr,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                         ),
                         children: [
                           TextSpan(
-                            text: 'Daftar',
+                            text: 'register'.tr,
                             style: TextStyle(
                               color: Colors.blue,
                             ),
@@ -177,10 +177,10 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'Butuh Bantuan ?',
+                      'need_help'.tr,
                     ),
                     Text(
-                      'WhatsApp 0817-7070-4114',
+                      'whatsapp_contact'.tr,
                       style: TextStyle(
                         color: const Color.fromARGB(255, 82, 163, 230),
                         fontWeight: FontWeight.bold,

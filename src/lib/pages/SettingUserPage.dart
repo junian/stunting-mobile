@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stantapp/controller/AuthController.dart';
+import 'package:stantapp/controller/LanguageController.dart';
 import 'package:stantapp/controller/ParameterController.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/SnkPage.dart';
@@ -16,12 +17,58 @@ class SettingUserPage extends StatefulWidget {
 class _SettingUserPageState extends State<SettingUserPage> {
   var parameterController = Get.put(ParameterController());
   var authController = Get.put(AuthController());
+  var languageController = Get.find<LanguageController>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     authController.isParent;
+  }
+
+  void _showLanguageSheet() {
+    Get.bottomSheet(
+      Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  'language'.tr,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Obx(
+                () => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    LanguageController.system,
+                    LanguageController.english,
+                    LanguageController.indonesian,
+                  ]
+                      .map(
+                        (code) => ListTile(
+                          title: Text(languageController.labelFor(code)),
+                          trailing: languageController.preference.value == code
+                              ? Icon(Icons.check, color: Colors.blue)
+                              : null,
+                          onTap: () {
+                            languageController.setLanguage(code);
+                            Get.back();
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              SizedBox(height: 8),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -65,54 +112,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     '${authController.isParent[0]["nama_orang_tua"]}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  // subtitle: Text(
-                  //   '085649930202',
-                  //   style: TextStyle(color: Colors.grey),
-                  // ),
-                  // trailing: TextButton(
-                  //   onPressed: () {},
-                  //   child: Text(
-                  //     'Ubah',
-                  //     style: TextStyle(
-                  //       color: Colors.blueAccent,
-                  //       fontSize: 15,
-                  //     ),
-                  //   ),
-                  // ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(left: 20, right: 20, top: 25),
-                //   child: Container(
-                //     alignment: Alignment.center,
-                //     width: width,
-                //     height: hight * 0.15,
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(20),
-                //       gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.centerRight,
-                //         colors: [
-                //           Colors.blueAccent,
-                //           Color.fromARGB(204, 115, 164, 250),
-                //         ],
-                //       ),
-                //     ),
-                //     child: ListTile(
-                //       trailing: Container(
-                //         width: width * 0.15,
-                //         height: hight * 0.12,
-                //         child: Image(
-                //           image: NetworkImage(
-                //               "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"),
-                //         ),
-                //       ),
-                //       title: Text(
-                //         'Mau dapat voucher Konsultasi senilai Rp.10.000? Ajak teman untuk unduh STANTAPP!!',
-                //         style: TextStyle(color: Colors.white),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Card(
@@ -126,7 +126,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Profile',
+                              'profile'.tr,
                               style: TextStyle(fontSize: 18),
                             ),
                             IconButton(
@@ -134,6 +134,42 @@ class _SettingUserPageState extends State<SettingUserPage> {
                               onPressed: () {
                                 Get.to(SetProfilePage());
                               },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Card(
+                    child: Container(
+                      width: width,
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'language'.tr,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Row(
+                              children: [
+                                Obx(
+                                  () => Text(
+                                    languageController.currentLabel,
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios),
+                                  onPressed: _showLanguageSheet,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -156,7 +192,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Syarat dan Ketentuan',
+                                'terms_conditions'.tr,
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
@@ -174,7 +210,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Tetang Aplikasi',
+                                'about_app'.tr,
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
@@ -187,22 +223,6 @@ class _SettingUserPageState extends State<SettingUserPage> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 8.0),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       Text(
-                        //         'Bantuan',
-                        //         style: TextStyle(fontSize: 18),
-                        //       ),
-                        //       IconButton(
-                        //         icon: Icon(Icons.arrow_forward_ios),
-                        //         onPressed: () {},
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -210,29 +230,6 @@ class _SettingUserPageState extends State<SettingUserPage> {
                 SizedBox(
                   height: hight * 0.1,
                 ),
-                // Card(
-                //   child: Container(
-                //     width: width,
-                //     color: Colors.white,
-                //     alignment: Alignment.center,
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(left: 8.0),
-                //       child: Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           Text(
-                //             'Pengaturan akun',
-                //             style: TextStyle(fontSize: 18),
-                //           ),
-                //           IconButton(
-                //             icon: Icon(Icons.arrow_forward_ios),
-                //             onPressed: () {},
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 GestureDetector(
                   onTap: () {},
                   child: Card(
@@ -246,7 +243,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Logout',
+                              'logout'.tr,
                               style: TextStyle(fontSize: 18),
                             ),
                             IconButton(
@@ -259,15 +256,14 @@ class _SettingUserPageState extends State<SettingUserPage> {
                                         MediaQuery.of(context).size.height;
                                     return Center(
                                       child: AlertDialog(
-                                        title: Text(
-                                            'Apakah anda yakin ingin keluar?',
+                                        title: Text('logout_confirm'.tr,
                                             style: TextStyle(fontSize: 20)),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
                                               authController.logout();
                                             },
-                                            child: Text('Keluar'),
+                                            child: Text('logout'.tr),
                                           ),
                                         ],
                                       ),
@@ -291,7 +287,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     alignment: Alignment.bottomLeft,
                     width: width,
                     child: Text(
-                      'Version 1.3.3',
+                      'version'.tr,
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),

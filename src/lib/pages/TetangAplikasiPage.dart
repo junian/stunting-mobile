@@ -69,7 +69,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tentang Aplikasi',
+          'about_app'.tr,
           style: TextStyle(fontSize: 20),
         ),
         leading: IconButton(
@@ -91,7 +91,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                       height: hight * 0.05,
                     ),
                     Text(
-                      "Tentang Stant App",
+                      "about_stantapp".tr,
                       style: TextStyle(fontSize: 18),
                     ),
                     SizedBox(
@@ -112,7 +112,7 @@ class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
                       width: width,
                       height: hight * 0.1,
                       child: Text(
-                        "Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).",
+                        "about_disclaimer".tr,
                         style: TextStyle(fontSize: 18),
                       ),
                     ),

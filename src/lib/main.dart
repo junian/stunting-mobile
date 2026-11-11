@@ -13,13 +13,15 @@ import 'package:stantapp/pages/WelcomePage.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:stantapp/controller/LanguageController.dart';
+import 'package:stantapp/localization/AppTranslations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseApi().requestPermission();
 
-  runApp(const MyApp());
+  await GetStorage.init();
 
   //set potrait only
   SystemChrome.setPreferredOrientations([
@@ -27,7 +29,12 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await GetStorage.init();
+  // Resolve the initial language from the saved preference, or from the
+  // device system language (English fallback).
+  final languageController = Get.put(LanguageController(), permanent: true);
+  Get.locale = languageController.locale.value;
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +44,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'STANTAPP',
+      translations: AppTranslations(),
+      locale: Get.locale,
+      fallbackLocale: const Locale('en'),
+      supportedLocales: const [Locale('en'), Locale('id')],
       theme: ThemeData(
         // This is the theme of your application.
         //

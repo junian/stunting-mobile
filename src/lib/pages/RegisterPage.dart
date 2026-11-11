@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Daftar Akun',
+                'register_account'.tr,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 children: [
                   Text(
-                    'Nomor HP',
+                    'phone_number'.tr,
                     style: TextStyle(),
                   ),
                   Text(
@@ -71,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
               TextField(
                 controller: phone_noController,
                 decoration: InputDecoration(
-                  hintText: 'Masukkan Nomor HP Anda',
+                  hintText: 'phone_number_hint'.tr,
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: isClicked
@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 children: [
                   Text(
-                    'Email',
+                    'email'.tr,
                     style: TextStyle(),
                   ),
                   Text(
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
-                  hintText: 'Masukkan alamat email Anda',
+                  hintText: 'email_hint'.tr,
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: isClicked
@@ -166,11 +166,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       child: RichText(
                         text: TextSpan(
-                          text: 'Saya telah membaca dan menyetujui ',
+                          text: 'terms_prefix'.tr,
                           style: TextStyle(color: Colors.black),
                           children: [
                             TextSpan(
-                              text: 'Syarat & Ketentuan',
+                              text: 'terms_link'.tr,
                               style: TextStyle(
                                 color: Colors.blue,
                                 decoration: TextDecoration.underline,
@@ -184,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   // Misalnya, tampilkan dialog dengan informasi syarat dan ketentuan
                                 },
                             ),
-                            TextSpan(text: ' dari Tim STANTAPP.'),
+                            TextSpan(text: 'terms_suffix'.tr),
                           ],
                         ),
                       ),
@@ -202,8 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     authController.reqAuthCode(
                         emailController.text, phone_noController.text);
                   } else {
-                    Get.snackbar("Warning",
-                        "Cek Kembali field yang kosong atau anda belum menerima syarat dan ketentuan");
+                    Get.snackbar("warning".tr, "fill_required_fields".tr);
                   }
                   // Anda dapat menambahkan logika atau tindakan lain di sini
                 },
@@ -218,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Center(
                     child: Text(
-                      'Daftar',
+                      'register'.tr,
                       style: TextStyle(
                         color: agreeToTerms == true
                             ? Colors.white

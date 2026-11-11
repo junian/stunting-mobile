@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                                             },
                                           )
                                         : Container(
-                                            child: Text("No Video Data"),
+                                            child: Text("no_video_data".tr),
                                           ),
                                     Padding(
                                       padding:
@@ -414,7 +414,7 @@ class _HomePageState extends State<HomePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Rekomendasi Artikel',
+                                    'recommended_articles'.tr,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -867,7 +867,7 @@ class MyContainer {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Saat ini Anda belum Mempunyai Profil anak',
+                    'no_child_profile'.tr,
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -898,7 +898,7 @@ class MyContainer {
                           ),
                           SizedBox(width: 8),
                           Text(
-                            'Tambah',
+                            'add'.tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -946,13 +946,14 @@ class MyContainer2 {
 // Format hasil
     String formattedAge = '';
     if (years > 0) {
-      formattedAge += '${years} tahun ';
+      formattedAge += 'age_years'.trParams({'count': '$years'});
     }
     if (remainingMonths > 0) {
-      formattedAge += '${remainingMonths} bulan ';
+      formattedAge +=
+          'age_months'.trParams({'count': '$remainingMonths'});
     }
     if (remainingDays > 0) {
-      formattedAge += '${remainingDays} hari';
+      formattedAge += 'age_days'.trParams({'count': '$remainingDays'});
     }
 
     return Container(
@@ -970,7 +971,10 @@ class MyContainer2 {
                     Container(
                       width: width * 0.5,
                       child: Text(
-                        'Hai, ${authController.isParent[0]["nama_orang_tua"]}',
+                        'greeting'.trParams({
+                          'name':
+                              '${authController.isParent[0]["nama_orang_tua"]}'
+                        }),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -1058,7 +1062,7 @@ class MyContainer2 {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Profil Anak',
+                      'child_profile'.tr,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -1245,7 +1249,7 @@ class MyContainer2 {
                             height: 10,
                           ),
                           Text(
-                            'Tambah Profil Anak',
+                            'add_child_profile'.tr,
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             style: TextStyle(

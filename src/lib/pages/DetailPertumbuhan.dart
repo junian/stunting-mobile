@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DetailPertumbuhanPage extends StatelessWidget {
@@ -38,7 +39,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Detail Pertumbuhan'),
+        title: Text('growth_detail'.tr),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -47,7 +48,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Tanggal Pertumbuhan : ",
+                  "growth_date_label".tr,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text(tglbuat,
@@ -58,7 +59,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Usia Anak : ",
+                  "child_age_label".tr,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text(umur,
@@ -69,7 +70,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Berat : ",
+                  "weight_label".tr,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${beratBadan.toString()} kg",
@@ -80,7 +81,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Tinggi : ",
+                  "height_label".tr,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${tinggiBadan.toString()} cm",
@@ -91,7 +92,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Lingkar Kepala : ",
+                  "head_label".tr,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Text("${lingkarKepala.toString()} cm",
@@ -117,7 +118,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Status Pertumbuhan Berat Badan berdasarkan standard WHO : ",
+                          "growth_status_weight".tr,
                           style: TextStyle(
                             fontSize: 18,
                           )),
@@ -130,8 +131,8 @@ class DetailPertumbuhanPage extends StatelessWidget {
                                   : Colors.yellow)),
                       Text(
                           statusPertumbuhanBerat == "Normal"
-                              ? "Ket. Tetap jaga kesehatan Anak Anda"
-                              : "Ket. Silahkan konsultasi dengan petugas setempat",
+                              ? "keep_healthy_note".tr
+                              : "consult_note".tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -157,7 +158,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Status Pertumbuhan Tinggi Badan berdasarkan standard WHO : ",
+                          "growth_status_height".tr,
                           style: TextStyle(
                             fontSize: 18,
                           )),
@@ -170,8 +171,8 @@ class DetailPertumbuhanPage extends StatelessWidget {
                                   : Colors.yellow)),
                       Text(
                           statusPertumbuhanBerat == "Normal"
-                              ? "Ket. Tetap jaga kesehatan Anak Anda"
-                              : "Ket. Silahkan konsultasi dengan petugas setempat",
+                              ? "keep_healthy_note".tr
+                              : "consult_note".tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -197,7 +198,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Status Pertumbuhan Lebar Kepala berdasarkan standard WHO : ",
+                          "growth_status_head".tr,
                           style: TextStyle(
                             fontSize: 18,
                           )),
@@ -213,8 +214,8 @@ class DetailPertumbuhanPage extends StatelessWidget {
                                   : Colors.yellow)),
                       Text(
                           statusPertumbuhanBerat == "Normal"
-                              ? "Ket. Tetap jaga kesehatan Anak Anda"
-                              : "Ket. Silahkan konsultasi dengan petugas setempat",
+                              ? "keep_healthy_note".tr
+                              : "consult_note".tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,

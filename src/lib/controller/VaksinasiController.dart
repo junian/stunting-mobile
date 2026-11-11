@@ -56,9 +56,9 @@ class VaksinasiController extends GetxController {
       if (response.statusCode == 200) {
         // Data berhasil terkirim
         print('Data berhasil terkirim');
-        Get.snackbar("Berhasil", "Anda berhasil enambahkan data vaksinasi, segarkan ulang page vaksinasi!");
+        Get.snackbar("success".tr, "vaccine_added_success".tr);
       } else {
-        Get.snackbar("Gagal", "Anda gagal enambahkan data vaksinasi");
+        Get.snackbar("failed".tr, "vaccine_added_failed".tr);
         // Gagal mengirim data
         print('Gagal mengirim data');
       }

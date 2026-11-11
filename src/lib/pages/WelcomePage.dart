@@ -47,7 +47,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: Column(
                     children: [
                       Text(
-                        'Selamat Datang di STANTAPP',
+                        'welcome_title'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Daftar Akun Baru',
+                                  'register_new_account'.tr,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -171,7 +171,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Login',
+                                  'login'.tr,
                                   style: TextStyle(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold,

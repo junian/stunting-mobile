@@ -80,7 +80,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                     border: InputBorder.none,
                     hintStyle: TextStyle(color: Colors.grey),
                     icon: Icon(Icons.search),
-                    hintText: "Cari Artikel"),
+                    hintText: "search_articles".tr),
               ),
             ),
           ),
@@ -109,7 +109,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                         SizedBox(
                           width: width * 0.01,
                         ),
-                        Text("Artikel")
+                        Text("articles".tr)
                       ],
                     ),
                     SizedBox(
@@ -198,7 +198,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                           .format(DateTime.parse(artikel.createdDate));
 
                       if (filteredList.isEmpty) {
-                        return Text("gagal");
+                        return Text("failed".tr);
                       }
                       return Card(
                         child: Container(
@@ -268,7 +268,8 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                subtitle: Text("Penulis : ${artikel.fullname}"),
+                                subtitle: Text("author_by".trParams(
+                                    {"author": artikel.fullname})),
                                 onTap: () {
                                   // Tambahkan aksi ketika artikel diklik di sini
                                 },

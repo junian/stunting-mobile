@@ -87,7 +87,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Riwayat Pertumbuahan'),
+        title: Text('growth_history'.tr),
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
@@ -110,7 +110,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
               color: Colors.blue,
             ),
             child: Text(
-              "Tambah Pertumbuhan",
+              "add_growth".tr,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
-                              'Terakhir',
+                              'latest'.tr,
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ),
@@ -156,7 +156,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
-                              'Terbaru',
+                              'newest'.tr,
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ),
@@ -184,11 +184,12 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
                     width: 20,
                   ),
                   Text(
-                    "Berat",
+                    "weight".tr,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text("Tinggi", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("L.Kepala",
+                  Text("height".tr,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("head_circumference".tr,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Container(
                     height: 20,

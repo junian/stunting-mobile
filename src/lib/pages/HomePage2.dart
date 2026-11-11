@@ -42,7 +42,9 @@ class HomePage2 extends StatelessWidget {
                             width: width * 0.5,
                             child: Expanded(
                               child: Text(
-                                'Hai, ${anak[0]["nama_anak"]}',
+                                'greeting'.trParams({
+                                  'name': '${anak[0]["nama_anak"]}'
+                                }),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -59,7 +61,7 @@ class HomePage2 extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Naikan Level Membership ',
+                                    'upgrade_membership'.tr,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -128,7 +130,7 @@ class HomePage2 extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Profil Anak',
+                            'child_profile'.tr,
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -137,7 +139,7 @@ class HomePage2 extends StatelessWidget {
                           ),
                           GestureDetector(
                             child: Text(
-                              'Lihat Semua',
+                              'see_all'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -299,7 +301,7 @@ class HomePage2 extends StatelessWidget {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Tambah Profil Anak',
+                                  'add_child_profile'.tr,
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
                                   style: TextStyle(
@@ -341,7 +343,7 @@ class HomePage2 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Rekomendasi Artikel',
+                              'recommended_articles'.tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -351,7 +353,7 @@ class HomePage2 extends StatelessWidget {
                             GestureDetector(
                               onTap: () {},
                               child: Text(
-                                'Lihat Semua',
+                                'see_all'.tr,
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold,
@@ -398,7 +400,7 @@ class HomePage2 extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Kategori',
+                                                'category'.tr,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 10,
@@ -468,7 +470,7 @@ class HomePage2 extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Kategori',
+                                                'category'.tr,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 10,

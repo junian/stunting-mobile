@@ -56,7 +56,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Tambah Vaksinasi Anak'),
+        title: Text('add_child_vaccination'.tr),
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
@@ -81,7 +81,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
               color: Colors.blue,
             ),
             child: Text(
-              "Simpan",
+              "save".tr,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                           Row(
                             children: [
                               Text(
-                                'Tanggal Vaksinasi',
+                                'vaccination_date'.tr,
                                 style: TextStyle(),
                               ),
                               Text(
@@ -179,7 +179,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                           controller: vaksinasiController
                               .dateinput, //editing controller of this TextField
                           decoration: InputDecoration(
-                            hintText: 'Tanggal Vaksinasi',
+                            hintText: 'vaccination_date'.tr,
                             border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: isClicked
@@ -243,7 +243,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                       Row(
                         children: [
                           Text(
-                            'Nama Dokter',
+                            'doctor_name'.tr,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -267,7 +267,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                         child: TextField(
                           controller: vaksinasiController.nama_dokter,
                           decoration: InputDecoration(
-                            hintText: 'Nama Dokter',
+                            hintText: 'doctor_name'.tr,
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             border: InputBorder.none,
@@ -288,7 +288,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                       Row(
                         children: [
                           Text(
-                            'Tempat',
+                            'place'.tr,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -312,7 +312,7 @@ class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
                         child: TextField(
                           controller: vaksinasiController.tempat,
                           decoration: InputDecoration(
-                            hintText: 'Nama Tempat',
+                            hintText: 'place_name'.tr,
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             border: InputBorder.none,

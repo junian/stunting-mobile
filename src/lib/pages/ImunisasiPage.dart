@@ -35,7 +35,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Imunisasi',
+              'immunization'.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -53,7 +53,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                   width: 1,
                 ),
                 Text(
-                  '0 Tahun 0 Bulan',
+                  'child_age_zero'.tr,
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -86,7 +86,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Jadwal Vaksinasi',
+                  'vaccination_schedule'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                 GestureDetector(
                   onTap: () {},
                   child: Text(
-                    'Lihat Semua',
+                    'see_all'.tr,
                     style: TextStyle(
                       color: Colors.blue,
                       fontSize: 15,
@@ -141,7 +141,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Di Rekomendasikan di',
+                                    'recommended_on'.tr,
                                     style: TextStyle(
                                       fontSize: 12,
                                     ),
@@ -224,7 +224,9 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                vaksin['status'],
+                                                vaksin['status'] == "Sudah"
+                                                    ? 'status_done'.tr
+                                                    : 'status_not_yet'.tr,
                                                 style: TextStyle(
                                                   color: vaksin['status'] ==
                                                           "Belum"

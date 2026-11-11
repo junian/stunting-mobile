@@ -125,6 +125,42 @@ class _SetProfilePageState extends State<SetProfilePage> {
     }
   }
 
+  String _educationLabel(String value) {
+    switch (value) {
+      case 'Pilih Pendidikan Terakhir':
+        return 'select_last_education'.tr;
+      case 'SD':
+        return 'edu_sd'.tr;
+      case 'SMP':
+        return 'edu_smp'.tr;
+      case 'SMA':
+        return 'edu_sma'.tr;
+      case 'S1':
+        return 'edu_s1'.tr;
+      case 'S2':
+        return 'edu_s2'.tr;
+      case 'S3':
+        return 'edu_s3'.tr;
+      default:
+        return value;
+    }
+  }
+
+  String _workLabel(String value) {
+    switch (value) {
+      case 'Pilih Pendidikan Terakhir':
+        return 'select_occupation'.tr;
+      case 'PNS':
+        return 'civil_servant'.tr;
+      case 'Wiraswasta':
+        return 'entrepreneur'.tr;
+      case 'Swasta':
+        return 'private_employee'.tr;
+      default:
+        return value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -132,7 +168,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Profile Anda'),
+        title: Text('set_profile'.tr),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -191,7 +227,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       _pickImage();
                     },
                     child: Text(
-                      'Unggah Foto Anda',
+                      'upload_your_photo'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.blueAccent,
@@ -208,7 +244,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Text(
-                            'Nama Lengkap Orang tua',
+                            'parent_full_name'.tr,
                             style: TextStyle(),
                           ),
                           Text(
@@ -223,7 +259,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       TextField(
                         controller: nama_orang_tua,
                         decoration: InputDecoration(
-                          hintText: 'Masukkan Nama Orang tua',
+                          hintText: 'parent_full_name_hint'.tr,
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: isClicked
@@ -344,7 +380,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Text(
-                            'Jenis Kelamin',
+                            'gender'.tr,
                             style: TextStyle(),
                           ),
                           Text(
@@ -367,7 +403,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               });
                             },
                           ),
-                          Text('Laki-Laki'),
+                          Text('male'.tr),
                           SizedBox(width: 16),
                           Radio(
                             value: 'Perempuan',
@@ -378,7 +414,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                               });
                             },
                           ),
-                          Text('Perempuan'),
+                          Text('female'.tr),
                         ],
                       ),
                       SizedBox(height: 24),
@@ -389,7 +425,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Provinsi',
+                                        'province'.tr,
                                         style: TextStyle(),
                                       ),
                                       Text(
@@ -409,7 +445,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         idProv = value?.provinceId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.provinceName ??
-                                            "Belum Memilih Provinsi"),
+                                            'select_province'.tr),
                                     popupProps: PopupProps.menu(
                                       menuProps: MenuProps(align: MenuAlign.bottomCenter),
                                       fit: FlexFit.loose,
@@ -447,7 +483,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Kota/Kabupaten',
+                                        'city'.tr,
                                         style: TextStyle(),
                                       ),
                                       Text(
@@ -467,7 +503,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         idCity = value?.cityId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.cityName ??
-                                            "Belum Memilih Kota/Kabupaten"),
+                                            'select_city'.tr),
                                     popupProps: PopupProps.menu(
                                       menuProps: MenuProps(align: MenuAlign.bottomCenter),
                                       fit: FlexFit.loose,
@@ -509,7 +545,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Kecamatan',
+                                        'district'.tr,
                                         style: TextStyle(),
                                       ),
                                       Text(
@@ -529,7 +565,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         idKecamatan = value?.kecamatanId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.kecamatanName ??
-                                            "Belum Memilih Kecamatan"),
+                                            'select_district'.tr),
                                     popupProps: PopupProps.menu(
                                       menuProps: MenuProps(align: MenuAlign.bottomCenter),
                                       fit: FlexFit.loose,
@@ -572,7 +608,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Kelurahan/Desa',
+                                        'village'.tr,
                                         style: TextStyle(),
                                       ),
                                       Text(
@@ -592,7 +628,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                         idKelurahan = value?.kelurahanId,
                                     dropdownBuilder: (context, selectedItem) =>
                                         Text(selectedItem?.kelurahanName ??
-                                            "Belum Memilih Kelurahan/Desa"),
+                                            'select_village'.tr),
                                     popupProps: PopupProps.menu(
                                       menuProps: MenuProps(align: MenuAlign.bottomCenter),
                                       fit: FlexFit.loose,
@@ -636,7 +672,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Alamat',
+                                        'address'.tr,
                                         style: TextStyle(),
                                       ),
                                       Text(
@@ -655,7 +691,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       TextField(
                         controller: alamat,
                         decoration: InputDecoration(
-                          hintText: 'Masukkan Alamat',
+                          hintText: 'address_hint'.tr,
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: isClicked
@@ -686,7 +722,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Text(
-                            'Pendidikan',
+                            'education'.tr,
                             style: TextStyle(),
                           ),
                           Text(
@@ -703,7 +739,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         items: _lastEducation.map((lastEducation) {
                           return DropdownMenuItem(
                             value: lastEducation,
-                            child: Text(lastEducation),
+                            child: Text(_educationLabel(lastEducation)),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -762,7 +798,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Text(
-                            'Pekerjaan',
+                            'occupation'.tr,
                             style: TextStyle(),
                           ),
                           Text(
@@ -779,7 +815,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                         items: _workType.map((work) {
                           return DropdownMenuItem(
                             value: work,
-                            child: Text(work),
+                            child: Text(_workLabel(work)),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -838,7 +874,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       Row(
                         children: [
                           Text(
-                            'Pendapatan',
+                            'income'.tr,
                             style: TextStyle(),
                           ),
                           Text(
@@ -853,7 +889,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                       TextField(
                         controller: pendapatan,
                         decoration: InputDecoration(
-                          hintText: 'Masukkan Pendapatan Perkapita',
+                          hintText: 'income_hint'.tr,
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: isClicked
@@ -925,7 +961,7 @@ class _SetProfilePageState extends State<SetProfilePage> {
                           ),
                           child: Center(
                             child: Text(
-                              'Simpan',
+                              'save'.tr,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

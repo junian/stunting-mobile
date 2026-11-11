@@ -47,7 +47,7 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Document"),
+          title: Text("document".tr),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info_outline),
@@ -58,7 +58,7 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                     return Center(
                       child: AlertDialog(
                         title: Text(
-                          'Cara membaca colom umur',
+                          'how_to_read_age_column'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -70,14 +70,14 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                           child: Column(
                             children: [
                               Text(
-                                  "Misal 2 berarti 2 bulan (60 Hari) Sampai dengan 2 bulan 29 hari (89 Hari)"),
+                                  'age_column_example'.tr),
                               Row(
                                 children: [
                                   Icon(
                                     Icons.square,
                                     color: Colors.blue,
                                   ),
-                                  Text("Usia si kecil"),
+                                  Text("child_age".tr),
                                 ],
                               ),
                               SizedBox(
@@ -87,25 +87,25 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                                 children: [
                                   Icon(Icons.square,
                                       color: Colors.blueAccent[100]),
-                                  Text("Primer"),
+                                  Text("primary".tr),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Icon(Icons.square, color: Colors.white),
-                                  Text("Kejar"),
+                                  Text("catch_up".tr),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Icon(Icons.square, color: Colors.pink[100]),
-                                  Text("Penguat"),
+                                  Text("booster".tr),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Icon(Icons.square, color: Colors.orange),
-                                  Text("Daerah Endemis"),
+                                  Text("endemic_area".tr),
                                 ],
                               ),
                             ],
@@ -116,7 +116,7 @@ class _JadwalImunisaiIDAIState extends State<JadwalImunisaiIDAI>
                             onPressed: () {
                               Get.back();
                             },
-                            child: Text('Close'),
+                            child: Text('close'.tr),
                           ),
                         ],
                       ),

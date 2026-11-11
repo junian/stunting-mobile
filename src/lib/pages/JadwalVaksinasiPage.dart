@@ -68,7 +68,7 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Jadwal Vaksinasi'),
+        title: Text('vaccination_schedule'.tr),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshData,
@@ -86,7 +86,7 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                         width: width * 0.4,
                         height: height * 0.1,
                         child: Text(
-                          "Jenis Tampilan",
+                          "view_type".tr,
                           style: TextStyle(fontSize: 20),
                         )),
                     Container(
@@ -198,7 +198,7 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Dirokemendasikan di ',
+                                        'recommended_on_period'.tr,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.normal,
@@ -248,7 +248,10 @@ class _JadwalVaksinasiPageState extends State<JadwalVaksinasiPage> {
                                               Chip(
                                                 side: BorderSide.none,
                                                 label: Text(
-                                                  subItem['status'],
+                                                  subItem['status'] ==
+                                                          "Sudah"
+                                                      ? 'status_done'.tr
+                                                      : 'status_not_yet'.tr,
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: subItem['status'] ==

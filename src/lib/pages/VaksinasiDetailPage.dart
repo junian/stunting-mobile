@@ -87,7 +87,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Edit Status Vaksinasi',
+                          'edit_vaccination_status'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Belum'),
+                            Text('status_not_yet'.tr),
                             Radio(
                               value: 'Belum',
                               groupValue: _selectedOption,
@@ -141,7 +141,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Sudah'),
+                            Text('status_done'.tr),
                             Radio(
                               value: 'Sudah',
                               groupValue: _selectedOption,
@@ -186,7 +186,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                         ),
                         child: Center(
                           child: Text(
-                            'Simpan',
+                            'save'.tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Tanggal Direkomendasikan',
+                        'recommended_date'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -302,7 +302,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       text: TextSpan(
                         style: TextStyle(fontSize: 14, color: Colors.black),
                         text:
-                            'Mencegah Penyakit hepatitis B yang dapat menyebabkan kerusakan hati',
+                            'hep_b_description'.tr,
                       ),
                     ),
                   ),
@@ -311,7 +311,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                   ),
                   Container(
                     child: Text(
-                      'Lihat Lebih Lanjut',
+                      'see_more'.tr,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -346,7 +346,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                             width: 10,
                           ),
                           Text(
-                            'Status Vaksinasi',
+                            'vaccination_status'.tr,
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -364,7 +364,9 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                               : Colors.red[100],
                         ),
                         child: Text(
-                          widget.status,
+                          widget.status == "Sudah"
+                              ? 'status_done'.tr
+                              : 'status_not_yet'.tr,
                           style: TextStyle(
                             color: widget.status == "Sudah"
                                 ? Colors.green
@@ -398,7 +400,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                       ),
                       child: Center(
                         child: Text(
-                          'Edit Status',
+                          'edit_status'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.blue,

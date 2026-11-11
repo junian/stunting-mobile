@@ -101,7 +101,7 @@ class _ChildernPageState extends State<ChildernPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      'Choose',
+                      'choose'.tr,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -152,9 +152,10 @@ class _ChildernPageState extends State<ChildernPage> {
     String formattedAge;
     if (diffYears > 0) {
       int remainingMonths = diffMonths % 12;
-      formattedAge = '${diffYears} tahun ${remainingMonths} bulan';
+      formattedAge = 'age_years_months'.trParams(
+          {'years': '$diffYears', 'months': '$remainingMonths'});
     } else {
-      formattedAge = '${diffMonths} bulan';
+      formattedAge = 'age_months_only'.trParams({'count': '$diffMonths'});
     }
 
     return isDataInitialized == true
@@ -281,7 +282,7 @@ class _ChildernPageState extends State<ChildernPage> {
                           width: width * 0.5,
                           padding: EdgeInsets.only(top: 15),
                           child: Text(
-                            'Buku Anak',
+                            'child_book'.tr,
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
@@ -391,7 +392,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Hasil Pertumbuhan',
+                                            'growth_results'.tr,
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
@@ -416,7 +417,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               );
                                             },
                                             child: Text(
-                                              'Lihat Semua',
+                                              'see_all'.tr,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w700,
@@ -497,7 +498,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                           child: Column(
                                                             children: [
                                                               Text(
-                                                                'Berat',
+                                                                'weight'.tr,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 16,
@@ -595,7 +596,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                           child: Column(
                                                             children: [
                                                               Text(
-                                                                'Tinggi',
+                                                                'height'.tr,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 16,
@@ -693,7 +694,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                           child: Column(
                                                             children: [
                                                               Text(
-                                                                'L.Kepala',
+                                                                'head_circumference'.tr,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 16,
@@ -750,7 +751,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'Terakhir Update',
+                                                    'last_update'.tr,
                                                     style: TextStyle(
                                                       fontSize: 15,
                                                     ),
@@ -795,7 +796,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      'Update Pertumbuhan',
+                                                      'update_growth'.tr,
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                       ),
@@ -845,7 +846,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      'Update',
+                                                      'update'.tr,
                                                       style: TextStyle(
                                                         color: Colors.blue,
                                                       ),
@@ -867,7 +868,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Vaksinasi',
+                                            'vaccination'.tr,
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
@@ -884,7 +885,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               );
                                             },
                                             child: Text(
-                                              'Lihat Detail',
+                                              'see_detail'.tr,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w700,
@@ -924,7 +925,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               children: [
                                                 Container(
                                                   child: Text(
-                                                    'Jadwal Vaksinasi',
+                                                    'vaccination_schedule'.tr,
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -980,7 +981,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Riwayat Pertumbuhan',
+                                            'growth_history'.tr,
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
@@ -1005,7 +1006,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               );
                                             },
                                             child: Text(
-                                              'Lihat Detail',
+                                              'see_detail'.tr,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w700,
@@ -1045,7 +1046,7 @@ class _ChildernPageState extends State<ChildernPage> {
                                               children: [
                                                 Container(
                                                   child: Text(
-                                                    'Riwayat Pertumbuhan Anak',
+                                                    'child_growth_history'.tr,
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:

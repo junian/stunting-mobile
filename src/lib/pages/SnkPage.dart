@@ -56,14 +56,14 @@ class _SnkPageState extends State<SnkPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Syarat dan Ketentuan penggunaan STANTAPP'.toUpperCase(),
+                'terms_full_title'.tr.toUpperCase(),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                'Perbaruan Terakhir : 1/12/2022',
+                'terms_last_updated'.tr,
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.w600,

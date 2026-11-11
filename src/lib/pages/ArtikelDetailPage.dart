@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as html;
+import 'package:get/get.dart';
 
 class ArtikelDetailPage extends StatefulWidget {
   String category;
@@ -55,7 +56,7 @@ class _ArtikelDetailPageState extends State<ArtikelDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Artikel',
+          'articles'.tr,
           style: TextStyle(fontSize: 20),
         ),
         leading: IconButton(
@@ -155,7 +156,7 @@ class _ArtikelDetailPageState extends State<ArtikelDetailPage> {
                   Text(widget.title,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  Text("Ditulis Oleh ${widget.author}",
+                  Text("author_by".trParams({"author": widget.author}),
                       style: TextStyle(color: Colors.grey)),
                 ],
               ),

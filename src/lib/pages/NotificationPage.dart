@@ -39,7 +39,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         notificationController.notification.toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifikasi'),
+        title: Text('notifications'.tr),
       ),
       body: isDataInitialized == true
           ? Padding(
@@ -74,7 +74,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
               ) : Container(
                 child: Center(
                   child: Text(
-                    "Belum ada notifikasi",
+                    "no_notifications".tr,
                     style: TextStyle(
                       fontSize: 24,
                       color: Colors.grey,

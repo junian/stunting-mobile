@@ -1,0 +1,467 @@
+import 'package:get/get.dart';
+
+/// Central translation table for the app.
+///
+/// English is the default/fallback language. Bahasa Indonesia is used when
+/// the device language is Indonesian or when the user selects it in Settings.
+class AppTranslations extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+        'en': _en,
+        'id': _id,
+      };
+
+  static const Map<String, String> _en = {
+    'app_name': 'STANTAPP',
+    'version': 'Version 1.3.3',
+    'warning': 'Warning',
+    'error': 'Error',
+    'success': 'Success',
+    'cancel': 'Cancel',
+    'close': 'Close',
+    'ok': 'OK',
+    'yes': 'Yes',
+    'no': 'No',
+    'save': 'Save',
+    'update': 'Update',
+    'choose': 'Choose',
+    'search': 'Search',
+    'all': 'All',
+    'login': 'Login',
+    'logout': 'Logout',
+    'register': 'Register',
+    'language': 'Language',
+    'language_system': 'System Default',
+    'language_english': 'English',
+    'language_indonesian': 'Bahasa Indonesia',
+    'language_changed': 'Language changed successfully',
+
+    // Welcome / Login / Verification
+    'welcome_title': 'Welcome to STANTAPP',
+    'register_new_account': 'Create New Account',
+    'login_with_email': 'Sign in with Email',
+    'email': 'Email',
+    'no_account': "Don't have an account? ",
+    'need_help': 'Need help?',
+    'whatsapp_contact': 'WhatsApp 0817-7070-4114',
+    'verification': 'Verification',
+    'verification_instruction':
+        'Enter the verification code that was sent to your email. Please check!',
+    'verification_code': 'Verification Code',
+    'did_not_receive_code': "Didn't receive a verification code? ",
+    'verification_incomplete': 'Verification code is incomplete',
+
+    // Settings
+    'profile': 'Profile',
+    'terms_conditions': 'Terms and Conditions',
+    'about_app': 'About App',
+    'logout_confirm': 'Are you sure you want to logout?',
+
+    // Register
+    'register_account': 'Register Account',
+    'phone_number': 'Phone Number',
+    'phone_number_hint': 'Enter your phone number',
+    'email_hint': 'Enter your email address',
+    'terms_prefix': 'I have read and agree to the ',
+    'terms_link': 'Terms & Conditions',
+    'terms_suffix': ' from the STANTAPP Team.',
+    'fill_required_fields':
+        'Please check the empty fields or you have not accepted the terms and conditions',
+
+    // Static pages
+    'terms_full_title': 'STANTAPP Terms and Conditions of Use',
+    'terms_last_updated': 'Last Updated: 1/12/2022',
+    'about_stantapp': 'About Stant App',
+    'about_disclaimer':
+        'The content and recommendations in STANTAPP are created and supervised by the Indonesian Pediatric Society (IDAI).',
+
+    // Notifications / Consultation
+    'notifications': 'Notifications',
+    'no_notifications': 'No notifications yet',
+    'consultation': 'Consultation',
+
+    // Articles
+    'articles': 'Articles',
+    'search_articles': 'Search Articles',
+    'author_by': 'Written by @author',
+    'failed': 'Failed',
+
+    // Vaccination
+    'vaccine_added_success':
+        'Vaccination data added successfully, refresh the vaccination page!',
+    'vaccine_added_failed': 'Failed to add vaccination data',
+
+    // Child profile form
+    'edit_child_account': 'Edit Child Account',
+    'set_profile': 'Set Your Profile',
+    'upload_photo': 'Upload Photo',
+    'full_name': 'Full Name',
+    'birth_date': 'Date of Birth',
+    'gender': 'Gender',
+    'male': 'Male',
+    'female': 'Female',
+    'birth_data': 'Birth Data',
+    'is_premature': 'Was your child born prematurely?',
+    'birth_weight_label': 'Birth Weight (kg)',
+    'birth_weight_hint': 'Enter weight in Kg',
+    'birth_height_label': 'Birth Length (Cm)',
+    'birth_height_hint': 'Enter length in cm',
+    'birth_head_label': 'Head Circumference at Birth (Cm)',
+    'additional_profile': 'Additional Profile',
+    'blood_group': 'Blood Type',
+    'select_blood_group': 'Select Blood Type',
+    'has_allergy': 'Does your child have any allergies?',
+    'parent_height': 'Parents Height',
+    'parent_height_note':
+        'Note: Parents height data will be used to measure the child\'s potential adult height',
+    'mother_height': 'Mother\'s Height (Cm)',
+    'father_height': 'Father\'s Height (Cm)',
+
+    // Parent profile form
+    'upload_your_photo': 'Upload Your Photo',
+    'parent_full_name': 'Parent\'s Full Name',
+    'parent_full_name_hint': 'Enter parent\'s name',
+    'province': 'Province',
+    'select_province': 'No province selected',
+    'city': 'City/Regency',
+    'select_city': 'No city/regency selected',
+    'district': 'District',
+    'select_district': 'No district selected',
+    'village': 'Village',
+    'select_village': 'No village selected',
+    'address': 'Address',
+    'address_hint': 'Enter address',
+    'education': 'Education',
+    'select_last_education': 'Select Last Education',
+    'edu_sd': 'Elementary School',
+    'edu_smp': 'Junior High School',
+    'edu_sma': 'Senior High School',
+    'edu_s1': 'Bachelor\'s Degree',
+    'edu_s2': 'Master\'s Degree',
+    'edu_s3': 'Doctorate',
+    'occupation': 'Occupation',
+    'select_occupation': 'Select Occupation',
+    'civil_servant': 'Civil Servant',
+    'entrepreneur': 'Entrepreneur',
+    'private_employee': 'Private Employee',
+    'income': 'Income',
+    'income_hint': 'Enter per capita income',
+
+    // Home
+    'no_video_data': 'No Video Data',
+    'recommended_articles': 'Recommended Articles',
+    'no_child_profile': 'You do not have a child profile yet',
+    'add': 'Add',
+    'greeting': 'Hi, @name',
+    'age_years': '@count years ',
+    'age_months': '@count months ',
+    'age_days': '@count days',
+    'child_profile': 'Child Profile',
+    'add_child_profile': 'Add Child Profile',
+    'see_all': 'See All',
+    'category': 'Category',
+
+    // Child detail
+    'child_book': 'Child Book',
+    'age_years_months': '@years years @months months',
+    'age_months_only': '@count months',
+    'growth_results': 'Growth Results',
+    'weight': 'Weight',
+    'height': 'Height',
+    'head_circumference': 'Head Circ.',
+    'last_update': 'Last Update',
+    'update_growth': 'Update Growth',
+    'vaccination': 'Vaccination',
+    'see_detail': 'See Detail',
+    'vaccination_schedule': 'Vaccination Schedule',
+    'growth_history': 'Growth History',
+    'child_growth_history': 'Child Growth History',
+
+    // Growth
+    'add_growth_data': 'Add Growth Data',
+    'growth_date': 'Growth Date',
+    'weight_kg': 'Weight (kg)',
+    'height_cm': 'Height (cm)',
+    'head_cm': 'Head Circumference (cm)',
+    'example_weight': 'Example: 3.5',
+    'example_height': 'Example: 40.8',
+    'add_growth': 'Add Growth',
+    'latest': 'Latest',
+    'newest': 'Newest',
+    'growth_detail': 'Growth Detail',
+    'growth_date_label': 'Growth Date: ',
+    'child_age_label': 'Child Age: ',
+    'weight_label': 'Weight: ',
+    'height_label': 'Height: ',
+    'head_label': 'Head Circumference: ',
+    'growth_status_weight':
+        'Weight Growth Status based on WHO standard: ',
+    'growth_status_height':
+        'Height Growth Status based on WHO standard: ',
+    'growth_status_head':
+        'Head Circumference Growth Status based on WHO standard: ',
+    'keep_healthy_note': 'Note: Keep your child healthy',
+    'consult_note': 'Note: Please consult your local health worker',
+
+    // Immunization / Vaccination schedule
+    'immunization': 'Immunization',
+    'recommended_on': 'Recommended on',
+    'recommended_on_period': 'Recommended on ',
+    'status_done': 'Done',
+    'status_not_yet': 'Not Yet',
+    'document': 'Document',
+    'how_to_read_age_column': 'How to read the age column',
+    'age_column_example':
+        'e.g. 2 means 2 months (60 days) up to 2 months 29 days (89 days)',
+    'child_age': 'Your little one\'s age',
+    'primary': 'Primary',
+    'catch_up': 'Catch-up',
+    'booster': 'Booster',
+    'endemic_area': 'Endemic Area',
+    'view_type': 'View Type',
+    'add_child_vaccination': 'Add Child Vaccination',
+    'vaccination_date': 'Vaccination Date',
+    'doctor_name': 'Doctor Name',
+    'place': 'Place',
+    'place_name': 'Place Name',
+    'edit_vaccination_status': 'Edit Vaccination Status',
+    'recommended_date': 'Recommended Date',
+    'hep_b_description':
+        'Prevents Hepatitis B, which can cause liver damage',
+    'see_more': 'See More',
+    'vaccination_status': 'Vaccination Status',
+    'edit_status': 'Edit Status',
+
+    'upgrade_membership': 'Upgrade Membership Level ',
+    'child_age_zero': '0 Years 0 Months',
+
+    // ==EN_END==
+  };
+
+  static const Map<String, String> _id = {
+    'app_name': 'STANTAPP',
+    'version': 'Versi 1.3.3',
+    'warning': 'Peringatan',
+    'error': 'Kesalahan',
+    'success': 'Berhasil',
+    'cancel': 'Batal',
+    'close': 'Tutup',
+    'ok': 'OK',
+    'yes': 'Ya',
+    'no': 'Tidak',
+    'save': 'Simpan',
+    'update': 'Update',
+    'choose': 'Pilih',
+    'search': 'Cari',
+    'all': 'Semua',
+    'login': 'Masuk',
+    'logout': 'Keluar',
+    'register': 'Daftar',
+    'language': 'Bahasa',
+    'language_system': 'Ikuti Sistem',
+    'language_english': 'English',
+    'language_indonesian': 'Bahasa Indonesia',
+    'language_changed': 'Bahasa berhasil diubah',
+
+    // Welcome / Login / Verification
+    'welcome_title': 'Selamat Datang di STANTAPP',
+    'register_new_account': 'Daftar Akun Baru',
+    'login_with_email': 'Masuk Dengan Email',
+    'email': 'Email',
+    'no_account': 'Belum memiliki akun? ',
+    'need_help': 'Butuh Bantuan ?',
+    'whatsapp_contact': 'WhatsApp 0817-7070-4114',
+    'verification': 'Verifikasi',
+    'verification_instruction':
+        'Masukkan Code Verifikasi yang telah dikirim Ke Email Anda. Silahkan cek!',
+    'verification_code': 'Kode Verifikasi',
+    'did_not_receive_code': 'Tidak Menerima Kode Verifikasi? ',
+    'verification_incomplete': 'Kode Verifikasi Belum Lengkap',
+
+    // Settings
+    'profile': 'Profil',
+    'terms_conditions': 'Syarat dan Ketentuan',
+    'about_app': 'Tentang Aplikasi',
+    'logout_confirm': 'Apakah anda yakin ingin keluar?',
+
+    // Register
+    'register_account': 'Daftar Akun',
+    'phone_number': 'Nomor HP',
+    'phone_number_hint': 'Masukkan Nomor HP Anda',
+    'email_hint': 'Masukkan alamat email Anda',
+    'terms_prefix': 'Saya telah membaca dan menyetujui ',
+    'terms_link': 'Syarat & Ketentuan',
+    'terms_suffix': ' dari Tim STANTAPP.',
+    'fill_required_fields':
+        'Cek Kembali field yang kosong atau anda belum menerima syarat dan ketentuan',
+
+    // Static pages
+    'terms_full_title': 'Syarat dan Ketentuan penggunaan STANTAPP',
+    'terms_last_updated': 'Perbaruan Terakhir : 1/12/2022',
+    'about_stantapp': 'Tentang Stant App',
+    'about_disclaimer':
+        'Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).',
+
+    // Notifications / Consultation
+    'notifications': 'Notifikasi',
+    'no_notifications': 'Belum ada notifikasi',
+    'consultation': 'Konsultasi',
+
+    // Articles
+    'articles': 'Artikel',
+    'search_articles': 'Cari Artikel',
+    'author_by': 'Ditulis Oleh @author',
+    'failed': 'Gagal',
+
+    // Vaccination
+    'vaccine_added_success':
+        'Anda berhasil menambahkan data vaksinasi, segarkan ulang page vaksinasi!',
+    'vaccine_added_failed': 'Anda gagal menambahkan data vaksinasi',
+
+    // Child profile form
+    'edit_child_account': 'Edit Akun Anak',
+    'set_profile': 'Set Profile Anda',
+    'upload_photo': 'Unggah Foto',
+    'full_name': 'Nama Lengkap',
+    'birth_date': 'Tanggal Lahir',
+    'gender': 'Jenis Kelamin',
+    'male': 'Laki-Laki',
+    'female': 'Perempuan',
+    'birth_data': 'Data Kelahiran',
+    'is_premature': 'Apakah anak anda lahir prematur',
+    'birth_weight_label': 'Input Berat Badan Saat Lahir (kg)',
+    'birth_weight_hint': 'Input Berat Badan dalam Kg',
+    'birth_height_label': 'Input Tinggi Badan Saat Lahir (Cm)',
+    'birth_height_hint': 'Input Tinggi Badan dalam cm',
+    'birth_head_label': 'Input Lingkar Kepala Saat Lahir (Cm)',
+    'additional_profile': 'Profil Tambahan',
+    'blood_group': 'Golongan Darah',
+    'select_blood_group': 'Pilih Golongan Darah',
+    'has_allergy': 'Apakah anak anda Mempunyai Alergi',
+    'parent_height': 'Tinggi Badan Orang Tua',
+    'parent_height_note':
+        'Keterangan: Data tinggi badang orang tua akan digunakan untuk mengukur potensial tinggi badan anak saat dewasa',
+    'mother_height': 'Tinggi Badan Ibu (Cm)',
+    'father_height': 'Tinggi Badan Ayah (Cm)',
+
+    // Parent profile form
+    'upload_your_photo': 'Unggah Foto Anda',
+    'parent_full_name': 'Nama Lengkap Orang tua',
+    'parent_full_name_hint': 'Masukkan Nama Orang tua',
+    'province': 'Provinsi',
+    'select_province': 'Belum Memilih Provinsi',
+    'city': 'Kota/Kabupaten',
+    'select_city': 'Belum Memilih Kota/Kabupaten',
+    'district': 'Kecamatan',
+    'select_district': 'Belum Memilih Kecamatan',
+    'village': 'Kelurahan/Desa',
+    'select_village': 'Belum Memilih Kelurahan/Desa',
+    'address': 'Alamat',
+    'address_hint': 'Masukkan Alamat',
+    'education': 'Pendidikan',
+    'select_last_education': 'Pilih Pendidikan Terakhir',
+    'edu_sd': 'SD',
+    'edu_smp': 'SMP',
+    'edu_sma': 'SMA',
+    'edu_s1': 'S1',
+    'edu_s2': 'S2',
+    'edu_s3': 'S3',
+    'occupation': 'Pekerjaan',
+    'select_occupation': 'Pilih Pekerjaan',
+    'civil_servant': 'PNS',
+    'entrepreneur': 'Wiraswasta',
+    'private_employee': 'Swasta',
+    'income': 'Pendapatan',
+    'income_hint': 'Masukkan Pendapatan Perkapita',
+
+    // Home
+    'no_video_data': 'Tidak Ada Data Video',
+    'recommended_articles': 'Rekomendasi Artikel',
+    'no_child_profile': 'Saat ini Anda belum Mempunyai Profil anak',
+    'add': 'Tambah',
+    'greeting': 'Hai, @name',
+    'age_years': '@count tahun ',
+    'age_months': '@count bulan ',
+    'age_days': '@count hari',
+    'child_profile': 'Profil Anak',
+    'add_child_profile': 'Tambah Profil Anak',
+    'see_all': 'Lihat Semua',
+    'category': 'Kategori',
+
+    // Child detail
+    'child_book': 'Buku Anak',
+    'age_years_months': '@years tahun @months bulan',
+    'age_months_only': '@count bulan',
+    'growth_results': 'Hasil Pertumbuhan',
+    'weight': 'Berat',
+    'height': 'Tinggi',
+    'head_circumference': 'L.Kepala',
+    'last_update': 'Terakhir Update',
+    'update_growth': 'Update Pertumbuhan',
+    'vaccination': 'Vaksinasi',
+    'see_detail': 'Lihat Detail',
+    'vaccination_schedule': 'Jadwal Vaksinasi',
+    'growth_history': 'Riwayat Pertumbuhan',
+    'child_growth_history': 'Riwayat Pertumbuhan Anak',
+
+    // Growth
+    'add_growth_data': 'Tambah Data Pertumbuhan',
+    'growth_date': 'Tanggal Pertumbuhan',
+    'weight_kg': 'Berat Badan (kg)',
+    'height_cm': 'Tinggi Badan (cm)',
+    'head_cm': 'Lingkar Kepala (cm)',
+    'example_weight': 'Contoh : 3.5',
+    'example_height': 'Contoh : 40.8',
+    'add_growth': 'Tambah Pertumbuhan',
+    'latest': 'Terakhir',
+    'newest': 'Terbaru',
+    'growth_detail': 'Detail Pertumbuhan',
+    'growth_date_label': 'Tanggal Pertumbuhan : ',
+    'child_age_label': 'Usia Anak : ',
+    'weight_label': 'Berat : ',
+    'height_label': 'Tinggi : ',
+    'head_label': 'Lingkar Kepala : ',
+    'growth_status_weight':
+        'Status Pertumbuhan Berat Badan berdasarkan standard WHO : ',
+    'growth_status_height':
+        'Status Pertumbuhan Tinggi Badan berdasarkan standard WHO : ',
+    'growth_status_head':
+        'Status Pertumbuhan Lebar Kepala berdasarkan standard WHO : ',
+    'keep_healthy_note': 'Ket. Tetap jaga kesehatan Anak Anda',
+    'consult_note': 'Ket. Silahkan konsultasi dengan petugas setempat',
+
+    // Immunization / Vaccination schedule
+    'immunization': 'Imunisasi',
+    'recommended_on': 'Di Rekomendasikan di',
+    'recommended_on_period': 'Dirokemendasikan di ',
+    'status_done': 'Sudah',
+    'status_not_yet': 'Belum',
+    'document': 'Dokumen',
+    'how_to_read_age_column': 'Cara membaca colom umur',
+    'age_column_example':
+        'Misal 2 berarti 2 bulan (60 Hari) Sampai dengan 2 bulan 29 hari (89 Hari)',
+    'child_age': 'Usia si kecil',
+    'primary': 'Primer',
+    'catch_up': 'Kejar',
+    'booster': 'Penguat',
+    'endemic_area': 'Daerah Endemis',
+    'view_type': 'Jenis Tampilan',
+    'add_child_vaccination': 'Tambah Vaksinasi Anak',
+    'vaccination_date': 'Tanggal Vaksinasi',
+    'doctor_name': 'Nama Dokter',
+    'place': 'Tempat',
+    'place_name': 'Nama Tempat',
+    'edit_vaccination_status': 'Edit Status Vaksinasi',
+    'recommended_date': 'Tanggal Direkomendasikan',
+    'hep_b_description':
+        'Mencegah Penyakit hepatitis B yang dapat menyebabkan kerusakan hati',
+    'see_more': 'Lihat Lebih Lanjut',
+    'vaccination_status': 'Status Vaksinasi',
+    'edit_status': 'Edit Status',
+
+    'upgrade_membership': 'Naikan Level Membership ',
+    'child_age_zero': '0 Tahun 0 Bulan',
+
+    // ==ID_END==
+  };
+}

@@ -39,7 +39,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verifikasi'),
+        title: Text('verification'.tr),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -58,7 +58,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
             child: Column(
               children: [
                 Text(
-                  'Masukkan Code Verifikasi yang telah dikirim Ke Email Anda. Silahkan cek!',
+                  'verification_instruction'.tr,
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -71,7 +71,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kode Verifikasi',
+                      'verification_code'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -120,7 +120,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Tidak Menerima Kode Verifikasi? ',
+                          'did_not_receive_code'.tr,
                           style: TextStyle(
                             fontSize: 12,
                           ),
@@ -151,7 +151,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
               authController.login(widget.email, _code.toString());
             }
           } else {
-            Get.snackbar("Warning", "Kode Verifikasi Belum Lengkap");
+            Get.snackbar("warning".tr, "verification_incomplete".tr);
           }
 
           // Get.to(SetProfilePage());
@@ -167,7 +167,7 @@ class _VerivicationPageState extends State<VerivicationPage> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              "Verifikasi",
+              "verification".tr,
               style: TextStyle(
                   color: _onEditing == true
                       ? const Color.fromARGB(255, 45, 45, 45)

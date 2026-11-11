@@ -55,7 +55,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Tambah Data Pertumbuhan'),
+        title: Text('add_growth_data'.tr),
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
@@ -81,7 +81,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
               color: Colors.blue,
             ),
             child: Text(
-              "Simpan",
+              "save".tr,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                           Row(
                   children: [
                     Text(
-                      'Tanggal Pertumbuhan',
+                      'growth_date'.tr,
                       style: TextStyle(),
                     ),
                     Text(
@@ -178,7 +178,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                         child: TextField(
                   controller: dateinput, //editing controller of this TextField
                   decoration: InputDecoration(
-                    hintText: 'Tanggal Pertumbuhan',
+                    hintText: 'growth_date'.tr,
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -242,7 +242,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                       Row(
                         children: [
                           Text(
-                            'Berat Badan (kg)',
+                            'weight_kg'.tr,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -269,7 +269,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
-                            hintText: 'Contoh : 3.5',
+                            hintText: 'example_weight'.tr,
                             border: InputBorder.none,
                           ),
                         ),
@@ -288,7 +288,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                       Row(
                         children: [
                           Text(
-                            'Tinggi Badan (cm)',
+                            'height_cm'.tr,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -315,7 +315,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
-                            hintText: 'Contoh : 40.8',
+                            hintText: 'example_height'.tr,
                             border: InputBorder.none,
                           ),
                         ),
@@ -334,7 +334,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                       Row(
                         children: [
                           Text(
-                            'Lingkar Kepala (cm)',
+                            'head_cm'.tr,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
@@ -361,7 +361,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
-                            hintText: 'Contoh : 40.8',
+                            hintText: 'example_height'.tr,
                             border: InputBorder.none,
                           ),
                         ),
@@ -402,7 +402,7 @@ class _TambahPertummbuhanPageState extends State<TambahPertummbuhanPage> {
                             ),
                             SizedBox(width: 8),
                             Text(
-                              'Unggah Foto',
+                              'upload_photo'.tr,
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

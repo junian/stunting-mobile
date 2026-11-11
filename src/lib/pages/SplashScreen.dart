@@ -48,7 +48,7 @@ class SplashScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(bottom: 50),
               alignment: Alignment.bottomCenter,
-              child: Text("Version 1.3.3"),
+              child: Text("version".tr),
             ),
           ],
         ),
