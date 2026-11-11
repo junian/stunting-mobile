@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/ParameterController.dart';
 
-class SnkPage extends StatefulWidget {
-  const SnkPage({super.key});
+class TermsOfServicePage extends StatefulWidget {
+  const TermsOfServicePage({super.key});
 
   @override
-  State<SnkPage> createState() => _SnkPageState();
+  State<TermsOfServicePage> createState() => _TermsOfServicePageState();
 }
 
-class _SnkPageState extends State<SnkPage> {
+class _TermsOfServicePageState extends State<TermsOfServicePage> {
   var parameterController = Get.put(ParameterController());
 
   bool isDataInitialized = false;

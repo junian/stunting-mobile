@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/AuthController.dart';
-import 'package:stantapp/pages/SnkPage.dart';
+import 'package:stantapp/pages/TermsOfServicePage.dart';
 import 'package:stantapp/pages/VerificationPage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -179,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ..onTap = () {
                                   // Action performed when the "Terms and Conditions" text link is pressed
                                   Get.to(
-                                    SnkPage(),
+                                    TermsOfServicePage(),
                                   );
                                   // For example, show a dialog with the terms and conditions
                                 },

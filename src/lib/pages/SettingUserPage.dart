@@ -3,7 +3,7 @@ import 'package:stantapp/controller/AuthController.dart';
 import 'package:stantapp/controller/LanguageController.dart';
 import 'package:stantapp/controller/ParameterController.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/SnkPage.dart';
+import 'package:stantapp/pages/TermsOfServicePage.dart';
 import 'package:stantapp/pages/AboutPage.dart';
 import 'package:get/get.dart';
 
@@ -198,7 +198,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                               IconButton(
                                 icon: Icon(Icons.arrow_forward_ios),
                                 onPressed: () {
-                                  Get.to(SnkPage());
+                                  Get.to(TermsOfServicePage());
                                 },
                               ),
                             ],
