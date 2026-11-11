@@ -1,6 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:stantapp/controller/ImunisasiController.dart';
+import 'package:stantapp/controller/ImmunizationController.dart';
 import 'package:stantapp/pages/VaksinasiDetailPage.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,7 @@ class ImunisasiPage extends StatefulWidget {
 }
 
 class _ImunisasiPageState extends State<ImunisasiPage> {
-  var imunisasiController = Get.put(ImunisasiController());
+  var imunisasiController = Get.put(ImmunizationController());
 
   List<dynamic> jadwalVaksin = [];
 

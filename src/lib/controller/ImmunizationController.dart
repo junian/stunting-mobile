@@ -10,7 +10,7 @@ import 'package:stantapp/pages/HomePage2.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/VerivicationPage.dart';
 
-class ImunisasiController extends GetxController {
+class ImmunizationController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 
