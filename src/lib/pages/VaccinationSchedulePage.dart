@@ -5,7 +5,7 @@ import 'package:stantapp/controller/VaccinationScheduleController.dart';
 import 'package:stantapp/controller/VaccinationScheduleByIdaiController.dart';
 import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/VaccinationScheduleByIdaiPage.dart';
-import 'package:stantapp/pages/VaksinasiDetailPage.dart';
+import 'package:stantapp/pages/VaccinationDetailPage.dart';
 
 class VaccinationSchedulePage extends StatefulWidget {
   String anak_id;
@@ -270,7 +270,7 @@ class _VaccinationSchedulePageState extends State<VaccinationSchedulePage> {
                                               IconButton(
                                                   onPressed: () {
                                                     Get.to(
-                                                      VaksinasiDetailPage(
+                                                      VaccinationDetailPage(
                                                         anak_id: widget.anak_id,
                                                         vaksin_id:
                                                             subItem['vaksin_id']

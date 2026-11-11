@@ -10,13 +10,13 @@ import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/VaccinationEditorPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 
-class VaksinasiDetailPage extends StatefulWidget {
+class VaccinationDetailPage extends StatefulWidget {
   String anak_id;
   String vaksin_id;
   String tgl_rekomendasi;
   String nama_vaksinasi;
   String status;
-  VaksinasiDetailPage(
+  VaccinationDetailPage(
       {super.key,
       required this.anak_id,
       required this.vaksin_id,
@@ -25,10 +25,11 @@ class VaksinasiDetailPage extends StatefulWidget {
       required this.status});
 
   @override
-  State<VaksinasiDetailPage> createState() => _VaksinasiDetailPageState();
+  State<VaccinationDetailPage> createState() =>
+      _VaccinationDetailPageState();
 }
 
-class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
+class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
   var vaksinasiController = Get.put(VaccinationScheduleController());
   var vaksinasi = Get.put(VaccinationController());
   String? _selectedOption;

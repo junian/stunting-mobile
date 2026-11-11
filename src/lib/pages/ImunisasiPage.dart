@@ -1,7 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:stantapp/controller/ImmunizationController.dart';
-import 'package:stantapp/pages/VaksinasiDetailPage.dart';
+import 'package:stantapp/pages/VaccinationDetailPage.dart';
 import 'package:get/get.dart';
 
 class ImunisasiPage extends StatefulWidget {
@@ -245,7 +245,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
                                           GestureDetector(
                                             onTap: () {
                                               vaksin['vaksin_id'];
-                                              // Get.to(VaksinasiDetailPage());
+                                              // Get.to(VaccinationDetailPage());
                                             },
                                             child: CircleAvatar(
                                               radius: 15,
@@ -367,7 +367,7 @@ class _ImunisasiPageState extends State<ImunisasiPage> {
               //                 GestureDetector(
               //                   onTap: () {
               //                     Get.to(
-              //                       VaksinasiDetailPage(),
+              //                       VaccinationDetailPage(),
               //                     );
               //                   },
               //                   child: CircleAvatar(
