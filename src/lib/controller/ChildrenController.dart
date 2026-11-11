@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stantapp/models/ChildernModel.dart';
+import 'package:stantapp/models/ChildrenModel.dart';
 import 'package:stantapp/pages/HomePage2.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/VerificationPage.dart';

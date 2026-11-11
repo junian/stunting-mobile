@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final childernModel = childernModelFromJson(jsonString);
+//     final childrenModel = childrenModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ChildernModel childernModelFromJson(String str) =>
-    ChildernModel.fromJson(json.decode(str));
+ChildrenModel childrenModelFromJson(String str) =>
+    ChildrenModel.fromJson(json.decode(str));
 
-String childernModelToJson(ChildernModel data) => json.encode(data.toJson());
+String childrenModelToJson(ChildrenModel data) => json.encode(data.toJson());
 
-class ChildernModel {
+class ChildrenModel {
   String anakId;
   String userId;
   String namaAnak;
@@ -31,7 +31,7 @@ class ChildernModel {
   dynamic updatedDate;
   String umur;
 
-  ChildernModel({
+  ChildrenModel({
     required this.anakId,
     required this.userId,
     required this.namaAnak,
@@ -54,7 +54,7 @@ class ChildernModel {
     required this.umur,
   });
 
-  factory ChildernModel.fromJson(Map<String, dynamic> json) => ChildernModel(
+  factory ChildrenModel.fromJson(Map<String, dynamic> json) => ChildrenModel(
         anakId: json["anak_id"],
         userId: json["user_id"],
         namaAnak: json["nama_anak"],

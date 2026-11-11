@@ -6,7 +6,7 @@ import 'package:stantapp/controller/ChildrenController.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/GrowthHistoryController.dart';
 import 'package:stantapp/controller/SessionController.dart';
-import 'package:stantapp/models/ChildernModel.dart';
+import 'package:stantapp/models/ChildrenModel.dart';
 import 'package:stantapp/pages/ChildrenEditorPage.dart';
 import 'package:stantapp/pages/VaccinationSchedulePage.dart';
 import 'package:stantapp/pages/GrowthHistoryPage.dart';
