@@ -16,7 +16,7 @@ import 'package:stantapp/pages/ArticlePage.dart';
 import 'package:stantapp/pages/ChildrenDetailPage.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
-import 'package:stantapp/pages/VidioPlayerPage.dart';
+import 'package:stantapp/pages/VideoPlayerPage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
