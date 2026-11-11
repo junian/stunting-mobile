@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:stantapp/controller/AuthController.dart';import 'package:stantapp/controller/ChildrenController.dart';
 
 
-import 'package:stantapp/pages/ArtikelPage.dart';
+import 'package:stantapp/pages/ArticlePage.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/pages/HomePage2.dart';
 import 'package:stantapp/pages/KonsultasiPage.dart';
@@ -102,7 +102,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               Offstage(
                 offstage:
                     _bottomNavIndex != 1, // Mengatur visibilitas halaman ke-1
-                child: ArtikelPage(),
+                child: ArticlePage(),
               ),
               Offstage(
                 offstage:

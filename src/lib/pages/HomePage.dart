@@ -12,7 +12,7 @@ import 'package:stantapp/controller/VideoController.dart';
 import 'package:stantapp/pages/AddAccountChildern.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/pages/ArtikelDetailPage.dart';
-import 'package:stantapp/pages/ArtikelPage.dart';
+import 'package:stantapp/pages/ArticlePage.dart';
 import 'package:stantapp/pages/ChildernDetail.dart';
 import 'package:stantapp/pages/NotificationPage.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';

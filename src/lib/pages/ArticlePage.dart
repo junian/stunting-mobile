@@ -6,14 +6,14 @@ import 'package:stantapp/models/MGetArtikelKategori.dart';
 import '../controller/ArticleController.dart';
 import 'ArtikelDetailPage.dart';
 
-class ArtikelPage extends StatefulWidget {
-  ArtikelPage({super.key});
+class ArticlePage extends StatefulWidget {
+  ArticlePage({super.key});
 
   @override
-  State<ArtikelPage> createState() => _ArtikelPageState();
+  State<ArticlePage> createState() => _ArticlePageState();
 }
 
-class _ArtikelPageState extends State<ArtikelPage> {
+class _ArticlePageState extends State<ArticlePage> {
   String selectedCategory = "Semua";
   TextEditingController searchController = TextEditingController();
   var artikelController = Get.put(ArticleController());
