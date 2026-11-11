@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/DetailPertumbuhanController.dart';
+import 'package:stantapp/controller/GrowthDetailController.dart';
 import '../controller/GrowthHistoryController.dart';
 import '../controller/GrowthEditorController.dart';
 import 'DetailPertumbuhan.dart';
@@ -28,7 +28,7 @@ class _RiwayatpertumbuhanPageState extends State<RiwayatpertumbuhanPage> {
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
   var tambahPertumbuhanAnak = Get.put(GrowthEditorController());
   var detailRiwayatPertumbuhanController =
-      Get.put(DetailPertumbuhanController());
+      Get.put(GrowthDetailController());
 
   List<Map<String, dynamic>> filteredList = [];
 

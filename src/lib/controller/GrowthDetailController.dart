@@ -11,7 +11,7 @@ import 'package:stantapp/pages/DetailPertumbuhan.dart';
 
 import 'GrowthHistoryController.dart';
 
-class DetailPertumbuhanController extends GetxController {
+class GrowthDetailController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
   var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
