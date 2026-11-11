@@ -4,7 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:stantapp/controller/JadwalVaksinasiController.dart';
+import 'package:stantapp/controller/VaccinationScheduleController.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/VaksinasiAdd.dart';
@@ -29,7 +29,7 @@ class VaksinasiDetailPage extends StatefulWidget {
 }
 
 class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
-  var vaksinasiController = Get.put(JadwalVaksinasiController());
+  var vaksinasiController = Get.put(VaccinationScheduleController());
   var vaksinasi = Get.put(VaccinationController());
   String? _selectedOption;
 

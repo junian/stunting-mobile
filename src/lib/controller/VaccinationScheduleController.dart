@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 
-class JadwalVaksinasiController extends GetxController {
+class VaccinationScheduleController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 
