@@ -10,7 +10,7 @@ import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
-import 'package:stantapp/pages/VaksinasiAdd.dart';
+import 'package:stantapp/pages/VaccinationEditorPage.dart';
 
 class VideoController extends GetxController {
   final api = helper.api;

@@ -11,7 +11,7 @@ import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
 
 import 'package:stantapp/models/MGetRiwayatPertumbuhan.dart';
-import 'package:stantapp/pages/VaksinasiAdd.dart';
+import 'package:stantapp/pages/VaccinationEditorPage.dart';
 
 class VaccinationController extends GetxController {
   final api = helper.api;
@@ -86,7 +86,7 @@ class VaccinationController extends GetxController {
         tempat.text = response.data[0]['tempat'];
         no_batch.text = response.data[0]['no_batch'];
 
-        Get.to(() => VaksinasiAddPage(
+        Get.to(() => VaccinationEditorPage(
               anak_id: anak_id,
               vaksin_id: vaksin_id,
               vaksin_anak_id: response.data[0]['vaksin_anak_id'],

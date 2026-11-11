@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:stantapp/controller/VaccinationScheduleController.dart';
 import 'package:get/get.dart';
 import 'package:stantapp/controller/VaccinationController.dart';
-import 'package:stantapp/pages/VaksinasiAdd.dart';
+import 'package:stantapp/pages/VaccinationEditorPage.dart';
 import 'package:stantapp/pages/WelcomePage.dart';
 
 class VaksinasiDetailPage extends StatefulWidget {
@@ -166,7 +166,7 @@ class _VaksinasiDetailPageState extends State<VaksinasiDetailPage> {
                         vaksinasi.nama_dokter.text = "";
                         vaksinasi.no_batch.text = "";
                         vaksinasi.tempat.text = "";
-                        Get.to(VaksinasiAddPage(
+                        Get.to(VaccinationEditorPage(
                             anak_id: widget.anak_id,
                             vaksin_id: widget.vaksin_id));
                         ;

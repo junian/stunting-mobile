@@ -10,21 +10,21 @@ import 'package:stantapp/controller/VaccinationController.dart';
 import 'package:stantapp/pages/HomePage.dart';
 import 'package:stantapp/widget/BottomNavbar.dart';
 
-class VaksinasiAddPage extends StatefulWidget {
+class VaccinationEditorPage extends StatefulWidget {
   String anak_id;
   String vaksin_id;
   String? vaksin_anak_id;
-  VaksinasiAddPage(
+  VaccinationEditorPage(
       {super.key,
       required this.anak_id,
       required this.vaksin_id,
       this.vaksin_anak_id});
 
   @override
-  State<VaksinasiAddPage> createState() => _VaksinasiAddPageState();
+  State<VaccinationEditorPage> createState() => _VaccinationEditorPageState();
 }
 
-class _VaksinasiAddPageState extends State<VaksinasiAddPage> {
+class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
   var vaksinasiController = Get.put(VaccinationController());
 
   Future<void> _pickImage(ImageSource source) async {
