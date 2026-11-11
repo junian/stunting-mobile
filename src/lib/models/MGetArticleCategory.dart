@@ -1,23 +1,23 @@
 // To parse this JSON data, do
 //
-//     final mGetArtikelKategori = mGetArtikelKategoriFromJson(jsonString);
+//     final mGetArticleCategory = mGetArticleCategoryFromJson(jsonString);
 
 import 'dart:convert';
 
-MGetArtikelKategori mGetArtikelKategoriFromJson(String str) =>
-    MGetArtikelKategori.fromJson(json.decode(str));
+MGetArticleCategory mGetArticleCategoryFromJson(String str) =>
+    MGetArticleCategory.fromJson(json.decode(str));
 
-String mGetArtikelKategoriToJson(MGetArtikelKategori data) =>
+String mGetArticleCategoryToJson(MGetArticleCategory data) =>
     json.encode(data.toJson());
 
-class MGetArtikelKategori {
+class MGetArticleCategory {
   String artikelKategoriId;
   String namaKategori;
   String isActive;
   String createdBy;
   String createdDate;
 
-  MGetArtikelKategori({
+  MGetArticleCategory({
     required this.artikelKategoriId,
     required this.namaKategori,
     required this.isActive,
@@ -25,8 +25,8 @@ class MGetArtikelKategori {
     required this.createdDate,
   });
 
-  factory MGetArtikelKategori.fromJson(Map<String, dynamic> json) =>
-      MGetArtikelKategori(
+  factory MGetArticleCategory.fromJson(Map<String, dynamic> json) =>
+      MGetArticleCategory(
         artikelKategoriId: json["artikel_kategori_id"],
         namaKategori: json["nama_kategori"],
         isActive: json["is_active"],

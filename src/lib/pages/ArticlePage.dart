@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stantapp/models/MGetArticle.dart';
-import 'package:stantapp/models/MGetArtikelKategori.dart';
+import 'package:stantapp/models/MGetArticleCategory.dart';
 import '../controller/ArticleController.dart';
 import 'ArticleDetailPage.dart';
 
@@ -19,7 +19,7 @@ class _ArticlePageState extends State<ArticlePage> {
   var artikelController = Get.put(ArticleController());
 
   List<MGetArticle> filteredList = [];
-  List<MGetArtikelKategori> categories = [];
+  List<MGetArticleCategory> categories = [];
   bool isDataInitialized = false;
 
   Future<void> initializeData() async {

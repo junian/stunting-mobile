@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArticle.dart';
-import 'package:stantapp/models/MGetArtikelKategori.dart';
+import 'package:stantapp/models/MGetArticleCategory.dart';
 
 class FirebaseController extends GetxController {
   final api = helper.api;
