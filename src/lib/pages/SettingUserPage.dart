@@ -4,7 +4,7 @@ import 'package:stantapp/controller/LanguageController.dart';
 import 'package:stantapp/controller/ParameterController.dart';
 import 'package:stantapp/pages/SetProfilePage.dart';
 import 'package:stantapp/pages/SnkPage.dart';
-import 'package:stantapp/pages/TetangAplikasiPage.dart';
+import 'package:stantapp/pages/AboutPage.dart';
 import 'package:get/get.dart';
 
 class SettingUserPage extends StatefulWidget {
@@ -217,7 +217,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                                 icon: Icon(Icons.arrow_forward_ios),
                                 onPressed: () {
                                   parameterController.getParameter("1");
-                                  Get.to(TentangAplikasiPage());
+                                  Get.to(AboutPage());
                                 },
                               ),
                             ],

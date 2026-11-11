@@ -3,14 +3,14 @@ import 'package:stantapp/controller/ParameterController.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 
-class TentangAplikasiPage extends StatefulWidget {
-  TentangAplikasiPage({super.key});
+class AboutPage extends StatefulWidget {
+  AboutPage({super.key});
 
   @override
-  State<TentangAplikasiPage> createState() => _TentangAplikasiPageState();
+  State<AboutPage> createState() => _AboutPageState();
 }
 
-class _TentangAplikasiPageState extends State<TentangAplikasiPage> {
+class _AboutPageState extends State<AboutPage> {
   var parameterController = Get.put(ParameterController());
 
   bool isDataInitialized = false;
