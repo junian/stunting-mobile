@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:stantapp/controller/GrowthDetailController.dart';
 import '../controller/GrowthHistoryController.dart';
 import '../controller/GrowthEditorController.dart';
-import 'DetailPertumbuhan.dart';
+import 'GrowthDetailPage.dart';
 import 'TambahPertumbuhanPage.dart';
 
 class RiwayatpertumbuhanPage extends StatefulWidget {

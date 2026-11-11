@@ -7,7 +7,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:stantapp/helper/Constant.dart';
 import 'package:stantapp/models/MGetArtikel.dart';
 import 'package:stantapp/models/MGetArtikelKategori.dart';
-import 'package:stantapp/pages/DetailPertumbuhan.dart';
+import 'package:stantapp/pages/GrowthDetailPage.dart';
 
 import 'GrowthHistoryController.dart';
 
@@ -30,7 +30,7 @@ class GrowthDetailController extends GetxController {
         if (responseData.isNotEmpty) {
           print(responseData['lingkar_kepala']);
           Get.to(
-            DetailPertumbuhanPage(
+            GrowthDetailPage(
               pertumbuhanAnakId: responseData['pertumbuhan_anak_id'],
               anakId: responseData['anak_id'],
               beratBadan: responseData['berat_badan'],

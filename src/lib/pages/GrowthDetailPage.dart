@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class DetailPertumbuhanPage extends StatelessWidget {
+class GrowthDetailPage extends StatelessWidget {
   String pertumbuhanAnakId;
   String anakId;
   String beratBadan;
@@ -13,7 +13,7 @@ class DetailPertumbuhanPage extends StatelessWidget {
   String statusPertumbuhanTinggi;
   String statusPertumbuhanLingkarKepala;
   String umur;
-  DetailPertumbuhanPage(
+  GrowthDetailPage(
       {super.key,
       required this.pertumbuhanAnakId,
       required this.anakId,
