@@ -9,7 +9,7 @@ import 'package:stantapp/helper/Constant.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
-class JadwalVaksinasiIDAIController extends GetxController {
+class VaccinationScheduleByIdaiController extends GetxController {
   final api = helper.api;
   final dio.Dio _dio = dio.Dio();
 
