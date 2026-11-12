@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:growthtracker/controller/AuthController.dart';import 'package:growthtracker/controller/ChildrenController.dart';
 
 
-import 'package:growthtracker/pages/ArticlePage.dart';
 import 'package:growthtracker/pages/HomePage.dart';
 import 'package:growthtracker/pages/HomePage2.dart';
 import 'package:growthtracker/pages/ConsultationPage.dart';
@@ -42,7 +41,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   final iconList = <IconData>[
     Icons.home_filled,
-    Icons.article,
     Icons.settings,
   ];
 
@@ -101,12 +99,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
               Offstage(
                 offstage:
-                    _bottomNavIndex != 1, // Control the visibility of page 1
-                child: ArticlePage(),
-              ),
-              Offstage(
-                offstage:
-                    _bottomNavIndex != 2, // Control the visibility of page 3
+                    _bottomNavIndex != 1, // Control the visibility of page 2
                 child: SettingUserPage(),
               ),
             ],
