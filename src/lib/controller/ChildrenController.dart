@@ -15,7 +15,7 @@ class ChildrenController extends GetxController {
   /// The child currently opened in the detail page.
   final RxList<dynamic> dataAnak = RxList<dynamic>([]);
 
-  Future<void> registerAnak(
+  Future<bool> registerAnak(
     String user_id,
     String? anak_id,
     String nama_anak,
@@ -80,8 +80,10 @@ class ChildrenController extends GetxController {
 
       await getAnak(owner, null);
       Get.off(BottomNavbar());
+      return true;
     } catch (e) {
       print('Could not save child: $e');
+      return false;
     }
   }
 

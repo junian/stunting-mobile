@@ -174,7 +174,8 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
     DateTime currentDate = DateTime.now();
     // Birth date
     DateTime birthDate =
-        DateTime.parse(childernController.anakList[0]['tanggal_lahir']);
+        DateTime.tryParse('${childernController.anakList[0]['tanggal_lahir']}') ??
+            currentDate;
     // Calculate the month difference
     int diffMonths = (currentDate.year - birthDate.year) * 12 +
         currentDate.month -

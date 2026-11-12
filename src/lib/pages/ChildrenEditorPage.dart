@@ -32,6 +32,8 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
   TextEditingController tinggi_badan_ayah = TextEditingController();
 
   bool isClicked = false;
+  bool _isSaving = false;
+  final Map<String, String> _errors = {};
 
   // List<String> _genders = ['Laki - Laki', 'Perempuan'];
   String? _selectedGender;
@@ -110,6 +112,119 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
       if (_blood.contains(bloodGroup)) {
         _selectedBloodGroup = bloodGroup;
       }
+    }
+  }
+
+  Widget _inlineError(String field) {
+    final message = _errors[field];
+    if (message == null) {
+      return const SizedBox.shrink();
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, top: 4),
+      child: Text(
+        message,
+        style: const TextStyle(color: Colors.red, fontSize: 12),
+      ),
+    );
+  }
+
+  void _clearError(String field) {
+    if (_errors.containsKey(field)) {
+      setState(() => _errors.remove(field));
+    }
+  }
+
+  void _validateNumber(
+    Map<String, String> errors,
+    String field,
+    String value, {
+    required double min,
+    required double max,
+  }) {
+    final raw = value.trim().replaceAll(',', '.');
+    if (raw.isEmpty) {
+      errors[field] = 'validation_required'.tr;
+      return;
+    }
+    final number = double.tryParse(raw);
+    if (number == null) {
+      errors[field] = 'validation_number'.tr;
+    } else if (number < min || number > max) {
+      errors[field] = 'validation_range'.tr;
+    }
+  }
+
+  Future<void> _save() async {
+    final errors = <String, String>{};
+
+    if (nama_anak.text.trim().isEmpty) {
+      errors['name'] = 'validation_required'.tr;
+    }
+
+    final birthDateText = dateinput.text.trim();
+    if (birthDateText.isEmpty) {
+      errors['birth_date'] = 'validation_required'.tr;
+    } else {
+      final birthDate = DateTime.tryParse(birthDateText);
+      if (birthDate == null) {
+        errors['birth_date'] = 'validation_date'.tr;
+      } else if (birthDate.isAfter(DateTime.now())) {
+        errors['birth_date'] = 'validation_future_date'.tr;
+      }
+    }
+
+    if (_selectedGender == null) {
+      errors['gender'] = 'validation_select_option'.tr;
+    }
+    if (_selectedPrematur == null) {
+      errors['prematur'] = 'validation_select_option'.tr;
+    }
+    _validateNumber(errors, 'weight', berat_badan.text, min: 0.5, max: 10);
+    _validateNumber(errors, 'height', tinggi_badan.text, min: 20, max: 80);
+    _validateNumber(errors, 'head', lingkar_kepala.text, min: 20, max: 60);
+    if (_selectedBloodGroup == null || _selectedBloodGroup == _blood.first) {
+      errors['blood'] = 'validation_select_option'.tr;
+    }
+    if (_selectedAllergy == null) {
+      errors['allergy'] = 'validation_select_option'.tr;
+    }
+    _validateNumber(errors, 'mother', tinggi_badan_ibu.text, min: 50, max: 250);
+    _validateNumber(errors, 'father', tinggi_badan_ayah.text, min: 50, max: 250);
+
+    setState(() {
+      _errors
+        ..clear()
+        ..addAll(errors);
+    });
+
+    if (errors.isNotEmpty) {
+      return;
+    }
+
+    setState(() => _isSaving = true);
+
+    final saved = await childernController.registerAnak(
+        sessionController.user_id.value,
+        widget.anak_id,
+        nama_anak.text.trim(),
+        dateinput.text,
+        _selectedGender.toString(),
+        berat_badan.text.trim(),
+        tinggi_badan.text.trim(),
+        lingkar_kepala.text.trim(),
+        tinggi_badan_ibu.text.trim(),
+        tinggi_badan_ayah.text.trim(),
+        _selectedBloodGroup.toString(),
+        _selectedAllergy.toString(),
+        _selectedPrematur.toString(),
+        image);
+
+    if (!saved) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+      Get.snackbar('warning'.tr, 'save_failed'.tr);
     }
   }
 
@@ -225,8 +340,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 ),
                 TextField(
                   controller: nama_anak,
+                  onChanged: (_) => _clearError('name'),
                   decoration: InputDecoration(
                     hintText: 'full_name'.tr,
+                    errorText: _errors['name'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -273,6 +390,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: dateinput, //editing controller of this TextField
                   decoration: InputDecoration(
                     hintText: 'birth_date'.tr,
+                    errorText: _errors['birth_date'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -296,7 +414,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(
                             2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
+                        lastDate: DateTime.now());
 
                     if (pickedDate != null) {
                       print(
@@ -310,6 +428,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                       setState(() {
                         dateinput.text =
                             formattedDate; //set output date to TextField value.
+                        _errors.remove('birth_date');
                       });
                     } else {
                       print("Date is not selected");
@@ -345,6 +464,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                       onChanged: (value) {
                         setState(() {
                           _selectedGender = value as String?;
+                          _errors.remove('gender');
                         });
                       },
                     ),
@@ -356,12 +476,14 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                       onChanged: (value) {
                         setState(() {
                           _selectedGender = value as String?;
+                          _errors.remove('gender');
                         });
                       },
                     ),
                     Text('female'.tr),
                   ],
                 ),
+                _inlineError('gender'),
                 SizedBox(height: 16),
                 Text(
                   'birth_data'.tr,
@@ -430,11 +552,12 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 Row(
                   children: [
                     Radio(
-                      value: 'YA',
+                      value: 'Ya',
                       groupValue: _selectedPrematur,
                       onChanged: (value) {
                         setState(() {
                           _selectedPrematur = value as String?;
+                          _errors.remove('prematur');
                         });
                       },
                     ),
@@ -452,6 +575,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                     Text('no'.tr),
                   ],
                 ),
+                _inlineError('prematur'),
                 SizedBox(height: 16),
                 Row(
                   children: [
@@ -471,8 +595,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 TextField(
                   controller: berat_badan,
                   keyboardType: TextInputType.number,
+                  onChanged: (_) => _clearError('weight'),
                   decoration: InputDecoration(
                     hintText: 'birth_weight_hint'.tr,
+                    errorText: _errors['weight'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -518,8 +644,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 TextField(
                   controller: tinggi_badan,
                   keyboardType: TextInputType.number,
+                  onChanged: (_) => _clearError('height'),
                   decoration: InputDecoration(
                     hintText: 'birth_height_hint'.tr,
+                    errorText: _errors['height'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -565,8 +693,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 TextField(
                   controller: lingkar_kepala,
                   keyboardType: TextInputType.number,
+                  onChanged: (_) => _clearError('head'),
                   decoration: InputDecoration(
                     hintText: 'birth_head_label'.tr,
+                    errorText: _errors['head'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -630,9 +760,11 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   onChanged: (value) {
                     setState(() {
                       _selectedBloodGroup = value;
+                      _errors.remove('blood');
                     });
                   },
                   decoration: InputDecoration(
+                    errorText: _errors['blood'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
@@ -660,11 +792,12 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 Row(
                   children: [
                     Radio(
-                      value: 'YA',
+                      value: 'Ya',
                       groupValue: _selectedAllergy,
                       onChanged: (value) {
                         setState(() {
                           _selectedAllergy = value as String?;
+                          _errors.remove('allergy');
                         });
                       },
                     ),
@@ -682,6 +815,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                     Text('no'.tr),
                   ],
                 ),
+                _inlineError('allergy'),
                 SizedBox(height: 16),
                 Text(
                   'parent_height'.tr,
@@ -717,8 +851,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 TextField(
                   controller: tinggi_badan_ibu,
                   keyboardType: TextInputType.number,
+                  onChanged: (_) => _clearError('mother'),
                   decoration: InputDecoration(
                     hintText: 'mother_height'.tr,
+                    errorText: _errors['mother'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -764,8 +900,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                 TextField(
                   controller: tinggi_badan_ayah,
                   keyboardType: TextInputType.number,
+                  onChanged: (_) => _clearError('father'),
                   decoration: InputDecoration(
                     hintText: 'father_height'.tr,
+                    errorText: _errors['father'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -801,26 +939,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
         ),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          childernController.registerAnak(
-              sessionController.user_id.value,
-              widget.anak_id,
-              nama_anak.text,
-              dateinput.text,
-              _selectedGender.toString(),
-              berat_badan.text,
-              tinggi_badan.text,
-              lingkar_kepala.text,
-              tinggi_badan_ibu.text,
-              tinggi_badan_ayah.text,
-              _selectedBloodGroup.toString(),
-              _selectedAllergy.toString(),
-              _selectedPrematur.toString(),
-              image);
-          // Get.to(
-          //   HomePage2(),
-          // );
-        },
+        onTap: _isSaving ? null : _save,
         child: Container(
             alignment: Alignment.center,
             width: width * 0.9,
@@ -830,13 +949,22 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
               shape: BoxShape.rectangle,
               color: Colors.blue,
             ),
-            child: Text(
-              "save".tr,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            )),
+            child: _isSaving
+                ? SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    "save".tr,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  )),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

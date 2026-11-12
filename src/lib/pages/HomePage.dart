@@ -397,7 +397,8 @@ class MyContainer2 {
     DateTime currentDate = DateTime.now();
 // Birth date
     DateTime birthDate =
-        DateTime.parse(childernController.anakList[0]['tanggal_lahir']);
+        DateTime.tryParse('${childernController.anakList[0]['tanggal_lahir']}') ??
+            currentDate;
 // Calculate the difference between the current date and the birth date
     Duration ageDifference = currentDate.difference(birthDate);
 
