@@ -99,7 +99,7 @@ class AppTranslations extends Translations {
     // Child profile form
     'edit_child_account': 'Edit Child Account',
     'set_profile': 'Set Your Profile',
-    'upload_photo': 'Upload Photo',
+    'upload_photo': 'Select Photo',
     'full_name': 'Full Name',
     'birth_date': 'Date of Birth',
     'gender': 'Gender',
@@ -342,7 +342,7 @@ class AppTranslations extends Translations {
     // Child profile form
     'edit_child_account': 'Edit Akun Anak',
     'set_profile': 'Set Profile Anda',
-    'upload_photo': 'Unggah Foto',
+    'upload_photo': 'Pilih Foto',
     'full_name': 'Nama Lengkap',
     'birth_date': 'Tanggal Lahir',
     'gender': 'Jenis Kelamin',
