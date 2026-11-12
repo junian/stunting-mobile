@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
 import 'package:growthtracker/widget/AppPhoto.dart';
+import 'package:growthtracker/widget/DecimalInputFormatter.dart';
 import 'HomePage2.dart';
 
 class ChildrenEditorPage extends StatefulWidget {
@@ -597,7 +597,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: berat_badan,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [_DecimalInputFormatter()],
+                  inputFormatters: [DecimalInputFormatter()],
                   onChanged: (_) => _clearError('weight'),
                   decoration: InputDecoration(
                     hintText: 'birth_weight_hint'.tr,
@@ -648,7 +648,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: tinggi_badan,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [_DecimalInputFormatter()],
+                  inputFormatters: [DecimalInputFormatter()],
                   onChanged: (_) => _clearError('height'),
                   decoration: InputDecoration(
                     hintText: 'birth_height_hint'.tr,
@@ -699,7 +699,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: lingkar_kepala,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [_DecimalInputFormatter()],
+                  inputFormatters: [DecimalInputFormatter()],
                   onChanged: (_) => _clearError('head'),
                   decoration: InputDecoration(
                     hintText: 'birth_head_label'.tr,
@@ -859,7 +859,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: tinggi_badan_ibu,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [_DecimalInputFormatter()],
+                  inputFormatters: [DecimalInputFormatter()],
                   onChanged: (_) => _clearError('mother'),
                   decoration: InputDecoration(
                     hintText: 'mother_height'.tr,
@@ -910,7 +910,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
                   controller: tinggi_badan_ayah,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [_DecimalInputFormatter()],
+                  inputFormatters: [DecimalInputFormatter()],
                   onChanged: (_) => _clearError('father'),
                   decoration: InputDecoration(
                     hintText: 'father_height'.tr,
@@ -982,23 +982,3 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
   }
 }
 
-/// Allows only digits and a single decimal separator (`.` or `,`),
-/// so weight/height fields can never hold arbitrary text.
-class _DecimalInputFormatter extends TextInputFormatter {
-  static final RegExp _valid = RegExp(r'^\d*[.,]?\d*$');
-
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    final text = newValue.text;
-    if (text.isEmpty || text == '.' || text == ',') {
-      return newValue;
-    }
-    if (_valid.hasMatch(text)) {
-      return newValue;
-    }
-    return oldValue;
-  }
-}

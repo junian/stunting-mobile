@@ -15,7 +15,7 @@ class GrowthEditorController extends GetxController {
   TextEditingController tinggiBadan = TextEditingController();
   TextEditingController lingkarKepala = TextEditingController();
 
-  Future<void> addPertumbuhanAnak({
+  Future<bool> addPertumbuhanAnak({
     required String anakID,
     required String selectedDate,
     File? pickedImage,
@@ -61,8 +61,10 @@ class GrowthEditorController extends GetxController {
       final records = await _store.growthRecords();
       records.add(record);
       await _store.saveGrowthRecords(records);
+      return true;
     } catch (e) {
       print('Could not save growth record: $e');
+      return false;
     }
   }
 

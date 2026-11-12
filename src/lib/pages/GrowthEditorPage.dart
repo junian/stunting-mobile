@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:growthtracker/controller/GrowthEditorController.dart';
+import 'package:growthtracker/widget/DecimalInputFormatter.dart';
 
 class GrowthEditorPage extends StatefulWidget {
   String anakID;
@@ -27,6 +27,9 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
 
   TextEditingController dateinput = TextEditingController();
 
+  bool _isSaving = false;
+  final Map<String, String> _errors = {};
+
   Future<void> _pickImage(ImageSource source) async {
     try {
       final imagePicker = ImagePicker();
@@ -45,6 +48,89 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
     }
   }
 
+  double _toDouble(String value) =>
+      double.parse(value.trim().replaceAll(',', '.'));
+
+  void _clearError(String field) {
+    if (_errors.containsKey(field)) {
+      setState(() => _errors.remove(field));
+    }
+  }
+
+  void _validateNumber(
+    Map<String, String> errors,
+    String field,
+    String value, {
+    required double min,
+    required double max,
+  }) {
+    final raw = value.trim().replaceAll(',', '.');
+    if (raw.isEmpty) {
+      errors[field] = 'validation_required'.tr;
+      return;
+    }
+    final number = double.tryParse(raw);
+    if (number == null) {
+      errors[field] = 'validation_number'.tr;
+    } else if (number < min || number > max) {
+      errors[field] = 'validation_range'.tr;
+    }
+  }
+
+  Future<void> _save() async {
+    final errors = <String, String>{};
+
+    if (dateinput.text.trim().isEmpty) {
+      errors['date'] = 'validation_required'.tr;
+    } else {
+      final date = DateTime.tryParse(dateinput.text.trim());
+      if (date == null) {
+        errors['date'] = 'validation_date'.tr;
+      } else if (date.isAfter(DateTime.now())) {
+        errors['date'] = 'validation_date_future'.tr;
+      }
+    }
+
+    _validateNumber(errors, 'weight', tambahPertumbuhanAnak.beratBadan.text,
+        min: 0.5, max: 60);
+    _validateNumber(errors, 'height', tambahPertumbuhanAnak.tinggiBadan.text,
+        min: 20, max: 200);
+    _validateNumber(errors, 'head', tambahPertumbuhanAnak.lingkarKepala.text,
+        min: 20, max: 70);
+
+    setState(() {
+      _errors
+        ..clear()
+        ..addAll(errors);
+    });
+
+    if (errors.isNotEmpty) {
+      return;
+    }
+
+    setState(() => _isSaving = true);
+
+    final saved = await tambahPertumbuhanAnak.addPertumbuhanAnak(
+        anakID: widget.anakID,
+        selectedDate: dateinput.text,
+        pickedImage: tambahPertumbuhanAnak.pickedImage,
+        beratBadan: _toDouble(tambahPertumbuhanAnak.beratBadan.text),
+        tinggiBadan: _toDouble(tambahPertumbuhanAnak.tinggiBadan.text),
+        lingkarKepala: _toDouble(tambahPertumbuhanAnak.lingkarKepala.text),
+        tinggiBadanIbu: widget.tinggiBadanIbu,
+        tinggiBadanAyah: widget.tinggiBadanAyah);
+
+    if (!saved) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+      Get.snackbar('warning'.tr, 'save_failed'.tr);
+      return;
+    }
+
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -59,33 +145,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
         title: Text('add_growth_data'.tr),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () async {
-          final berat =
-              double.tryParse(tambahPertumbuhanAnak.beratBadan.text);
-          final tinggi =
-              double.tryParse(tambahPertumbuhanAnak.tinggiBadan.text);
-          final lingkar =
-              double.tryParse(tambahPertumbuhanAnak.lingkarKepala.text);
-
-          if (berat == null ||
-              tinggi == null ||
-              lingkar == null ||
-              dateinput.text.isEmpty) {
-            Fluttertoast.showToast(msg: 'complete_form_message'.tr);
-            return;
-          }
-
-          await tambahPertumbuhanAnak.addPertumbuhanAnak(
-              anakID: widget.anakID,
-              selectedDate: dateinput.text,
-              pickedImage: tambahPertumbuhanAnak.pickedImage,
-              beratBadan: berat,
-              tinggiBadan: tinggi,
-              lingkarKepala: lingkar,
-              tinggiBadanIbu: widget.tinggiBadanIbu,
-              tinggiBadanAyah: widget.tinggiBadanAyah);
-          Get.back();
-        },
+        onTap: _isSaving ? null : _save,
         child: Container(
             alignment: Alignment.center,
             width: width * 0.9,
@@ -95,13 +155,22 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
               shape: BoxShape.rectangle,
               color: Colors.blue,
             ),
-            child: Text(
-              "save".tr,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            )),
+            child: _isSaving
+                ? SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    "save".tr,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  )),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
@@ -194,6 +263,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                   controller: dateinput, //editing controller of this TextField
                   decoration: InputDecoration(
                     hintText: 'growth_date'.tr,
+                    errorText: _errors['date'],
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: isClicked
@@ -217,7 +287,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(
                             2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
+                        lastDate: DateTime.now());
 
                     if (pickedDate != null) {
                       print(
@@ -231,6 +301,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                       setState(() {
                         dateinput.text =
                             formattedDate; //set output date to TextField value.
+                        _errors.remove('date');
                       });
                     } else {
                       print("Date is not selected");
@@ -280,11 +351,15 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                         ),
                         child: TextField(
                           controller: tambahPertumbuhanAnak.beratBadan,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [DecimalInputFormatter()],
+                          onChanged: (_) => _clearError('weight'),
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             hintText: 'example_weight'.tr,
+                            errorText: _errors['weight'],
                             border: InputBorder.none,
                           ),
                         ),
@@ -326,11 +401,15 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                         ),
                         child: TextField(
                           controller: tambahPertumbuhanAnak.tinggiBadan,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [DecimalInputFormatter()],
+                          onChanged: (_) => _clearError('height'),
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             hintText: 'example_height'.tr,
+                            errorText: _errors['height'],
                             border: InputBorder.none,
                           ),
                         ),
@@ -372,11 +451,15 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
                         ),
                         child: TextField(
                           controller: tambahPertumbuhanAnak.lingkarKepala,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [DecimalInputFormatter()],
+                          onChanged: (_) => _clearError('head'),
                           decoration: InputDecoration(
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             hintText: 'example_height'.tr,
+                            errorText: _errors['head'],
                             border: InputBorder.none,
                           ),
                         ),
