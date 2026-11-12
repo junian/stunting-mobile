@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/helper/AgeHelper.dart';
+import 'package:growthtracker/services/GrowthStatus.dart';
 import 'package:growthtracker/services/LocalStore.dart';
 
 /// Creates, reads and deletes the growth records stored on this device.
@@ -31,6 +32,17 @@ class GrowthEditorController extends GetxController {
       }
 
       final measuredAt = _parse(selectedDate) ?? DateTime.now();
+      final child = await _store.childById(anakID);
+      final birthDate = _parse(child?['tanggal_lahir']);
+      final status = GrowthStatus.compute(
+        jenisKelamin: child?['jenis_kelamin']?.toString(),
+        beratBadan: beratBadan,
+        tinggiBadan: tinggiBadan,
+        lingkarKepala: lingkarKepala,
+        ageInMonths: birthDate == null
+            ? null
+            : GrowthStatus.ageInMonths(birthDate, measuredAt),
+      );
       final record = <String, dynamic>{
         'pertumbuhan_anak_id': _store.newId('pertumbuhan_'),
         'anak_id': anakID,
@@ -42,14 +54,8 @@ class GrowthEditorController extends GetxController {
         'tinggi_badan_ayah': tinggiBadanAyah,
         'photo': photoPath,
         'created_date': DateTime.now().toIso8601String(),
-        'umur': ageLabel(
-            _parse((await _store.childById(anakID))?['tanggal_lahir']),
-            measuredAt),
-        // Growth status needs the WHO reference tables, which this app does
-        // not carry offline yet.
-        'status_pertumbuhan_berat': null,
-        'status_pertumbuhan_tinggi': null,
-        'status_pertumbuhan_lingkar_kepala': null,
+        'umur': ageLabel(birthDate, measuredAt),
+        ...status,
       };
 
       final records = await _store.growthRecords();
