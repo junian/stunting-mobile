@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                   //             width: width * 0.5,
                   //             child: Expanded(
                   //               child: Text(
-                  //                 'Hai, Muhammad Haris',
+                  //                 'Hai, John Doe',
                   //                 maxLines: 2,
                   //                 overflow: TextOverflow.ellipsis,
                   //                 style: TextStyle(

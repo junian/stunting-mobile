@@ -204,7 +204,7 @@ class HomePage2 extends StatelessWidget {
                                       Container(
                                         width: width * 0.30,
                                         child: Text(
-                                          'Muhammad Haris Kumala',
+                                          'John Doe',
                                           maxLines: 2,
                                           style: TextStyle(
                                             fontSize: 14,

@@ -44,7 +44,7 @@ class _VaccinationPageState extends State<VaccinationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Muhammad Haris Kumala',
+                  'John Doe',
                   style: TextStyle(
                     fontSize: 12,
                   ),
