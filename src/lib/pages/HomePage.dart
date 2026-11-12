@@ -1,28 +1,16 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:growthtracker/controller/ArticleController.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:growthtracker/controller/NotificationController.dart';
 import 'package:growthtracker/controller/GrowthHistoryController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
-import 'package:growthtracker/controller/VideoController.dart';
 import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:get/get.dart';
-import 'package:growthtracker/pages/ArticleDetailPage.dart';
-import 'package:growthtracker/pages/ArticlePage.dart';
 import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 import 'package:growthtracker/pages/NotificationPage.dart';
 import 'package:growthtracker/pages/SetProfilePage.dart';
-import 'package:growthtracker/pages/VideoPlayerPage.dart';
 import 'package:growthtracker/widget/AppPhoto.dart';
-import 'package:growthtracker/widget/BottomNavbar.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:video_player/video_player.dart';
-
-import '../models/MGetArticle.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -35,29 +23,17 @@ class _HomePageState extends State<HomePage> {
   final authController = Get.put(AuthController());
   final childernController = Get.put(ChildrenController());
   final sessionController = Get.put(SessionController());
-  final artikelController = Get.put(ArticleController());
-  final videoController = Get.put(VideoController());
-
-  //corousel
-  final controller = PageController(viewportFraction: 1, keepPage: true);
-
-  //video player
-  late VideoPlayerController _controller;
 
   bool isDataInitialized = false;
-  List<MGetArticle> filteredList = [];
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(seconds: 2));
-    await artikelController.getArtikel();
     // Children live on the device, so they load for guests as well.
     await childernController.getAnak(sessionController.user_id.value, null);
     if (sessionController.user_id.value.isNotEmpty) {
       await authController.getOrangTua(sessionController.user_id.value);
     }
-    await videoController.getParameterSplitted(parameter_id: "8");
 
-    filteredList = artikelController.artikel.toList();
     setState(() {
       isDataInitialized =
           true; // Set the data initialization status to true
@@ -68,71 +44,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initializeData();
-    // _controller = VideoPlayerController.networkUrl(Uri.parse(
-    //     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'))
-    // _controller = VideoPlayerController.asset('images/tes.mp4')
-    //   ..initialize().then((_) {
-    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //     setState(() {});
-    //   });
   }
 
   @override
   Widget build(BuildContext context) {
-    int dataLength = 0; // Replace with your actual data length
-
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    final pages = List.generate(
-      videoController.parameterData.length,
-      (index) => Container(
-        decoration: BoxDecoration(
-            // color: Color.fromARGB(255, 172, 113, 113),
-            // borderRadius: BorderRadius.circular(40),
-            ),
-        child: Container(
-          height: height * 0.13,
-          width: width * 0.45,
-          child: Center(
-            child: GestureDetector(
-              onTap: () {
-                RegExp regExp = RegExp(
-                  r'^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=)?([a-zA-Z0-9_-]+)',
-                  caseSensitive: false,
-                );
-                Match? match = regExp
-                    .firstMatch('${videoController.parameterData[index]}');
-
-                if (match != null) {
-                  String videoId =
-                      match.group(4)!; // Extract the video ID from the match
-                  Get.to(VideoScreen(id: videoId));
-                } else {
-                  print('No match found.');
-                }
-                // Get.to(VideoScreen(
-                //     url: videoController.parameterData[index],
-                //     title: title,
-                //     desciption: desciption));
-              },
-              child: Container(
-                width: width * 0.6,
-                height: height * 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      10.0), // Adjust to the radius you want
-                  child: Image.asset(
-                    'images/stuntingapp-$index.png',
-                    fit: BoxFit.cover, // Fill the container with the image
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
 
     return Scaffold(
       // floatingActionButton: FloatingActionButton(
@@ -166,73 +84,6 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.blueAccent,
                           ),
                         ),
-                        SingleChildScrollView(
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              // SizedBox(height: 16),
-                              Container(
-                                height: height * 0.13,
-                                width: width * 0.80,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  // border:
-                                  //     Border.all(width: 2, color: Colors.black),
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    videoController.parameterData.isNotEmpty
-                                        ? PageView.builder(
-                                            controller: controller,
-                                            // itemCount: pages.length,
-                                            itemBuilder: (_, index) {
-                                              return pages[
-                                                  index % pages.length];
-                                            },
-                                          )
-                                        : Container(
-                                            child: Text("no_video_data".tr),
-                                          ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: SmoothPageIndicator(
-                                        controller: controller,
-                                        count: pages.length,
-                                        effect: const ExpandingDotsEffect(
-                                            dotHeight: 6,
-                                            dotWidth: 6,
-                                            dotColor: Colors.black
-                                            // type: WormType.thinUnderground,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Container(
-                        //   height: height * 0.13,
-                        //   width: width * 0.45,
-                        //   margin: EdgeInsets.only(bottom: height * 0.03),
-                        //   decoration: BoxDecoration(
-                        //       // color: Colors.green,
-                        //       border:
-                        //           Border.all(color: Colors.black, width: 2)),
-                        //   child: _controller.value.isInitialized
-                        //       ? AspectRatio(
-                        //           aspectRatio: _controller.value.aspectRatio,
-                        //           child: VideoPlayer(_controller),
-                        //         )
-                        //       : Container(
-                        //           height: height * 0.13,
-                        //           width: width * 0.45,
-                        //           child: CircularProgressIndicator(),
-                        //         ),
-                        // ),
                       ],
                     ),
                   ),
@@ -387,370 +238,6 @@ class _HomePageState extends State<HomePage> {
                   //     ],
                   //   ),
                   // ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: width,
-                        height: height * 0.35,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 187, 234, 240),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 12, right: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'recommended_articles'.tr,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  // GestureDetector(
-                                  //   onTap: () {
-                                  //     setState(() {
-                                  //       authController.bottomNavIndex = 1;
-                                  //     });
-                                  //     Future.delayed(
-                                  //         Duration(milliseconds: 500), () {
-                                  //       // Navigate to the BottomNavbar page using Get.to()
-                                  //       Get.to(BottomNavbar());
-                                  //     });
-                                  //   },
-                                  //   child: Text(
-                                  //     'Lihat Semua',
-                                  //     style: TextStyle(
-                                  //       color: Colors.blue,
-                                  //       fontWeight: FontWeight.bold,
-                                  //     ),
-                                  //   ),
-                                  // )
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.02,
-                              ),
-                              Container(
-                                height: height * 0.27,
-                                child: isDataInitialized == true
-                                    ? ListView.builder(
-                                        itemCount: filteredList.length > 5
-                                            ? 5
-                                            : filteredList.length,
-                                        itemBuilder: (context, index) {
-                                          MGetArticle artikel =
-                                              filteredList[index];
-                                          DateFormat dateFormat =
-                                              DateFormat('d MMM y');
-                                          String tglbuat = dateFormat.format(
-                                              DateTime.parse(
-                                                  artikel.createdDate));
-                                          return Container(
-                                            width: width * 0.4,
-                                            child: Card(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Get.to(
-                                                        ArticleDetailPage(
-                                                          category: artikel
-                                                              .namaKategori,
-                                                          title: artikel.judul,
-                                                          author:
-                                                              artikel.fullname,
-                                                          date: tglbuat,
-                                                          description:
-                                                              artikel.konten,
-                                                          imageUrl:
-                                                              "https://mystantapp.siuinsa.com" +
-                                                                  artikel
-                                                                      .thumbnail
-                                                                      .toString(),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      width: width * 0.4,
-                                                      height: height * 0.10,
-                                                      child: artikel
-                                                                  .thumbnail ==
-                                                              null
-                                                          ? Image.asset(
-                                                              'images/logo.png',
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                            )
-                                                          : Image.network(
-                                                              "https://mystantapp.siuinsa.com/" +
-                                                                  artikel
-                                                                      .thumbnail
-                                                                      .toString(),
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(10),
-                                                      decoration: BoxDecoration(
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            255, 148, 184, 245),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            artikel
-                                                                .namaKategori,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 10,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      height: height * 0.002),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Get.to(
-                                                        ArticleDetailPage(
-                                                          category: artikel
-                                                              .namaKategori,
-                                                          title: artikel.judul,
-                                                          author:
-                                                              artikel.fullname,
-                                                          date: tglbuat,
-                                                          description:
-                                                              artikel.konten,
-                                                          imageUrl:
-                                                              "https://mystantapp.siuinsa.com" +
-                                                                  artikel
-                                                                      .thumbnail
-                                                                      .toString(),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8,
-                                                              right: 8),
-                                                      child: Text(
-                                                        artikel.judul,
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      height: height * 0.002),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8, right: 8),
-                                                    child: Text(
-                                                      tglbuat,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        scrollDirection: Axis.horizontal,
-                                        // children: [
-                                        //   Container(
-                                        //     width: 200,
-                                        //     child: Card(
-                                        //       child: Column(
-                                        //         crossAxisAlignment:
-                                        //             CrossAxisAlignment.start,
-                                        //         children: [
-                                        //           Container(
-                                        //             width: 200,
-                                        //             height: 110,
-                                        //             child: Image.asset(
-                                        //               'images/image_0.png',
-                                        //               fit: BoxFit.cover,
-                                        //             ),
-                                        //           ),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.all(8.0),
-                                        //             child: Container(
-                                        //               padding: EdgeInsets.all(10),
-                                        //               decoration: BoxDecoration(
-                                        //                 color: const Color.fromARGB(
-                                        //                     255, 148, 184, 245),
-                                        //                 borderRadius:
-                                        //                     BorderRadius.circular(8),
-                                        //               ),
-                                        //               child: Column(
-                                        //                 crossAxisAlignment:
-                                        //                     CrossAxisAlignment.start,
-                                        //                 children: [
-                                        //                   Text(
-                                        //                     'Kategori',
-                                        //                     style: TextStyle(
-                                        //                       fontWeight: FontWeight.bold,
-                                        //                       fontSize: 10,
-                                        //                     ),
-                                        //                   ),
-                                        //                 ],
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(height: 4),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.only(
-                                        //                 left: 8, right: 8),
-                                        //             child: Text(
-                                        //               'Alat Masak yang Perlu di Siapkan Untuk MPASI',
-                                        //               maxLines: 2,
-                                        //               overflow: TextOverflow.ellipsis,
-                                        //               style: TextStyle(
-                                        //                 fontWeight: FontWeight.bold,
-                                        //                 fontSize: 13,
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(height: 4),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.only(
-                                        //                 left: 8, right: 8),
-                                        //             child: Text(
-                                        //               '21 Jun 2023',
-                                        //               style: TextStyle(
-                                        //                 fontSize: 14,
-                                        //                 color: Colors.grey,
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //         ],
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        //   Container(
-                                        //     width: 200,
-                                        //     child: Card(
-                                        //       child: Column(
-                                        //         crossAxisAlignment:
-                                        //             CrossAxisAlignment.start,
-                                        //         children: [
-                                        //           Container(
-                                        //             width: 200,
-                                        //             height: 110,
-                                        //             child: Image.asset(
-                                        //               'images/image_1.png',
-                                        //               fit: BoxFit.cover,
-                                        //             ),
-                                        //           ),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.all(8.0),
-                                        //             child: Container(
-                                        //               padding: EdgeInsets.all(10),
-                                        //               decoration: BoxDecoration(
-                                        //                 color: const Color.fromARGB(
-                                        //                     255, 148, 184, 245),
-                                        //                 borderRadius:
-                                        //                     BorderRadius.circular(8),
-                                        //               ),
-                                        //               child: Column(
-                                        //                 crossAxisAlignment:
-                                        //                     CrossAxisAlignment.start,
-                                        //                 children: [
-                                        //                   Text(
-                                        //                     'Kategori',
-                                        //                     style: TextStyle(
-                                        //                       fontWeight: FontWeight.bold,
-                                        //                       fontSize: 10,
-                                        //                     ),
-                                        //                   ),
-                                        //                 ],
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(height: 4),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.only(
-                                        //                 left: 8, right: 8),
-                                        //             child: Text(
-                                        //               'Alat Masak yang Perlu di Siapkan Untuk MPASI di kota Bekasi',
-                                        //               maxLines: 2,
-                                        //               overflow: TextOverflow.ellipsis,
-                                        //               style: TextStyle(
-                                        //                 fontWeight: FontWeight.bold,
-                                        //                 fontSize: 13,
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(height: 4),
-                                        //           Padding(
-                                        //             padding: const EdgeInsets.only(
-                                        //                 left: 8, right: 8),
-                                        //             child: Text(
-                                        //               '21 Jun 2023',
-                                        //               style: TextStyle(
-                                        //                 fontSize: 14,
-                                        //                 color: Colors.grey,
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //         ],
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ],
-                                      )
-                                    : Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
             )
@@ -760,11 +247,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
 }
 
 class MyContainer {
