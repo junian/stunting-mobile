@@ -60,6 +60,7 @@ class AppTranslations extends Translations {
     'profile': 'Profile',
     'terms_conditions': 'Terms and Conditions',
     'about_app': 'About App',
+    'about_this_app': 'About Stant App',
     'logout_confirm': 'Are you sure you want to logout?',
 
     // Register
@@ -76,7 +77,6 @@ class AppTranslations extends Translations {
     // Static pages
     'terms_full_title': 'STANTAPP Terms and Conditions of Use',
     'terms_last_updated': 'Last Updated: 1/12/2022',
-    'about_stantapp': 'About Stant App',
     'about_disclaimer':
         'The content and recommendations in STANTAPP are created and supervised by the Indonesian Pediatric Society (IDAI).',
 
@@ -303,6 +303,7 @@ class AppTranslations extends Translations {
     'profile': 'Profil',
     'terms_conditions': 'Syarat dan Ketentuan',
     'about_app': 'Tentang Aplikasi',
+    'about_this_app': 'Tentang Stant App',
     'logout_confirm': 'Apakah anda yakin ingin keluar?',
 
     // Register
@@ -319,7 +320,6 @@ class AppTranslations extends Translations {
     // Static pages
     'terms_full_title': 'Syarat dan Ketentuan penggunaan STANTAPP',
     'terms_last_updated': 'Perbaruan Terakhir : 1/12/2022',
-    'about_stantapp': 'Tentang Stant App',
     'about_disclaimer':
         'Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).',
 

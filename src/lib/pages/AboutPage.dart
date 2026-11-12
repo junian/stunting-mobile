@@ -91,7 +91,7 @@ class _AboutPageState extends State<AboutPage> {
                       height: hight * 0.05,
                     ),
                     Text(
-                      "about_stantapp".tr,
+                      "about_this_app".tr,
                       style: TextStyle(fontSize: 18),
                     ),
                     SizedBox(
