@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/GrowthEditorController.dart';
+import 'package:growthtracker/services/GrowthStatus.dart';
 
 class GrowthDetailPage extends StatelessWidget {
   String pertumbuhanAnakId;
@@ -26,6 +27,27 @@ class GrowthDetailPage extends StatelessWidget {
       required this.statusPertumbuhanTinggi,
       required this.statusPertumbuhanLingkarKepala,
       required this.umur});
+
+  Text _statusLabel(String? status) => Text(
+        GrowthStatus.labelKey(status)?.tr ?? '$status',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: GrowthStatus.isNormal(status) ? Colors.green : Colors.yellow,
+        ),
+      );
+
+  Text _statusNote(String? status) {
+    final String? key = GrowthStatus.noteKey(status);
+    return Text(
+      key == null ? '' : key.tr,
+      style: TextStyle(
+        fontSize: 15,
+        color: Colors.grey,
+        fontStyle: FontStyle.italic,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,22 +175,8 @@ class GrowthDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(statusPertumbuhanBerat,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: statusPertumbuhanBerat == "Normal"
-                                  ? Colors.green
-                                  : Colors.yellow)),
-                      Text(
-                          statusPertumbuhanBerat == "Normal"
-                              ? "keep_healthy_note".tr
-                              : "consult_note".tr,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic,
-                          )),
+                      _statusLabel(statusPertumbuhanBerat),
+                      _statusNote(statusPertumbuhanBerat),
                     ],
                   ),
                 ),
@@ -193,22 +201,8 @@ class GrowthDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(statusPertumbuhanTinggi,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: statusPertumbuhanBerat == "Normal"
-                                  ? Colors.green
-                                  : Colors.yellow)),
-                      Text(
-                          statusPertumbuhanBerat == "Normal"
-                              ? "keep_healthy_note".tr
-                              : "consult_note".tr,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic,
-                          )),
+                      _statusLabel(statusPertumbuhanTinggi),
+                      _statusNote(statusPertumbuhanTinggi),
                     ],
                   ),
                 ),
@@ -233,25 +227,8 @@ class GrowthDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                           )),
-                      Text(statusPertumbuhanLingkarKepala,
-                          // isLebarKepalaNormal(lebarKepala)
-                          //     ? "Normal"
-                          //     : "Tidak Normal",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: statusPertumbuhanBerat == "Normal"
-                                  ? Colors.green
-                                  : Colors.yellow)),
-                      Text(
-                          statusPertumbuhanBerat == "Normal"
-                              ? "keep_healthy_note".tr
-                              : "consult_note".tr,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic,
-                          )),
+                      _statusLabel(statusPertumbuhanLingkarKepala),
+                      _statusNote(statusPertumbuhanLingkarKepala),
                     ],
                   ),
                 ),
