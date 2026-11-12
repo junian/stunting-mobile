@@ -9,7 +9,6 @@ import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 import 'package:growthtracker/pages/NotificationPage.dart';
-import 'package:growthtracker/pages/SetProfilePage.dart';
 import 'package:growthtracker/widget/AppPhoto.dart';
 
 class HomePage extends StatefulWidget {
@@ -299,23 +298,6 @@ class MyContainer {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(SetProfilePage());
-                      },
-                      child: CircleAvatar(
-                        radius: 20, // Radius lingkaran
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          size: 30,
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ],
@@ -512,26 +494,6 @@ class MyContainer2 {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        authController.getOrangTua(
-                          sessionController.user_id.toString(),
-                        );
-                        Get.to(SetProfilePage());
-                      },
-                      child: CircleAvatar(
-                        radius: 20, // Radius lingkaran
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          size: 30,
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ],

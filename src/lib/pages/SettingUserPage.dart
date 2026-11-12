@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
 import 'package:growthtracker/controller/ParameterController.dart';
-import 'package:growthtracker/pages/SetProfilePage.dart';
 import 'package:growthtracker/pages/TermsOfServicePage.dart';
 import 'package:growthtracker/pages/AboutPage.dart';
 import 'package:get/get.dart';
@@ -88,62 +87,6 @@ class _SettingUserPageState extends State<SettingUserPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.grey,
-                    child: authController.isParent.isNotEmpty &&
-                            authController.isParent[0]['photo'] != null
-                        ? ClipOval(
-                            child: Image.network(
-                              "https://mystantapp.siuinsa.com/" +
-                                  authController.isParent[0]['photo'],
-                              width: 55,
-                              height: 55,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                  ),
-                  title: Text(
-                    authController.isParent.isNotEmpty
-                        ? '${authController.isParent[0]["nama_orang_tua"]}'
-                        : '',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Card(
-                    child: Container(
-                      width: width,
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'profile'.tr,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: () {
-                                Get.to(SetProfilePage());
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Card(
@@ -227,57 +170,6 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: hight * 0.1,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Card(
-                    child: Container(
-                      width: width,
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'logout'.tr,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.logout),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    var height =
-                                        MediaQuery.of(context).size.height;
-                                    return Center(
-                                      child: AlertDialog(
-                                        title: Text('logout_confirm'.tr,
-                                            style: TextStyle(fontSize: 20)),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              authController.logout();
-                                            },
-                                            child: Text('logout'.tr),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                 ),
