@@ -269,8 +269,11 @@ class MyContainer {
                   width: width * 0.5,
                   child: Text(
                     authController.isParent.isNotEmpty
-                        ? 'Hai, ${authController.isParent[0]["nama_orang_tua"]}'
-                        : 'Hai',
+                        ? 'greeting'.trParams({
+                            'name':
+                                '${authController.isParent[0]["nama_orang_tua"]}'
+                          })
+                        : 'greeting_parent'.tr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -439,7 +442,7 @@ class MyContainer2 {
                           'name':
                               authController.isParent.isNotEmpty
                                   ? '${authController.isParent[0]["nama_orang_tua"]}'
-                                  : 'Hai'
+                                  : 'greeting_parent'.tr
                         }),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
