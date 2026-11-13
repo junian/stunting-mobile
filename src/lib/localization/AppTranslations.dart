@@ -13,7 +13,7 @@ class AppTranslations extends Translations {
 
   static const Map<String, String> _en = {
     'app_name': 'STANTAPP',
-    'version': 'Version 1.3.4',
+    'version': 'Version 1.3.5',
     'warning': 'Warning',
     'error': 'Error',
     'success': 'Success',
@@ -264,7 +264,7 @@ class AppTranslations extends Translations {
 
   static const Map<String, String> _id = {
     'app_name': 'STANTAPP',
-    'version': 'Versi 1.3.4',
+    'version': 'Versi 1.3.5',
     'warning': 'Peringatan',
     'error': 'Kesalahan',
     'success': 'Berhasil',
