@@ -1,9 +1,16 @@
 /// Product identity in one place.
 ///
-/// The package id (`com.bebasstunting.stantapp`), API host and old social
-/// handles intentionally keep their original values so existing installs,
-/// links and backend data continue to work after the rename.
+/// The package id (`com.bebasstunting.stantapp`) and API host intentionally
+/// keep their original values so existing installs and backend data continue
+/// to work after the rename.
 const String kAppName = 'KidScale';
+
+/// Support and public links. Keep these in one place so the About page, the
+/// settings screen and the help copy cannot drift apart.
+const String kSupportEmail = 'support+kidscale@mail.junian.net';
+const String kSupportMailto = 'mailto:$kSupportEmail';
+const String kWebsiteUrl = 'https://kidscale.junian.net';
+const String kYouTubeUrl = 'https://youtube.com/@JunianDev';
 
 /// Replaces the legacy product name in copy fetched from the server.
 String rebrandServerCopy(String text) {

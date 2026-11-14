@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/pages/RegisterPage.dart';
 import 'package:growthtracker/pages/SetProfilePage.dart';
 
@@ -180,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                       'need_help'.tr,
                     ),
                     Text(
-                      'whatsapp_contact'.tr,
+                      kSupportEmail,
                       style: TextStyle(
                         color: const Color.fromARGB(255, 82, 163, 230),
                         fontWeight: FontWeight.bold,

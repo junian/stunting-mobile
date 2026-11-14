@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
-import 'package:growthtracker/controller/ParameterController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/pages/AboutPage.dart';
 import 'package:growthtracker/pages/TermsOfServicePage.dart';
 import 'package:growthtracker/theme/app_theme.dart';
@@ -19,7 +19,6 @@ class SettingUserPage extends StatefulWidget {
 }
 
 class _SettingUserPageState extends State<SettingUserPage> {
-  final parameterController = Get.put(ParameterController());
   final authController = Get.put(AuthController());
   final sessionController = Get.put(SessionController());
   final languageController = Get.find<LanguageController>();
@@ -65,11 +64,14 @@ class _SettingUserPageState extends State<SettingUserPage> {
   }
 
   Future<void> _contactSupport() async {
-    final uri = Uri.parse('https://wa.me/6281770704114');
     try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      final launched = await launchUrl(
+        Uri.parse(kSupportMailto),
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) AppSnack.info(kSupportEmail);
     } catch (_) {
-      AppSnack.info('whatsapp_contact'.tr);
+      AppSnack.info(kSupportEmail);
     }
   }
 
@@ -167,10 +169,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                       icon: Icons.info_outline_rounded,
                       title: 'about_app'.tr,
                       tone: AppTone.mint,
-                      onTap: () {
-                        parameterController.getParameter('1');
-                        Get.to(() => AboutPage());
-                      },
+                      onTap: () => Get.to(() => AboutPage()),
                     ),
                   ],
                 ),
@@ -181,9 +180,9 @@ class _SettingUserPageState extends State<SettingUserPage> {
               AppCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: AppListTile(
-                  icon: Icons.chat_bubble_outline_rounded,
+                  icon: Icons.mail_outline_rounded,
                   title: 'help_support'.tr,
-                  subtitle: 'whatsapp_contact'.tr,
+                  subtitle: kSupportEmail,
                   tone: AppTone.mint,
                   onTap: _contactSupport,
                 ),

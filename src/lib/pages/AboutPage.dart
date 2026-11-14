@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:growthtracker/controller/ParameterController.dart';
 import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widgets/app_widgets.dart';
@@ -16,47 +15,6 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  static const String _whatsappUrl = 'https://wa.me/6281770704114';
-  static const String _websiteUrl = 'https://mystantapp.siuinsa.com';
-  static const String _instagramUrl = 'https://www.instagram.com/bebasstunting';
-  static const String _facebookUrl = 'https://www.facebook.com/bebasstunting';
-  static const String _youtubeUrl = 'https://www.youtube.com/@bebasstunting';
-
-  final ParameterController parameterController =
-      Get.put(ParameterController());
-
-  bool _loading = true;
-  bool _failed = false;
-  String _description = '';
-
-  @override
-  void initState() {
-    super.initState();
-    initializeData();
-  }
-
-  Future<void> initializeData() async {
-    if (mounted && !_loading) {
-      setState(() {
-        _loading = true;
-        _failed = false;
-      });
-    }
-
-    // The controller instance is shared with the other static pages, so clear
-    // the cached value first: an offline retry must not display old content.
-    parameterController.parameterValue = '';
-    await parameterController.getParameter('5');
-
-    if (!mounted) return;
-    final value = parameterController.parameterValue.trim();
-    setState(() {
-      _description = rebrandServerCopy(value);
-      _loading = false;
-      _failed = value.isEmpty;
-    });
-  }
-
   Future<void> _openUrl(String url) async {
     try {
       final launched = await launchUrl(
@@ -89,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               AppPageHeader(
                 title: 'about_app'.tr,
-                  ),
+              ),
               Expanded(
                 child: ListView(
                   physics: const BouncingScrollPhysics(),
@@ -221,56 +179,13 @@ class _AboutPageState extends State<AboutPage> {
 
   Widget _buildDescriptionCard(BuildContext context) {
     return AppCard(
-      child: _loading
-          ? const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SkeletonBox(height: 14, radius: 6),
-                SizedBox(height: 10),
-                SkeletonBox(height: 14, radius: 6),
-                SizedBox(height: 10),
-                SkeletonBox(width: 220, height: 14, radius: 6),
-                SizedBox(height: 10),
-                SkeletonBox(width: 160, height: 14, radius: 6),
-              ],
-            )
-          : _failed
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.cloud_off_rounded,
-                          size: 20,
-                          color: AppColors.coral,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'failed'.tr,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    AppButton(
-                      label: 'retry'.tr,
-                      icon: Icons.refresh_rounded,
-                      variant: AppButtonVariant.soft,
-                      height: 48,
-                      onPressed: () => initializeData(),
-                    ),
-                  ],
-                )
-              : Text(
-                  _description,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        height: 1.65,
-                        color: AppColors.inkSoft,
-                      ),
-                ),
+      child: Text(
+        'about_description'.tr,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              height: 1.65,
+              color: AppColors.inkSoft,
+            ),
+      ),
     );
   }
 
@@ -319,11 +234,11 @@ class _AboutPageState extends State<AboutPage> {
       child: Column(
         children: [
           AppListTile(
-            icon: Icons.chat_bubble_outline_rounded,
-            title: 'whatsapp_contact'.tr,
-            subtitle: 'contact_us'.tr,
-            tone: AppTone.mint,
-            onTap: () => _openUrl(_whatsappUrl),
+            icon: Icons.mail_outline_rounded,
+            title: 'email'.tr,
+            subtitle: kSupportEmail,
+            tone: AppTone.primary,
+            onTap: () => _openUrl(kSupportMailto),
             trailing: const Icon(
               Icons.arrow_outward_rounded,
               size: 18,
@@ -336,28 +251,16 @@ class _AboutPageState extends State<AboutPage> {
             child: Row(
               children: [
                 _SocialButton(
-                  icon: Icons.camera_alt_rounded,
-                  label: 'Instagram',
-                  tone: AppTone.coral,
-                  onTap: () => _openUrl(_instagramUrl),
-                ),
-                _SocialButton(
-                  icon: Icons.facebook_rounded,
-                  label: 'Facebook',
-                  tone: AppTone.primary,
-                  onTap: () => _openUrl(_facebookUrl),
-                ),
-                _SocialButton(
                   icon: Icons.smart_display_rounded,
                   label: 'YouTube',
                   tone: AppTone.amber,
-                  onTap: () => _openUrl(_youtubeUrl),
+                  onTap: () => _openUrl(kYouTubeUrl),
                 ),
                 _SocialButton(
                   icon: Icons.public_rounded,
-                  label: 'Website',
+                  label: 'website'.tr,
                   tone: AppTone.mint,
-                  onTap: () => _openUrl(_websiteUrl),
+                  onTap: () => _openUrl(kWebsiteUrl),
                 ),
               ],
             ),

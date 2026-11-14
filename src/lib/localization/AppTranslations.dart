@@ -23,8 +23,7 @@ class AppTranslations extends Translations {
     'yes': 'Yes',
     'no': 'No',
     'delete': 'Delete',
-    'delete_child_message':
-        'Delete this child and all of its growth records?',
+    'delete_child_message': 'Delete this child and all of its growth records?',
     'delete_growth_message': 'Delete this growth record?',
     'complete_form_message': 'Please complete the form first.',
     'save': 'Save',
@@ -55,7 +54,6 @@ class AppTranslations extends Translations {
     'email': 'Email',
     'no_account': "Don't have an account? ",
     'need_help': 'Need help?',
-    'whatsapp_contact': 'WhatsApp 0817-7070-4114',
     'verification': 'Verification',
     'verification_instruction':
         'Enter the verification code that was sent to your email. Please check!',
@@ -84,8 +82,11 @@ class AppTranslations extends Translations {
     // Static pages
     'terms_full_title': 'KidScale Terms and Conditions of Use',
     'terms_last_updated': 'Last Updated: 1/12/2022',
+    'about_description':
+        'KidScale helps parents record and understand their child\'s growth and vaccination journey in one simple place. Track weight, height and head circumference, follow the national immunization schedule, and see growth trends over time. All data stays on your device — no account is needed.',
+    'website': 'Website',
     'about_disclaimer':
-        'The content and recommendations in KidScale are created and supervised by the Indonesian Pediatric Society (IDAI).',
+        'KidScale is built on official growth and immunization guidelines from the Indonesian Pediatric Society (IDAI). KidScale is not directly supervised or endorsed by IDAI. This app is for reference and education only, not a medical diagnosis. For accurate advice about your child, always consult a doctor, pediatrician, or official health service.',
 
     // Notifications / Consultation
     'notifications': 'Notifications',
@@ -237,7 +238,8 @@ class AppTranslations extends Translations {
     'vaccination': 'Vaccination',
     'see_detail': 'See Detail',
     'vaccination_schedule': 'Vaccination Schedule',
-    'vaccination_schedule_hint': 'Tap a vaccine to record or update its vaccination details.',
+    'vaccination_schedule_hint':
+        'Tap a vaccine to record or update its vaccination details.',
     'growth_history': 'Growth',
     'child_growth_history': 'Child Growth History',
 
@@ -260,10 +262,8 @@ class AppTranslations extends Translations {
     'weight_label': 'Weight: ',
     'height_label': 'Height: ',
     'head_label': 'Head Circumference: ',
-    'growth_status_weight':
-        'Weight Growth Status based on WHO standard: ',
-    'growth_status_height':
-        'Height Growth Status based on WHO standard: ',
+    'growth_status_weight': 'Weight Growth Status based on WHO standard: ',
+    'growth_status_height': 'Height Growth Status based on WHO standard: ',
     'growth_status_head':
         'Head Circumference Growth Status based on WHO standard: ',
     'keep_healthy_note': 'Note: Keep your child healthy',
@@ -307,8 +307,7 @@ class AppTranslations extends Translations {
     'place_name': 'Place Name',
     'edit_vaccination_status': 'Edit Vaccination Status',
     'recommended_date': 'Recommended Date',
-    'hep_b_description':
-        'Prevents Hepatitis B, which can cause liver damage',
+    'hep_b_description': 'Prevents Hepatitis B, which can cause liver damage',
     'see_more': 'See More',
     'vaccination_status': 'Vaccination Status',
     'edit_status': 'Edit Status',
@@ -380,7 +379,6 @@ class AppTranslations extends Translations {
     'email': 'Email',
     'no_account': 'Belum memiliki akun? ',
     'need_help': 'Butuh Bantuan ?',
-    'whatsapp_contact': 'WhatsApp 0817-7070-4114',
     'verification': 'Verifikasi',
     'verification_instruction':
         'Masukkan Code Verifikasi yang telah dikirim Ke Email Anda. Silahkan cek!',
@@ -409,8 +407,11 @@ class AppTranslations extends Translations {
     // Static pages
     'terms_full_title': 'Syarat dan Ketentuan penggunaan KidScale',
     'terms_last_updated': 'Perbaruan Terakhir : 1/12/2022',
+    'about_description':
+        'KidScale membantu orang tua mencatat dan memahami perjalanan tumbuh kembang serta imunisasi anak dalam satu tempat yang sederhana. Pantau berat badan, tinggi badan, dan lingkar kepala, ikuti jadwal imunisasi nasional, dan lihat tren pertumbuhan dari waktu ke waktu. Semua data tersimpan di perangkat Anda — tanpa perlu akun.',
+    'website': 'Situs Web',
     'about_disclaimer':
-        'Isi dan rekomendasi yang terdapat di dalam KidScale dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).',
+        'KidScale dibangun berdasarkan pedoman pertumbuhan dan imunisasi resmi dari Ikatan Dokter Anak Indonesia (IDAI). KidScale tidak diawasi secara langsung dan tidak merupakan dukungan resmi dari IDAI. Aplikasi ini hanya untuk referensi dan edukasi, bukan diagnosis medis. Untuk saran yang akurat mengenai anak Anda, selalu konsultasikan dengan dokter, dokter anak, atau layanan kesehatan resmi.',
 
     // Notifications / Consultation
     'notifications': 'Notifikasi',
@@ -562,7 +563,8 @@ class AppTranslations extends Translations {
     'vaccination': 'Vaksinasi',
     'see_detail': 'Lihat Detail',
     'vaccination_schedule': 'Jadwal Vaksinasi',
-    'vaccination_schedule_hint': 'Ketuk vaksin untuk mencatat atau memperbarui data vaksinasinya.',
+    'vaccination_schedule_hint':
+        'Ketuk vaksin untuk mencatat atau memperbarui data vaksinasinya.',
     'growth_history': 'Pertumbuhan',
     'child_growth_history': 'Riwayat Pertumbuhan Anak',
 
