@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
 import 'package:growthtracker/controller/ParameterController.dart';
-import 'package:growthtracker/pages/TermsOfServicePage.dart';
+import 'package:growthtracker/controller/SessionController.dart';
 import 'package:growthtracker/pages/AboutPage.dart';
-import 'package:get/get.dart';
+import 'package:growthtracker/pages/TermsOfServicePage.dart';
+import 'package:growthtracker/theme/app_theme.dart';
+import 'package:growthtracker/widgets/app_widgets.dart';
 
 class SettingUserPage extends StatefulWidget {
   const SettingUserPage({super.key});
@@ -14,9 +19,10 @@ class SettingUserPage extends StatefulWidget {
 }
 
 class _SettingUserPageState extends State<SettingUserPage> {
-  var parameterController = Get.put(ParameterController());
-  var authController = Get.put(AuthController());
-  var languageController = Get.find<LanguageController>();
+  final parameterController = Get.put(ParameterController());
+  final authController = Get.put(AuthController());
+  final sessionController = Get.put(SessionController());
+  final languageController = Get.find<LanguageController>();
 
   @override
   void initState() {
@@ -25,44 +31,194 @@ class _SettingUserPageState extends State<SettingUserPage> {
   }
 
   void _showLanguageSheet() {
-    Get.bottomSheet(
-      Container(
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) {
+        return AppSheet(
+          title: 'language'.tr,
+          subtitle: 'preferences'.tr,
+          child: Obx(
+            () => Column(
+              children: [
+                for (final code in [
+                  LanguageController.system,
+                  LanguageController.english,
+                  LanguageController.indonesian,
+                ])
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: _LanguageOption(
+                      label: languageController.labelFor(code),
+                      selected: languageController.preference.value == code,
+                      onTap: () {
+                        languageController.setLanguage(code);
+                        Get.back();
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _contactSupport() async {
+    final uri = Uri.parse('https://wa.me/6281770704114');
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (_) {
+      AppSnack.info('whatsapp_contact'.tr);
+    }
+  }
+
+  Future<void> _logout() async {
+    final confirmed = await showAppConfirm(
+      context,
+      title: 'logout'.tr,
+      message: 'logout_confirm'.tr,
+      confirmLabel: 'logout'.tr,
+      icon: Icons.logout_rounded,
+    );
+    if (confirmed == true) {
+      await authController.logout();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          bottom: false,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 130),
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'language'.tr,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Obx(
-                () => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    LanguageController.system,
-                    LanguageController.english,
-                    LanguageController.indonesian,
-                  ]
-                      .map(
-                        (code) => ListTile(
-                          title: Text(languageController.labelFor(code)),
-                          trailing: languageController.preference.value == code
-                              ? Icon(Icons.check, color: Colors.blue)
-                              : null,
-                          onTap: () {
-                            languageController.setLanguage(code);
-                            Get.back();
-                          },
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'account_settings'.tr,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                      )
-                      .toList(),
+                        const SizedBox(height: 3),
+                        Text(
+                          'preferences'.tr,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  AppIconButton(
+                    icon: Icons.translate_rounded,
+                    background: AppColors.primarySoft,
+                    foreground: AppColors.primary,
+                    tooltip: 'language'.tr,
+                    onTap: _showLanguageSheet,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              _buildProfileCard(context),
+              const SizedBox(height: 26),
+              _buildSectionLabel(context, 'preferences'.tr),
+              const SizedBox(height: 10),
+              AppCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Obx(
+                  () => AppListTile(
+                    icon: Icons.language_rounded,
+                    title: 'language'.tr,
+                    subtitle: languageController.currentLabel,
+                    tone: AppTone.primary,
+                    onTap: _showLanguageSheet,
+                    trailing: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.inkMuted,
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 26),
+              _buildSectionLabel(context, 'general'.tr),
+              const SizedBox(height: 10),
+              AppCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    AppListTile(
+                      icon: Icons.description_outlined,
+                      title: 'terms_conditions'.tr,
+                      tone: AppTone.amber,
+                      onTap: () => Get.to(() => const TermsOfServicePage()),
+                    ),
+                    const Divider(),
+                    AppListTile(
+                      icon: Icons.info_outline_rounded,
+                      title: 'about_app'.tr,
+                      tone: AppTone.mint,
+                      onTap: () {
+                        parameterController.getParameter('1');
+                        Get.to(() => AboutPage());
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 26),
+              _buildSectionLabel(context, 'support'.tr),
+              const SizedBox(height: 10),
+              AppCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: AppListTile(
+                  icon: Icons.chat_bubble_outline_rounded,
+                  title: 'help_support'.tr,
+                  subtitle: 'whatsapp_contact'.tr,
+                  tone: AppTone.mint,
+                  onTap: _contactSupport,
+                ),
+              ),
+              if (sessionController.email.value.isNotEmpty) ...[
+                const SizedBox(height: 26),
+                AppButton(
+                  label: 'logout'.tr,
+                  icon: Icons.logout_rounded,
+                  variant: AppButtonVariant.danger,
+                  onPressed: _logout,
+                ),
+              ],
+              const SizedBox(height: 28),
+              Center(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'images/logo.png',
+                      width: 42,
+                      height: 42,
+                      opacity: const AlwaysStoppedAnimation(0.55),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'STANTAPP · ${'version'.tr}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.inkMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -70,126 +226,123 @@ class _SettingUserPageState extends State<SettingUserPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var hight = MediaQuery.of(context).size.height;
+  Widget _buildSectionLabel(BuildContext context, String label) {
+    return Text(
+      label.toUpperCase(),
+      style: AppTextStyles.overline.copyWith(
+        color: AppColors.inkMuted,
+        letterSpacing: 1.2,
+      ),
+    );
+  }
 
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-        ),
-        body: Container(
-          width: width,
-          height: hight,
-          child: SingleChildScrollView(
+  Widget _buildProfileCard(BuildContext context) {
+    final parent = authController.isParent;
+    final name =
+        parent.isNotEmpty ? '${parent[0]['nama_orang_tua'] ?? ''}'.trim() : '';
+    final email = sessionController.email.value;
+    final displayName = name.isNotEmpty
+        ? name
+        : (email.isNotEmpty ? email.split('@').first : 'greeting_parent'.tr);
+    final subtitle = email.isNotEmpty ? email : 'app_tagline'.tr;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: AppColors.brandGradient,
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        boxShadow: AppShadows.primary,
+      ),
+      child: Row(
+        children: [
+          AppAvatar(
+            photo: parent.isNotEmpty ? '${parent[0]['photo'] ?? ''}' : null,
+            name: name.isNotEmpty ? name : null,
+            size: 58,
+            ring: true,
+            icon: Icons.person_rounded,
+            gradient: const LinearGradient(
+              colors: [Color(0xFF6B93FF), Color(0xFF2EC4B6)],
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Card(
-                    child: Container(
-                      width: width,
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'language'.tr,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                Obx(
-                                  () => Text(
-                                    languageController.currentLabel,
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios),
-                                  onPressed: _showLanguageSheet,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                Text(
+                  displayName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ),
-                  ),
                 ),
-                SizedBox(
-                  height: hight * 0.07,
-                ),
-                Card(
-                  child: Container(
-                    width: width,
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'terms_conditions'.tr,
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_ios),
-                                onPressed: () {
-                                  Get.to(TermsOfServicePage());
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'about_app'.tr,
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_ios),
-                                onPressed: () {
-                                  parameterController.getParameter("1");
-                                  Get.to(AboutPage());
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: hight * 0.01,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    width: width,
-                    child: Text(
-                      'version'.tr,
-                      style: TextStyle(color: Colors.grey),
-                    ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: 0.75),
+                    height: 1.4,
                   ),
                 ),
               ],
             ),
           ),
-        ));
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageOption extends StatelessWidget {
+  const _LanguageOption({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected ? AppColors.primarySoft : AppColors.surfaceAlt,
+      borderRadius: BorderRadius.circular(AppRadius.md),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14.5,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    color: selected ? AppColors.primaryDeep : AppColors.ink,
+                  ),
+                ),
+              ),
+              if (selected)
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: AppColors.primary,
+                  size: 22,
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

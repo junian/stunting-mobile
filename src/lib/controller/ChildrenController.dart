@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:growthtracker/helper/AgeHelper.dart';
 import 'package:growthtracker/services/LocalStore.dart';
-import 'package:growthtracker/widget/BottomNavbar.dart';
 
 /// Manages the children kept on this device.
 class ChildrenController extends GetxController {
@@ -79,7 +78,6 @@ class ChildrenController extends GetxController {
       await _store.saveChildren(children);
 
       await getAnak(owner, null);
-      Get.off(BottomNavbar());
       return true;
     } catch (e) {
       print('Could not save child: $e');
@@ -95,8 +93,7 @@ class ChildrenController extends GetxController {
           : children.where((child) => child['anak_id'] == anak_id).toList();
 
       final now = DateTime.now();
-      anakList.value =
-          selected.map((child) => _withAge(child, now)).toList();
+      anakList.value = selected.map((child) => _withAge(child, now)).toList();
     } catch (e) {
       print('Could not load children: $e');
     }
@@ -125,9 +122,8 @@ class ChildrenController extends GetxController {
       await _store.saveChildren(children);
 
       final records = await _store.growthRecords();
-      final removed = records
-          .where((record) => record['anak_id'] == anakId)
-          .toList();
+      final removed =
+          records.where((record) => record['anak_id'] == anakId).toList();
       records.removeWhere((record) => record['anak_id'] == anakId);
       await _store.saveGrowthRecords(records);
 

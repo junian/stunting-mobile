@@ -3,239 +3,284 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/GrowthEditorController.dart';
 import 'package:growthtracker/services/GrowthStatus.dart';
+import 'package:growthtracker/theme/app_theme.dart';
+import 'package:growthtracker/widgets/app_widgets.dart';
 
 class GrowthDetailPage extends StatelessWidget {
-  String pertumbuhanAnakId;
-  String anakId;
-  String beratBadan;
-  String tinggiBadan;
-  String lingkarKepala;
-  String createdDate;
-  String statusPertumbuhanBerat;
-  String statusPertumbuhanTinggi;
-  String statusPertumbuhanLingkarKepala;
-  String umur;
-  GrowthDetailPage(
-      {super.key,
-      required this.pertumbuhanAnakId,
-      required this.anakId,
-      required this.beratBadan,
-      required this.tinggiBadan,
-      required this.lingkarKepala,
-      required this.createdDate,
-      required this.statusPertumbuhanBerat,
-      required this.statusPertumbuhanTinggi,
-      required this.statusPertumbuhanLingkarKepala,
-      required this.umur});
+  final String pertumbuhanAnakId;
+  final String anakId;
+  final String beratBadan;
+  final String tinggiBadan;
+  final String lingkarKepala;
+  final String createdDate;
+  final String statusPertumbuhanBerat;
+  final String statusPertumbuhanTinggi;
+  final String statusPertumbuhanLingkarKepala;
+  final String umur;
 
-  Text _statusLabel(String? status) => Text(
-        GrowthStatus.labelKey(status)?.tr ?? '$status',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: GrowthStatus.isNormal(status) ? Colors.green : Colors.yellow,
-        ),
-      );
+  const GrowthDetailPage({
+    super.key,
+    required this.pertumbuhanAnakId,
+    required this.anakId,
+    required this.beratBadan,
+    required this.tinggiBadan,
+    required this.lingkarKepala,
+    required this.createdDate,
+    required this.statusPertumbuhanBerat,
+    required this.statusPertumbuhanTinggi,
+    required this.statusPertumbuhanLingkarKepala,
+    required this.umur,
+  });
 
-  Text _statusNote(String? status) {
-    final String? key = GrowthStatus.noteKey(status);
-    return Text(
-      key == null ? '' : key.tr,
-      style: TextStyle(
-        fontSize: 15,
-        color: Colors.grey,
-        fontStyle: FontStyle.italic,
-      ),
+  String get _formattedDate {
+    final date = DateTime.tryParse(createdDate);
+    if (date == null) return createdDate;
+    return DateFormat('d MMM y').format(date);
+  }
+
+  String _number(String value) {
+    final parsed = double.tryParse(value.replaceAll(',', '.'));
+    if (parsed == null) return value;
+    if (parsed == parsed.truncateToDouble()) return parsed.toStringAsFixed(0);
+    return parsed.toStringAsFixed(1);
+  }
+
+  String _statusText(String? status) {
+    final key = GrowthStatus.labelKey(status);
+    return key == null ? 'status_tidak_ada'.tr : key.tr;
+  }
+
+  AppTone _toneFor(String? status) {
+    if (!GrowthStatus.hasReference(status)) return AppTone.neutral;
+    if (GrowthStatus.isNormal(status)) return AppTone.mint;
+    final code = GrowthStatus.codeFor(status);
+    final severe = code == GrowthStatus.sangatPendek ||
+        code == GrowthStatus.giziBuruk ||
+        code == GrowthStatus.mikrosefali;
+    return severe ? AppTone.coral : AppTone.amber;
+  }
+
+  Future<void> _delete(BuildContext context) async {
+    final confirmed = await showAppConfirm(
+      context,
+      title: 'delete'.tr,
+      message: 'delete_growth_message'.tr,
+      confirmLabel: 'delete'.tr,
     );
+    if (confirmed != true) return;
+
+    await GrowthEditorController().deletePertumbuhanAnak(pertumbuhanAnakId);
+    if (!context.mounted) return;
+    Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
-    DateFormat dateFormat = DateFormat('d MMM y');
-    String tglbuat = dateFormat.format(DateTime.parse(createdDate));
-
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text('growth_detail'.tr),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete_outline),
-            onPressed: () async {
-              final confirmed = await showDialog<bool>(
-                context: context,
-                builder: (dialogContext) => AlertDialog(
-                  title: Text('delete'.tr),
-                  content: Text('delete_growth_message'.tr),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(dialogContext, false),
-                      child: Text('cancel'.tr),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(dialogContext, true),
-                      child: Text('delete'.tr),
-                    ),
-                  ],
+      backgroundColor: AppColors.background,
+      body: Column(
+        children: [
+          AppPageHeader(
+            title: 'growth_detail'.tr,
+            subtitle: umur.isEmpty ? null : umur,
+            action: AppIconButton(
+              icon: Icons.delete_outline_rounded,
+              background: AppColors.coralSoft,
+              foreground: AppColors.coral,
+              tooltip: 'delete'.tr,
+              onTap: () => _delete(context),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
+              children: [
+                _buildSummary(context),
+                const SizedBox(height: 26),
+                AppSectionHeader(title: 'growth_status'.tr),
+                const SizedBox(height: 12),
+                _buildStatusCard(
+                  context,
+                  icon: Icons.monitor_weight_rounded,
+                  title: 'weight'.tr,
+                  value: '${_number(beratBadan)} kg',
+                  status: statusPertumbuhanBerat,
                 ),
-              );
-
-              if (confirmed != true) return;
-
-              await GrowthEditorController()
-                  .deletePertumbuhanAnak(pertumbuhanAnakId);
-              Get.back();
-            },
+                const SizedBox(height: 12),
+                _buildStatusCard(
+                  context,
+                  icon: Icons.straighten_rounded,
+                  title: 'height'.tr,
+                  value: '${_number(tinggiBadan)} cm',
+                  status: statusPertumbuhanTinggi,
+                ),
+                const SizedBox(height: 12),
+                _buildStatusCard(
+                  context,
+                  icon: Icons.circle_outlined,
+                  title: 'head_circumference'.tr,
+                  value: '${_number(lingkarKepala)} cm',
+                  status: statusPertumbuhanLingkarKepala,
+                ),
+              ],
+            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  "growth_date_label".tr,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(tglbuat,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "child_age_label".tr,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(umur,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "weight_label".tr,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text("${beratBadan.toString()} kg",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "height_label".tr,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text("${tinggiBadan.toString()} cm",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "head_label".tr,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text("${lingkarKepala.toString()} cm",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Container(
-                width: width,
-                height: height * 0.2,
+    );
+  }
+
+  Widget _buildSummary(BuildContext context) {
+    return AppCard(
+      padding: const EdgeInsets.all(18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 2),
+                  gradient: AppColors.brandGradient,
+                  borderRadius: BorderRadius.circular(14),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "growth_status_weight".tr,
-                          style: TextStyle(
-                            fontSize: 18,
-                          )),
-                      _statusLabel(statusPertumbuhanBerat),
-                      _statusNote(statusPertumbuhanBerat),
-                    ],
-                  ),
+                child: const Icon(
+                  Icons.monitor_heart_outlined,
+                  color: Colors.white,
+                  size: 22,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Container(
-                width: width,
-                height: height * 0.2,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 2),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "growth_status_height".tr,
-                          style: TextStyle(
-                            fontSize: 18,
-                          )),
-                      _statusLabel(statusPertumbuhanTinggi),
-                      _statusNote(statusPertumbuhanTinggi),
-                    ],
-                  ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _formattedDate,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      umur,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Container(
-                width: width,
-                height: height * 0.2,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 2),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "growth_status_head".tr,
-                          style: TextStyle(
-                            fontSize: 18,
-                          )),
-                      _statusLabel(statusPertumbuhanLingkarKepala),
-                      _statusNote(statusPertumbuhanLingkarKepala),
-                    ],
-                  ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: MetricTile(
+                  icon: Icons.monitor_weight_rounded,
+                  label: 'weight'.tr,
+                  value: _number(beratBadan),
+                  unit: 'kg',
+                  tone: AppTone.primary,
+                  compact: true,
                 ),
               ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: MetricTile(
+                  icon: Icons.straighten_rounded,
+                  label: 'height'.tr,
+                  value: _number(tinggiBadan),
+                  unit: 'cm',
+                  tone: AppTone.mint,
+                  compact: true,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: MetricTile(
+                  icon: Icons.circle_outlined,
+                  label: 'head_short'.tr,
+                  value: _number(lingkarKepala),
+                  unit: 'cm',
+                  tone: AppTone.amber,
+                  compact: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String value,
+    required String status,
+  }) {
+    final tone = _toneFor(status);
+    final noteKey = GrowthStatus.noteKey(status);
+    final normal = GrowthStatus.isNormal(status);
+    final hasReference = GrowthStatus.hasReference(status);
+
+    return AppCard(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: tone.background,
+              borderRadius: BorderRadius.circular(13),
             ),
-          ],
-        ),
+            child: Icon(icon, color: tone.foreground, size: 21),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                    Text(
+                      value,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                StatusPill(
+                  label: _statusText(status),
+                  tone: tone,
+                  icon: hasReference
+                      ? (normal
+                          ? Icons.check_circle_outline_rounded
+                          : Icons.error_outline_rounded)
+                      : Icons.help_outline_rounded,
+                ),
+                if (noteKey != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    noteKey.tr,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          height: 1.45,
+                        ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

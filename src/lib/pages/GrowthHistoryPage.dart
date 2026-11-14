@@ -1,370 +1,549 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:growthtracker/controller/GrowthDetailController.dart';
-import '../controller/GrowthHistoryController.dart';
-import '../controller/GrowthEditorController.dart';
-import 'GrowthDetailPage.dart';
-import 'GrowthEditorPage.dart';
-import 'package:growthtracker/widget/AppPhoto.dart';
+import 'package:growthtracker/controller/GrowthHistoryController.dart';
+import 'package:growthtracker/pages/GrowthDetailPage.dart';
+import 'package:growthtracker/pages/GrowthEditorPage.dart';
+import 'package:growthtracker/services/GrowthStatus.dart';
+import 'package:growthtracker/services/LocalStore.dart';
+import 'package:growthtracker/theme/app_theme.dart';
+import 'package:growthtracker/widgets/app_widgets.dart';
 
 class GrowthHistoryPage extends StatefulWidget {
-  String anak_id;
-  String tinggi_badan_ibu;
-  String tinggi_badan_ayah;
-  GrowthHistoryPage(
-      {Key? key,
-      required this.anak_id,
-      required this.tinggi_badan_ayah,
-      required this.tinggi_badan_ibu})
-      : super(key: key);
+  final String anak_id;
+  final String tinggi_badan_ibu;
+  final String tinggi_badan_ayah;
+
+  const GrowthHistoryPage({
+    super.key,
+    required this.anak_id,
+    required this.tinggi_badan_ayah,
+    required this.tinggi_badan_ibu,
+  });
 
   @override
   State<GrowthHistoryPage> createState() => _GrowthHistoryPageState();
 }
 
 class _GrowthHistoryPageState extends State<GrowthHistoryPage> {
-  bool isAscending = false;
-  bool isDataInitialized = false;
-  var riwayatPertumbuhanController = Get.put(GrowthHistoryController());
-  var tambahPertumbuhanAnak = Get.put(GrowthEditorController());
-  var detailRiwayatPertumbuhanController =
-      Get.put(GrowthDetailController());
+  final GrowthHistoryController growthController =
+      Get.put(GrowthHistoryController());
+  final LocalStore _store = LocalStore();
 
-  List<Map<String, dynamic>> filteredList = [];
-
-  Future<void> initializeData() async {
-    await Future.delayed(Duration(seconds: 2)); // Wait for 2 seconds
-    await riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
-    filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
-    setState(() {
-      isDataInitialized =
-          true; // Set the data initialization status to true
-    });
-  }
+  bool _loading = true;
+  bool _newestFirst = true;
+  String _childName = '';
+  List<Map<String, dynamic>> _records = [];
 
   @override
   void initState() {
     super.initState();
-    initializeData();
+    _loadData();
   }
 
-  void filterData(bool ascending) {
+  Future<void> _loadData() async {
+    await growthController.getPertumbuhanAnak(widget.anak_id);
+    final child = await _store.childById(widget.anak_id);
+    if (!mounted) return;
     setState(() {
-      isAscending = ascending;
+      _records = growthController.riwayatPertumbuhan
+          .map((record) => Map<String, dynamic>.from(record))
+          .toList();
+      _childName = '${child?['nama_anak'] ?? ''}';
+      _loading = false;
+    });
+  }
 
-      filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
+  DateTime _recordDate(Map<String, dynamic> record) {
+    return DateTime.tryParse('${record['tanggal_pertumbuhan'] ?? ''}') ??
+        DateTime.tryParse('${record['created_date'] ?? ''}') ??
+        DateTime(1970);
+  }
 
-      filteredList.sort((a, b) {
-        // Compare values by creation date (created_date)
-        DateTime dateA = DateTime.parse(a['created_date']);
-        DateTime dateB = DateTime.parse(b['created_date']);
-
-        if (isAscending) {
-          return dateA.compareTo(dateB); // Urutan ascending
-        } else {
-          return dateB.compareTo(dateA); // Urutan descending
-        }
+  List<Map<String, dynamic>> get _sortedRecords {
+    final sorted = [..._records]..sort((a, b) {
+        final comparison = _recordDate(a).compareTo(_recordDate(b));
+        return _newestFirst ? -comparison : comparison;
       });
-    });
+    return sorted;
   }
 
-  Future<void> _refreshData() async {
-    // Simulate the data refresh process (e.g. fetching new data from the server)
-    riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
-    await Future.delayed(Duration(seconds: 2));
-
-    setState(() {
-      filteredList = riwayatPertumbuhanController.riwayatPertumbuhan.toList();
-    });
+  List<double> get _weightTrend {
+    final sorted = [..._records]
+      ..sort((a, b) => _recordDate(a).compareTo(_recordDate(b)));
+    final values = sorted
+        .map((record) => double.tryParse('${record['berat_badan'] ?? ''}'))
+        .whereType<double>()
+        .toList();
+    return values.length > 10 ? values.sublist(values.length - 10) : values;
   }
 
+  Map<String, dynamic>? get _latest {
+    if (_records.isEmpty) return null;
+    final sorted = [..._records]
+      ..sort((a, b) => _recordDate(a).compareTo(_recordDate(b)));
+    return sorted.last;
+  }
+
+  String _formatNumber(dynamic value) {
+    final parsed = value is num ? value.toDouble() : double.tryParse('$value');
+    if (parsed == null) return '$value';
+    if (parsed == parsed.truncateToDouble()) return parsed.toStringAsFixed(0);
+    return parsed.toStringAsFixed(1);
+  }
+
+  String _formatDate(DateTime date) => DateFormat('d MMM y').format(date);
+
+  ({String label, AppTone tone})? _statusFor(Map<String, dynamic> record) {
+    final raw = record['status_pertumbuhan_tinggi']?.toString();
+    final label = GrowthStatus.labelKey(raw)?.tr;
+    if (label == null) return null;
+    if (GrowthStatus.isNormal(raw)) {
+      return (label: label, tone: AppTone.mint);
+    }
+    final code = GrowthStatus.codeFor(raw);
+    final severe = code == GrowthStatus.sangatPendek ||
+        code == GrowthStatus.giziBuruk ||
+        code == GrowthStatus.mikrosefali;
+    return (
+      label: _shortLabel(raw, label),
+      tone: severe ? AppTone.coral : AppTone.amber
+    );
+  }
+
+  String _shortLabel(String? raw, String fallback) {
+    final code = GrowthStatus.codeFor(raw);
+    switch (code) {
+      case GrowthStatus.sangatPendek:
+        return 'status_short_sangat_pendek'.tr;
+      case GrowthStatus.tinggiNormal:
+        return 'status_short_tinggi_normal'.tr;
+      case GrowthStatus.lingkarNormal:
+        return 'status_short_lingkar_normal'.tr;
+      case GrowthStatus.tidakAda:
+        return 'status_short_tidak_ada'.tr;
+      default:
+        return fallback;
+    }
+  }
+
+  Future<void> _openEditor() async {
+    await Get.to(
+      () => GrowthEditorPage(
+        anakID: widget.anak_id,
+        tinggiBadanAyah: widget.tinggi_badan_ayah,
+        tinggiBadanIbu: widget.tinggi_badan_ibu,
+      ),
+    );
+    if (mounted) _loadData();
+  }
+
+  Future<void> _openRecord(Map<String, dynamic> record) async {
+    await Get.to(
+      () => GrowthDetailPage(
+        pertumbuhanAnakId: '${record['pertumbuhan_anak_id']}',
+        anakId: widget.anak_id,
+        beratBadan: '${record['berat_badan'] ?? ''}',
+        tinggiBadan: '${record['tinggi_badan'] ?? ''}',
+        lingkarKepala: '${record['lingkar_kepala'] ?? ''}',
+        createdDate:
+            '${record['tanggal_pertumbuhan'] ?? record['created_date'] ?? ''}',
+        statusPertumbuhanBerat: '${record['status_pertumbuhan_berat'] ?? ''}',
+        statusPertumbuhanTinggi: '${record['status_pertumbuhan_tinggi'] ?? ''}',
+        statusPertumbuhanLingkarKepala:
+            '${record['status_pertumbuhan_lingkar_kepala'] ?? ''}',
+        umur: '${record['umur'] ?? ''}',
+      ),
+    );
+    if (mounted) _loadData();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    final bottomInset = systemBottomInset(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text('growth_history'.tr),
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          riwayatPertumbuhanController.getPertumbuhanAnak(widget.anak_id);
-
-          riwayatPertumbuhanController.riwayatPertumbuhan;
-
-          Get.to(GrowthEditorPage(
-              anakID: widget.anak_id,
-              tinggiBadanAyah: widget.tinggi_badan_ayah,
-              tinggiBadanIbu: widget.tinggi_badan_ibu))?.then(
-            (_) => _refreshData(),
-          );
-        },
-        child: Container(
-            alignment: Alignment.center,
-            width: width * 0.9,
-            height: height * 0.07,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              shape: BoxShape.rectangle,
-              color: Colors.blue,
-            ),
-            child: Text(
-              "add_growth".tr,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            )),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      backgroundColor: AppColors.background,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          AppPageHeader(
+            title: 'growth_history'.tr,
+            subtitle: _childName.isEmpty ? null : _childName,
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              color: AppColors.primary,
+              backgroundColor: AppColors.surface,
+              onRefresh: _loadData,
+              child: _loading
+                  ? _buildSkeleton()
+                  : _records.isEmpty
+                      ? _buildEmpty()
+                      : _buildContent(),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.fromLTRB(20, 8, 20, 12 + bottomInset),
+        child: AppButton(
+          label: 'add_growth'.tr,
+          icon: Icons.add_rounded,
+          onPressed: _openEditor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkeleton() {
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: const [
+        SkeletonBox(height: 150, radius: 24),
+        SizedBox(height: 16),
+        SkeletonBox(height: 92, radius: 20),
+        SizedBox(height: 12),
+        SkeletonBox(height: 92, radius: 20),
+        SizedBox(height: 12),
+        SkeletonBox(height: 92, radius: 20),
+      ],
+    );
+  }
+
+  Widget _buildEmpty() {
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: [
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.12),
+        EmptyState(
+          icon: Icons.show_chart_rounded,
+          title: 'no_history'.tr,
+          message: 'add_growth_data'.tr,
+          actionLabel: 'add_growth'.tr,
+          onAction: _openEditor,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContent() {
+    final latest = _latest;
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
+      children: [
+        _buildSummary(latest),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${'growth_history'.tr} · ${_records.length}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            _SortButton(
+              ascending: !_newestFirst,
+              onTap: () => setState(() => _newestFirst = !_newestFirst),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        for (final record in _sortedRecords)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: _RecordCard(
+              record: record,
+              date: _formatDate(_recordDate(record)),
+              status: _statusFor(record),
+              formatNumber: _formatNumber,
+              onTap: () => _openRecord(record),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildSummary(Map<String, dynamic>? latest) {
+    return AppCard(
+      padding: const EdgeInsets.all(18),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: AppColors.brandGradient,
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: const Icon(
+                  Icons.insights_rounded,
+                  color: Colors.white,
+                  size: 21,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'summary'.tr,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      latest == null
+                          ? 'no_history'.tr
+                          : 'last_measured'.trParams({
+                              'date': _formatDate(_recordDate(latest)),
+                            }),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (latest != null) ...[
+            const SizedBox(height: 16),
+            Row(
               children: [
-                DropdownButtonHideUnderline(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(),
-                    ),
-                    child: DropdownButton<bool>(
-                      value: isAscending,
-                      onChanged: (bool? newValue) {
-                        if (newValue != null) {
-                          filterData(newValue);
-                        }
-                      },
-                      items: [
-                        DropdownMenuItem<bool>(
-                          value: true,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(
-                              'latest'.tr,
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem<bool>(
-                          value: false,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(
-                              'newest'.tr,
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                Expanded(
+                  child: MetricTile(
+                    icon: Icons.monitor_weight_rounded,
+                    label: 'weight'.tr,
+                    value: _formatNumber(latest['berat_badan']),
+                    unit: 'kg',
+                    tone: AppTone.primary,
+                    compact: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MetricTile(
+                    icon: Icons.straighten_rounded,
+                    label: 'height'.tr,
+                    value: _formatNumber(latest['tinggi_badan']),
+                    unit: 'cm',
+                    tone: AppTone.mint,
+                    compact: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MetricTile(
+                    icon: Icons.circle_outlined,
+                    label: 'head_short'.tr,
+                    value: _formatNumber(latest['lingkar_kepala']),
+                    unit: 'cm',
+                    tone: AppTone.amber,
+                    compact: true,
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-            ),
-            child: Container(
-              width: width,
-              height: height * 0.08,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            if (_weightTrend.length >= 2) ...[
+              const SizedBox(height: 16),
+              Row(
                 children: [
-                  Container(
-                    height: 20,
-                    width: 20,
-                  ),
                   Text(
-                    "weight".tr,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    'growth_trend'.tr,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  Text("height".tr,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("head_circumference".tr,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Container(
-                    height: 20,
-                    width: 10,
+                  const Spacer(),
+                  Text(
+                    'weight'.tr,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
-            ),
+              const SizedBox(height: 4),
+              Sparkline(
+                values: _weightTrend,
+                color: AppColors.primary,
+                height: 52,
+              ),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _SortButton extends StatelessWidget {
+  const _SortButton({required this.ascending, required this.onTap});
+
+  final bool ascending;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(color: AppColors.line),
           ),
-          Container(
-            height: height * 0.6,
-            width: width,
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              child: isDataInitialized == true
-                  ? ListView.builder(
-                      itemCount: filteredList.length,
-                      itemBuilder: (context, index) {
-                        Map<String, dynamic> data = filteredList[index];
-                        DateFormat dateFormat = DateFormat('d MMM y');
-                        String tglbuat = dateFormat
-                            .format(DateTime.parse(data['created_date']));
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                ascending
+                    ? Icons.arrow_upward_rounded
+                    : Icons.arrow_downward_rounded,
+                size: 15,
+                color: AppColors.primary,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                ascending ? 'sort_oldest'.tr : 'sort_newest'.tr,
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.inkSoft,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-                        // String formatSelisihTanggal(
-                        //     DateTime startDate, DateTime endDate) {
-                        //   Duration selisih = endDate.difference(startDate);
-                        //   int tahun = selisih.inDays ~/ 365;
-                        //   int bulan = (selisih.inDays % 365) ~/ 30;
-                        //   int hari = selisih.inDays % 30;
+class _RecordCard extends StatelessWidget {
+  const _RecordCard({
+    required this.record,
+    required this.date,
+    required this.status,
+    required this.formatNumber,
+    required this.onTap,
+  });
 
-                        //   String hasil = '';
-                        //   if (tahun > 0) {
-                        //     hasil += '$tahun tahun ';
-                        //   }
-                        //   if (bulan > 0) {
-                        //     hasil += '$bulan bulan ';
-                        //   }
-                        //   if (hari > 0) {
-                        //     hasil += '$hari hari';
-                        //   }
+  final Map<String, dynamic> record;
+  final String date;
+  final ({String label, AppTone tone})? status;
+  final String Function(dynamic value) formatNumber;
+  final VoidCallback onTap;
 
-                        //   return hasil.trim();
-                        // }
-
-                        // var selisih =
-                        //     formatSelisihTanggal(data.tanggalLahir, data.createDate);
-
-                        return Container(
-                          width: width,
-                          height: height * 0.18,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 2,
-                                          blurRadius: 5,
-                                          offset: Offset(0, 3),
-                                        ),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  width: width,
-                                  height: height * 0.08,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          detailRiwayatPertumbuhanController
-                                              .getDetailPertumbuhan(
-                                                  data['pertumbuhan_anak_id'],
-                                                  data['umur'])
-                                              .then((_) => _refreshData());
-                                        },
-                                        child: data['photo'] != null
-                                            ? Container(
-                                                height: height * 0.03,
-                                                width: width * 0.06,
-                                                child: AppPhoto(
-                                                  data['photo'],
-                                                  fit: BoxFit.contain,
-                                                ),
-                                                // child: Icon(
-                                                //   Icons.image,
-                                                //   color: Colors.grey,
-                                                // ),
-                                              )
-                                            : Container(
-                                                height: height * 0.03,
-                                                width: width * 0.06,
-                                                child: Icon(
-                                                  Icons.image,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                      ),
-                                      Text("${data['berat_badan']} kg"),
-                                      Text("${data['tinggi_badan']} cm"),
-                                      Text("${data['lingkar_kepala']} cm"),
-                                      GestureDetector(
-                                        onTap: () {
-                                          detailRiwayatPertumbuhanController
-                                              .getDetailPertumbuhan(
-                                                  data['pertumbuhan_anak_id'],
-                                                  data['umur'])
-                                              .then((_) => _refreshData());
-                                        },
-                                        child: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 2,
-                                  left: 16,
-                                  right: 16,
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 2,
-                                          blurRadius: 5,
-                                          offset: Offset(0, 3),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          bottomRight: Radius.circular(20))),
-                                  width: width,
-                                  height: height * 0.08,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        tglbuat,
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                      Text(data['umur'],
-                                          style: TextStyle(color: Colors.grey)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(),
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      onTap: onTap,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      date,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-            ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${record['umur'] ?? ''}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              if (status != null)
+                StatusPill(
+                  label: status!.label,
+                  tone: status!.tone,
+                  dense: true,
+                ),
+              const SizedBox(width: 4),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.inkMuted,
+                size: 20,
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _InlineMetric(
+                icon: Icons.monitor_weight_rounded,
+                value: '${formatNumber(record['berat_badan'])} kg',
+                tone: AppTone.primary,
+              ),
+              const SizedBox(width: 8),
+              _InlineMetric(
+                icon: Icons.straighten_rounded,
+                value: '${formatNumber(record['tinggi_badan'])} cm',
+                tone: AppTone.mint,
+              ),
+              const SizedBox(width: 8),
+              _InlineMetric(
+                icon: Icons.circle_outlined,
+                value: '${formatNumber(record['lingkar_kepala'])} cm',
+                tone: AppTone.amber,
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _InlineMetric extends StatelessWidget {
+  const _InlineMetric({
+    required this.icon,
+    required this.value,
+    required this.tone,
+  });
+
+  final IconData icon;
+  final String value;
+  final AppTone tone;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 8),
+        decoration: BoxDecoration(
+          color: tone.background,
+          borderRadius: BorderRadius.circular(11),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 13, color: tone.foreground),
+            const SizedBox(width: 5),
+            Expanded(
+              child: Text(
+                value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.ink,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,16 +5,25 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/VaccinationController.dart';
+import 'package:growthtracker/theme/app_theme.dart';
+import 'package:growthtracker/widgets/app_widgets.dart';
 
+/// Form used to record or update one vaccination of a child.
+///
+/// The date, doctor and place are required; the batch number and a photo of the
+/// vaccination book are optional. The save action stays pinned above the
+/// navigation bar so the form can grow without hiding it.
 class VaccinationEditorPage extends StatefulWidget {
-  String anak_id;
-  String vaksin_id;
-  String? vaksin_anak_id;
-  VaccinationEditorPage(
-      {super.key,
-      required this.anak_id,
-      required this.vaksin_id,
-      this.vaksin_anak_id});
+  final String anak_id;
+  final String vaksin_id;
+  final String? vaksin_anak_id;
+
+  const VaccinationEditorPage({
+    super.key,
+    required this.anak_id,
+    required this.vaksin_id,
+    this.vaksin_anak_id,
+  });
 
   @override
   State<VaccinationEditorPage> createState() => _VaccinationEditorPageState();
@@ -55,430 +64,354 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
     });
 
     if (errors.isNotEmpty) {
-      Get.snackbar('warning'.tr, 'complete_form_message'.tr);
+      AppSnack.error('complete_form_message'.tr);
       return;
     }
 
     setState(() => _saving = true);
 
     final saved = await vaksinasiController.addVaksinAnak(
-        vaksin_anak_id: widget.vaksin_anak_id,
-        anak_id: widget.anak_id,
-        vaksin_id: widget.vaksin_id,
-        tanggal_vaksin: tanggal,
-        name_dokter: vaksinasiController.nama_dokter.text.trim(),
-        tempat: vaksinasiController.tempat.text.trim(),
-        no_batch: vaksinasiController.no_batch.text.trim(),
-        pickedImage: vaksinasiController.pickedImage);
+      vaksin_anak_id: widget.vaksin_anak_id,
+      anak_id: widget.anak_id,
+      vaksin_id: widget.vaksin_id,
+      tanggal_vaksin: tanggal,
+      name_dokter: vaksinasiController.nama_dokter.text.trim(),
+      tempat: vaksinasiController.tempat.text.trim(),
+      no_batch: vaksinasiController.no_batch.text.trim(),
+      pickedImage: vaksinasiController.pickedImage,
+    );
 
     if (!mounted) return;
     setState(() => _saving = false);
 
     if (!saved) {
-      Get.snackbar('failed'.tr, 'vaccine_added_failed'.tr);
+      AppSnack.error('vaccine_added_failed'.tr);
       return;
     }
 
-    Get.snackbar('success'.tr, 'vaccine_added_success'.tr);
+    AppSnack.success('saved'.tr);
     Get.back();
+  }
+
+  void _clearError(String field) {
+    if (_errors.containsKey(field)) {
+      setState(() => _errors.remove(field));
+    }
+  }
+
+  Future<void> _pickDate() async {
+    final now = DateTime.now();
+    final current = DateTime.tryParse(
+      vaksinasiController.dateinput.text.trim(),
+    );
+    final initial = current == null || current.isAfter(now) ? now : current;
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: DateTime(2000),
+      lastDate: now,
+    );
+    if (picked == null || !mounted) return;
+
+    setState(() {
+      vaksinasiController.dateinput.text =
+          DateFormat('yyyy-MM-dd').format(picked);
+      _errors.remove('date');
+    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
     try {
       final imagePicker = ImagePicker();
       final pickedFile = await imagePicker.pickImage(source: source);
+      if (pickedFile == null || !mounted) return;
 
-      if (pickedFile != null) {
-        // Get the selected image file
-        File pickedImageFile = File(pickedFile.path);
-
-        setState(() {
-          vaksinasiController.pickedImage = pickedImageFile;
-        });
-      }
-    } catch (e) {
-      print(e);
+      setState(() {
+        vaksinasiController.pickedImage = File(pickedFile.path);
+      });
+    } catch (_) {
+      if (mounted) AppSnack.error('failed'.tr);
     }
+  }
+
+  void _showPhotoSource() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) {
+        return AppSheet(
+          title: 'upload_photo'.tr,
+          subtitle: 'vaccination_photo_hint'.tr,
+          child: Column(
+            children: [
+              AppListTile(
+                icon: Icons.photo_camera_rounded,
+                title: 'take_photo'.tr,
+                tone: AppTone.primary,
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  _pickImage(ImageSource.camera);
+                },
+              ),
+              const Divider(),
+              AppListTile(
+                icon: Icons.photo_library_rounded,
+                title: 'choose_from_gallery'.tr,
+                tone: AppTone.mint,
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  _pickImage(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _removePhoto() {
+    setState(() => vaksinasiController.pickedImage = null);
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    bool isClicked = true;
+    final editing = widget.vaksin_anak_id != null;
+    final picked = vaksinasiController.pickedImage;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text('add_child_vaccination'.tr),
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: _saving
-            ? null
-            : () {
-                _save();
-              },
-        child: Container(
-            alignment: Alignment.center,
-            width: width * 0.9,
-            height: height * 0.07,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              shape: BoxShape.rectangle,
-              color: Colors.blue,
-            ),
-            child: Text(
-              "save".tr,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            )),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  // Container(
-                  //   width: width * 0.3,
-                  //   height: height * 0.1,
-                  //   child: Column(
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           Text(
-                  //             'Umur',
-                  //             style: TextStyle(color: Colors.grey),
-                  //           ),
-                  //           Text(
-                  //             '*',
-                  //             style: TextStyle(
-                  //               fontWeight: FontWeight.bold,
-                  //               color: Colors.red,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       Container(
-                  //         decoration: BoxDecoration(
-                  //           border: Border(
-                  //             bottom: BorderSide(
-                  //               color: Colors.black,
-                  //               width: 1.0,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         child: TextField(
-                  //           keyboardType: TextInputType.number,
-                  //           decoration: InputDecoration(
-                  //             hintStyle:
-                  //                 TextStyle(fontSize: 15, color: Colors.black),
-                  //             hintText: 'Usia Anak',
-                  //             border: InputBorder.none,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Container(
-                  width: width,
-                  height: height * 0.1,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'vaccination_date'.tr,
-                                style: TextStyle(),
-                              ),
-                              Text(
-                                '*',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: vaksinasiController
-                              .dateinput, //editing controller of this TextField
-                          decoration: InputDecoration(
-                            hintText: 'vaccination_date'.tr,
-                            errorText: _errors['date'],
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: isClicked
-                                    ? const Color.fromARGB(255, 188, 180, 179)
-                                    : Colors.grey,
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.blue,
-                                width: 2.0,
-                              ),
-                            ),
-                          ),
-                          readOnly:
-                              true, //set it true, so that user will not able to edit text
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(
-                                    2000), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime.now());
-
-                            if (pickedDate != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-
-                              setState(() {
-                                vaksinasiController.dateinput.text =
-                                    formattedDate; //set output date to TextField value.
-                              });
-                            } else {
-                              print("Date is not selected");
-                            }
-                          },
-                          onSubmitted: (value) {
-                            setState(() {
-                              isClicked = false;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Container(
-                  width: width,
-                  height: height * 0.1,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'doctor_name'.tr,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: vaksinasiController.nama_dokter,
-                          decoration: InputDecoration(
-                            hintText: 'doctor_name'.tr,
-                            hintStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            border: InputBorder.none,
-                            errorText: _errors['doctor'],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Container(
-                  width: width,
-                  height: height * 0.1,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'place'.tr,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: vaksinasiController.tempat,
-                          decoration: InputDecoration(
-                            hintText: 'place_name'.tr,
-                            hintStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            border: InputBorder.none,
-                            errorText: _errors['place'],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 16.0),
-              //   child: Container(
-              //     width: width,
-              //     height: height * 0.1,
-              //     child: Column(
-              //       children: [
-              //         Row(
-              //           children: [
-              //             Text(
-              //               'No Batch',
-              //               style: TextStyle(color: Colors.grey),
-              //             ),
-              //             Text(
-              //               '*',
-              //               style: TextStyle(
-              //                 fontWeight: FontWeight.bold,
-              //                 color: Colors.red,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         Container(
-              //           decoration: BoxDecoration(
-              //             border: Border(
-              //               bottom: BorderSide(
-              //                 color: Colors.black,
-              //                 width: 1.0,
-              //               ),
-              //             ),
-              //           ),
-              //           child: TextField(
-              //             controller: vaksinasiController.no_batch,
-              //             decoration: InputDecoration(
-              //               hintStyle:
-              //                   TextStyle(fontSize: 15, color: Colors.black),
-              //               hintText: 'No Batch',
-              //               border: InputBorder.none,
-              //             ),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 16),
-              //   child: Center(
-              //     child: GestureDetector(
-              //       onTap: () {
-              //         // Action when the upload photo button is pressed
-              //         _pickImage(ImageSource.gallery);
-              //       },
-              //       child: DottedBorder(
-              //         borderType: BorderType.RRect,
-              //         color: Colors.blue,
-              //         radius: Radius.circular(20),
-              //         padding: EdgeInsets.all(3),
-              //         child: Container(
-              //           width: width * 0.9,
-              //           height: height * 0.07,
-              //           padding:
-              //               EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-              //           decoration: BoxDecoration(
-              //             color: Colors.white,
-              //             borderRadius: BorderRadius.circular(20),
-              //           ),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               Icon(
-              //                 Icons.add,
-              //                 color: Colors.blue,
-              //               ),
-              //               SizedBox(width: 8),
-              //               Text(
-              //                 'Unggah Foto',
-              //                 style: TextStyle(
-              //                   color: Colors.blue,
-              //                   fontWeight: FontWeight.bold,
-              //                   fontSize: 16,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Container(
-              //     width: width,
-              //     height: height * 0.2,
-              //     child: vaksinasiController.pickedImage == null
-              //         ? SizedBox() // Show an empty placeholder if no image has been selected
-              //         : Image.file(vaksinasiController.pickedImage!),
-              //   ),
-              // )
-            ],
+      backgroundColor: AppColors.background,
+      body: Column(
+        children: [
+          AppPageHeader(
+            title:
+                editing ? 'update_vaccination'.tr : 'add_child_vaccination'.tr,
           ),
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
+              children: [
+                AppCard(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _FormSectionHeader(
+                        icon: Icons.vaccines_rounded,
+                        title: 'vaccination_details'.tr,
+                      ),
+                      const SizedBox(height: 20),
+                      AppTextField(
+                        label: 'vaccination_date'.tr,
+                        controller: vaksinasiController.dateinput,
+                        hint: 'select_date'.tr,
+                        required: true,
+                        readOnly: true,
+                        onTap: _pickDate,
+                        prefixIcon: Icons.calendar_today_rounded,
+                        error: _errors['date'],
+                      ),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        label: 'doctor_name'.tr,
+                        controller: vaksinasiController.nama_dokter,
+                        hint: 'doctor_name'.tr,
+                        required: true,
+                        prefixIcon: Icons.person_outline_rounded,
+                        textInputAction: TextInputAction.next,
+                        error: _errors['doctor'],
+                        onChanged: (_) => _clearError('doctor'),
+                      ),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        label: 'place'.tr,
+                        controller: vaksinasiController.tempat,
+                        hint: 'place_name'.tr,
+                        required: true,
+                        prefixIcon: Icons.location_on_outlined,
+                        textInputAction: TextInputAction.next,
+                        error: _errors['place'],
+                        onChanged: (_) => _clearError('place'),
+                      ),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        label: 'no_batch'.tr,
+                        controller: vaksinasiController.no_batch,
+                        hint: 'no_batch'.tr,
+                        prefixIcon: Icons.qr_code_2_rounded,
+                        textInputAction: TextInputAction.done,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                AppCard(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _FormSectionHeader(
+                              icon: Icons.photo_camera_rounded,
+                              title: 'photo'.tr,
+                              tone: AppTone.mint,
+                            ),
+                          ),
+                          Text(
+                            'optional'.tr,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      if (picked != null) ...[
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(AppRadius.md),
+                              child: Image.file(
+                                picked,
+                                width: double.infinity,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: AppIconButton(
+                                icon: Icons.close_rounded,
+                                size: 36,
+                                background:
+                                    AppColors.ink.withValues(alpha: 0.72),
+                                foreground: Colors.white,
+                                onTap: _removePhoto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton.icon(
+                            onPressed: _showPhotoSource,
+                            icon: const Icon(Icons.sync_rounded, size: 18),
+                            label: Text('change_photo'.tr),
+                          ),
+                        ),
+                      ] else
+                        AnimatedPressable(
+                          onTap: _showPhotoSource,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 26,
+                              horizontal: 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceAlt,
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.md + 2),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 52,
+                                  height: 52,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primarySoft,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.add_a_photo_rounded,
+                                    color: AppColors.primary,
+                                    size: 23,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  'upload_photo'.tr,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'vaccination_photo_hint'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _buildSaveBar(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSaveBar() {
+    return SafeArea(
+      top: false,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          border: Border(top: BorderSide(color: AppColors.line)),
+        ),
+        child: AppButton(
+          label: 'save'.tr,
+          icon: Icons.check_rounded,
+          loading: _saving,
+          onPressed: _saving ? null : _save,
         ),
       ),
+    );
+  }
+}
+
+class _FormSectionHeader extends StatelessWidget {
+  const _FormSectionHeader({
+    required this.icon,
+    required this.title,
+    this.tone = AppTone.primary,
+  });
+
+  final IconData icon;
+  final String title;
+  final AppTone tone;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: tone.background,
+            borderRadius: BorderRadius.circular(11),
+          ),
+          child: Icon(icon, size: 18, color: tone.foreground),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+      ],
     );
   }
 }

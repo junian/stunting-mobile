@@ -1,133 +1,107 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widget/AppPhoto.dart';
 import 'package:growthtracker/widget/DecimalInputFormatter.dart';
-import 'HomePage2.dart';
+import 'package:growthtracker/widgets/app_widgets.dart';
 
 class ChildrenEditorPage extends StatefulWidget {
-  var anak_id;
-  ChildrenEditorPage({super.key, required this.anak_id});
+  final dynamic anak_id;
+
+  const ChildrenEditorPage({super.key, required this.anak_id});
 
   @override
   State<ChildrenEditorPage> createState() => _ChildrenEditorPageState();
 }
 
 class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
-  var childernController = Get.put(ChildrenController());
-  var sessionController = Get.put(SessionController());
+  final childernController = Get.put(ChildrenController());
+  final sessionController = Get.put(SessionController());
 
-  TextEditingController nama_anak = TextEditingController();
-  TextEditingController tanggal_lahir = TextEditingController();
-  TextEditingController jenis_kelamin = TextEditingController();
-  TextEditingController berat_badan = TextEditingController();
-  TextEditingController tinggi_badan = TextEditingController();
-  TextEditingController lingkar_kepala = TextEditingController();
-  TextEditingController tinggi_badan_ibu = TextEditingController();
-  TextEditingController tinggi_badan_ayah = TextEditingController();
+  final TextEditingController nama_anak = TextEditingController();
+  final TextEditingController tanggal_lahir = TextEditingController();
+  final TextEditingController jenis_kelamin = TextEditingController();
+  final TextEditingController berat_badan = TextEditingController();
+  final TextEditingController tinggi_badan = TextEditingController();
+  final TextEditingController lingkar_kepala = TextEditingController();
+  final TextEditingController tinggi_badan_ibu = TextEditingController();
+  final TextEditingController tinggi_badan_ayah = TextEditingController();
 
-  bool isClicked = false;
   bool _isSaving = false;
   final Map<String, String> _errors = {};
 
-  // List<String> _genders = ['Laki - Laki', 'Perempuan'];
   String? _selectedGender;
   String? _selectedPrematur;
   String? _selectedAllergy;
-
-  List<String> _blood = ['Pilih Golongan Darah', 'A', 'B', 'O', 'AB'];
   String? _selectedBloodGroup;
 
-  TextEditingController dateinput = TextEditingController();
-  //text editing controller for text field
+  static const List<String> _blood = ['A', 'B', 'AB', 'O'];
+
+  final TextEditingController dateinput = TextEditingController();
+  String? _dateLabel;
 
   List<dynamic> isChildern = [];
-
-  //image picker
   File? image;
-  Future<void> _pickImage() async {
-    try {
-      final imagePicker = ImagePicker();
-      final image = await imagePicker.pickImage(source: ImageSource.gallery);
-
-      if (image != null) {
-        // Get the selected image file
-        File imageTemporary = File(image.path);
-
-        setState(() {
-          this.image = imageTemporary;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    _selectedBloodGroup = _blood.isNotEmpty ? _blood[0] : null;
+    _selectedBloodGroup = null;
 
-    if (widget.anak_id != null) {
+    if (widget.anak_id != null && childernController.dataAnak.isNotEmpty) {
       isChildern = List<dynamic>.from(childernController.dataAnak);
+      final child = isChildern[0];
 
-      // Set the TextEditingControllers values based on isChildern
-      nama_anak.text = isChildern[0]['nama_anak'] ?? '';
-      dateinput.text = isChildern[0]['tanggal_lahir'] ?? '';
-      // jenis_kelamin.text = isChildern[0]['jenis_kelamin'] ?? '';
-      berat_badan.text = isChildern[0]['berat_badan'] ?? '';
-      tinggi_badan.text = isChildern[0]['tinggi_badan'] ?? '';
-      lingkar_kepala.text = isChildern[0]['lingkar_kepala'] ?? '';
-      tinggi_badan_ibu.text = isChildern[0]['tinggi_badan_ibu'] ?? '';
-      tinggi_badan_ayah.text = isChildern[0]['tinggi_badan_ayah'] ?? '';
+      nama_anak.text = '${child['nama_anak'] ?? ''}';
+      dateinput.text = '${child['tanggal_lahir'] ?? ''}';
+      final birth = DateTime.tryParse(dateinput.text);
+      if (birth != null) {
+        _dateLabel = DateFormat('d MMM y').format(birth);
+      }
+      berat_badan.text = '${child['berat_badan'] ?? ''}';
+      tinggi_badan.text = '${child['tinggi_badan'] ?? ''}';
+      lingkar_kepala.text = '${child['lingkar_kepala'] ?? ''}';
+      tinggi_badan_ibu.text = '${child['tinggi_badan_ibu'] ?? ''}';
+      tinggi_badan_ayah.text = '${child['tinggi_badan_ayah'] ?? ''}';
 
-      String gender = isChildern[0]['jenis_kelamin'] ?? '';
-      if (gender == 'Laki-Laki') {
-        _selectedGender = 'Laki-Laki';
-      } else if (gender == 'Perempuan') {
-        _selectedGender = 'Perempuan';
+      final gender = '${child['jenis_kelamin'] ?? ''}';
+      if (gender == 'Laki-Laki' || gender == 'Perempuan') {
+        _selectedGender = gender;
       }
 
-      String prematur = isChildern[0]['prematur'] ?? '';
-      if (prematur == 'Ya') {
-        _selectedPrematur = 'Ya';
-      } else if (prematur == 'Tidak') {
-        _selectedPrematur = 'Tidak';
+      final prematur = '${child['prematur'] ?? ''}';
+      if (prematur == 'Ya' || prematur == 'Tidak') {
+        _selectedPrematur = prematur;
       }
 
-      String alergi = isChildern[0]['alergi'] ?? '';
-      if (alergi == 'Ya') {
-        _selectedAllergy = 'Ya';
-      } else if (alergi == 'Tidak') {
-        _selectedAllergy = 'Tidak';
+      final alergi = '${child['alergi'] ?? ''}';
+      if (alergi == 'Ya' || alergi == 'Tidak') {
+        _selectedAllergy = alergi;
       }
 
-      // dateinput.text = ""; //set the initial value of text field
-      String bloodGroup = isChildern[0]['gol_darah'] ?? "";
-      if (_blood.contains(bloodGroup)) {
-        _selectedBloodGroup = bloodGroup;
+      final blood = '${child['gol_darah'] ?? ''}'.trim();
+      if (_blood.contains(blood)) {
+        _selectedBloodGroup = blood;
       }
     }
   }
 
-  Widget _inlineError(String field) {
-    final message = _errors[field];
-    if (message == null) {
-      return const SizedBox.shrink();
+  Future<void> _pickImage() async {
+    try {
+      final imagePicker = ImagePicker();
+      final picked = await imagePicker.pickImage(source: ImageSource.gallery);
+      if (picked != null) {
+        setState(() => image = File(picked.path));
+      }
+    } catch (_) {
+      AppSnack.error('save_failed'.tr);
     }
-    return Padding(
-      padding: const EdgeInsets.only(left: 12, top: 4),
-      child: Text(
-        message,
-        style: const TextStyle(color: Colors.red, fontSize: 12),
-      ),
-    );
   }
 
   void _clearError(String field) {
@@ -149,6 +123,21 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
     if (double.tryParse(raw) == null) {
       errors[field] = 'validation_number'.tr;
     }
+  }
+
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.tryParse(dateinput.text) ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked == null) return;
+    setState(() {
+      dateinput.text = DateFormat('yyyy-MM-dd').format(picked);
+      _dateLabel = DateFormat('d MMM y').format(picked);
+      _errors.remove('birth_date');
+    });
   }
 
   Future<void> _save() async {
@@ -179,7 +168,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
     _validateNumber(errors, 'weight', berat_badan.text);
     _validateNumber(errors, 'height', tinggi_badan.text);
     _validateNumber(errors, 'head', lingkar_kepala.text);
-    if (_selectedBloodGroup == null || _selectedBloodGroup == _blood.first) {
+    if (_selectedBloodGroup == null) {
       errors['blood'] = 'validation_select_option'.tr;
     }
     if (_selectedAllergy == null) {
@@ -194,786 +183,464 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
         ..addAll(errors);
     });
 
-    if (errors.isNotEmpty) {
-      return;
-    }
+    if (errors.isNotEmpty) return;
 
     setState(() => _isSaving = true);
 
     final saved = await childernController.registerAnak(
-        sessionController.user_id.value,
-        widget.anak_id,
-        nama_anak.text.trim(),
-        dateinput.text,
-        _selectedGender.toString(),
-        berat_badan.text.trim(),
-        tinggi_badan.text.trim(),
-        lingkar_kepala.text.trim(),
-        tinggi_badan_ibu.text.trim(),
-        tinggi_badan_ayah.text.trim(),
-        _selectedBloodGroup.toString(),
-        _selectedAllergy.toString(),
-        _selectedPrematur.toString(),
-        image);
+      sessionController.user_id.value,
+      widget.anak_id,
+      nama_anak.text.trim(),
+      dateinput.text,
+      _selectedGender.toString(),
+      berat_badan.text.trim(),
+      tinggi_badan.text.trim(),
+      lingkar_kepala.text.trim(),
+      tinggi_badan_ibu.text.trim(),
+      tinggi_badan_ayah.text.trim(),
+      _selectedBloodGroup.toString(),
+      _selectedAllergy.toString(),
+      _selectedPrematur.toString(),
+      image,
+    );
 
     if (!saved) {
-      if (mounted) {
-        setState(() => _isSaving = false);
-      }
-      Get.snackbar('warning'.tr, 'save_failed'.tr);
+      if (mounted) setState(() => _isSaving = false);
+      AppSnack.error('save_failed'.tr);
+      return;
     }
+
+    if (mounted) setState(() => _isSaving = false);
+    AppSnack.success('saved'.tr);
+    Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    final bottomInset = systemBottomInset(context);
+    final editing = widget.anak_id != null;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            widget.anak_id != null ? 'edit_child_account'.tr : 'set_profile'.tr),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Action when the back icon is pressed
-            Get.back();
-            // You can add Navigator.pop or another action here
-          },
-        ),
-      ),
-      body: Container(
-        height: height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, const Color.fromARGB(255, 220, 235, 247)],
+      backgroundColor: AppColors.background,
+      body: Column(
+        children: [
+          AppPageHeader(
+            title: editing ? 'edit_child_account'.tr : 'add_child_profile'.tr,
+            subtitle: 'child_profile'.tr,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 8),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
               children: [
-                Center(
-                  child: Column(
-                    children: [
-                      DottedBorder(
-                        options: CircularDottedBorderOptions(
-                          color: Colors.blue,
-                          strokeWidth: 1,
-                          padding: EdgeInsets.all(5),
-                        ),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor:
-                              const Color.fromARGB(255, 194, 192, 192),
-                          child: image == null
-                              ? isChildern.isNotEmpty &&
-                                      isChildern[0]['photo'] != null
-                                  ? ClipOval(
-                                      child: AppPhoto(
-                                        isChildern[0]['photo'],
-                                        height: 60,
-                                        width: 60,
-                                      ),
-                                    )
-                                  : Icon(
-                                      Icons.person,
-                                      size: 30,
-                                      color: Colors.white,
-                                    )
-                              : ClipOval(
-                                  child: Image(
-                                    image: FileImage(image!),
-                                    height: 60,
-                                    width: 60,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                        ),
+                _buildPhotoCard(context),
+                const SizedBox(height: 16),
+                _buildSection(
+                  context,
+                  icon: Icons.person_outline_rounded,
+                  title: 'personal_information'.tr,
+                  children: [
+                    AppTextField(
+                      label: 'full_name'.tr,
+                      required: true,
+                      controller: nama_anak,
+                      hint: 'child_name_hint'.tr,
+                      error: _errors['name'],
+                      textInputAction: TextInputAction.next,
+                      onChanged: (_) => _clearError('name'),
+                    ),
+                    const SizedBox(height: 16),
+                    AppField(
+                      label: 'birth_date'.tr,
+                      required: true,
+                      error: _errors['birth_date'],
+                      child: _DateField(
+                        label: _dateLabel,
+                        onTap: _pickDate,
                       ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _pickImage();
+                    ),
+                    const SizedBox(height: 16),
+                    AppField(
+                      label: 'gender'.tr,
+                      required: true,
+                      error: _errors['gender'],
+                      child: AppSegmented<String>(
+                        value: _selectedGender,
+                        onChanged: (value) {
+                          setState(() => _selectedGender = value);
+                          _clearError('gender');
                         },
-                        child: Text(
-                          'upload_photo'.tr,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                        options: [
+                          AppSegment(
+                            value: 'Laki-Laki',
+                            label: 'male'.tr,
+                            icon: Icons.male_rounded,
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'full_name'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                          AppSegment(
+                            value: 'Perempuan',
+                            label: 'female'.tr,
+                            icon: Icons.female_rounded,
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                TextField(
-                  controller: nama_anak,
-                  onChanged: (_) => _clearError('name'),
-                  decoration: InputDecoration(
-                    hintText: 'full_name'.tr,
-                    errorText: _errors['name'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
-                Row(
+                const SizedBox(height: 16),
+                _buildSection(
+                  context,
+                  icon: Icons.child_friendly_outlined,
+                  title: 'birth_data'.tr,
                   children: [
-                    Text(
-                      'birth_date'.tr,
-                      style: TextStyle(),
+                    AppTextField(
+                      label: 'birth_weight_label'.tr,
+                      required: true,
+                      controller: berat_badan,
+                      hint: 'birth_weight_hint'.tr,
+                      suffixText: 'kg',
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [DecimalInputFormatter()],
+                      error: _errors['weight'],
+                      onChanged: (_) => _clearError('weight'),
                     ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      label: 'birth_height_label'.tr,
+                      required: true,
+                      controller: tinggi_badan,
+                      hint: 'birth_height_hint'.tr,
+                      suffixText: 'cm',
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [DecimalInputFormatter()],
+                      error: _errors['height'],
+                      onChanged: (_) => _clearError('height'),
+                    ),
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      label: 'birth_head_label'.tr,
+                      required: true,
+                      controller: lingkar_kepala,
+                      hint: 'birth_height_hint'.tr,
+                      suffixText: 'cm',
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [DecimalInputFormatter()],
+                      error: _errors['head'],
+                      onChanged: (_) => _clearError('head'),
+                    ),
+                    const SizedBox(height: 16),
+                    AppField(
+                      label: 'is_premature'.tr,
+                      required: true,
+                      error: _errors['prematur'],
+                      child: AppSegmented<String>(
+                        value: _selectedPrematur,
+                        onChanged: (value) {
+                          setState(() => _selectedPrematur = value);
+                          _clearError('prematur');
+                        },
+                        options: [
+                          AppSegment(
+                            value: 'Ya',
+                            label: 'yes'.tr,
+                            icon: Icons.check_rounded,
+                          ),
+                          AppSegment(
+                            value: 'Tidak',
+                            label: 'no'.tr,
+                            icon: Icons.close_rounded,
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                TextField(
-                  controller: dateinput, //editing controller of this TextField
-                  decoration: InputDecoration(
-                    hintText: 'birth_date'.tr,
-                    errorText: _errors['birth_date'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  readOnly:
-                      true, //set it true, so that user will not able to edit text
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime.now());
-
-                    if (pickedDate != null) {
-                      print(
-                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      print(
-                          formattedDate); //formatted date output using intl package =>  2021-03-16
-                      //you can implement different kind of Date Format here according to your requirement
-
-                      setState(() {
-                        dateinput.text =
-                            formattedDate; //set output date to TextField value.
-                        _errors.remove('birth_date');
-                      });
-                    } else {
-                      print("Date is not selected");
-                    }
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
-                Row(
+                const SizedBox(height: 16),
+                _buildSection(
+                  context,
+                  icon: Icons.medical_information_outlined,
+                  title: 'additional_profile'.tr,
                   children: [
-                    Text(
-                      'gender'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Laki-Laki',
-                      groupValue: _selectedGender,
+                    AppDropdownField<String>(
+                      label: 'blood_group'.tr,
+                      required: true,
+                      value: _selectedBloodGroup,
+                      hint: 'select_blood_group'.tr,
+                      error: _errors['blood'],
+                      items: [
+                        for (final blood in _blood)
+                          DropdownMenuItem(
+                            value: blood,
+                            child: Text(blood),
+                          ),
+                      ],
                       onChanged: (value) {
-                        setState(() {
-                          _selectedGender = value as String?;
-                          _errors.remove('gender');
-                        });
+                        setState(() => _selectedBloodGroup = value);
+                        _clearError('blood');
                       },
                     ),
-                    Text('male'.tr),
-                    SizedBox(width: 16),
-                    Radio(
-                      value: 'Perempuan',
-                      groupValue: _selectedGender,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedGender = value as String?;
-                          _errors.remove('gender');
-                        });
-                      },
+                    const SizedBox(height: 16),
+                    AppField(
+                      label: 'has_allergy'.tr,
+                      required: true,
+                      error: _errors['allergy'],
+                      child: AppSegmented<String>(
+                        value: _selectedAllergy,
+                        onChanged: (value) {
+                          setState(() => _selectedAllergy = value);
+                          _clearError('allergy');
+                        },
+                        options: [
+                          AppSegment(
+                            value: 'Ya',
+                            label: 'yes'.tr,
+                            icon: Icons.check_rounded,
+                          ),
+                          AppSegment(
+                            value: 'Tidak',
+                            label: 'no'.tr,
+                            icon: Icons.close_rounded,
+                          ),
+                        ],
+                      ),
                     ),
-                    Text('female'.tr),
                   ],
                 ),
-                _inlineError('gender'),
-                SizedBox(height: 16),
-                Text(
-                  'birth_data'.tr,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Center(
-                //   child: GestureDetector(
-                //     onTap: () {
-                //       // Action when the upload photo button is pressed
-                //     },
-                //     child: DottedBorder(
-                //       borderType: BorderType.RRect,
-                //       color: Colors.blue,
-                //       radius: Radius.circular(20),
-                //       padding: EdgeInsets.all(1),
-                //       child: Container(
-                //         width: 300,
-                //         padding:
-                //             EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                //         decoration: BoxDecoration(
-                //           color: Color.fromARGB(255, 220, 232, 243),
-                //           borderRadius: BorderRadius.circular(20),
-                //         ),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: [
-                //             Icon(
-                //               Icons.add,
-                //               color: Colors.blue,
-                //             ),
-                //             SizedBox(width: 8),
-                //             Text(
-                //               'Unggah Foto',
-                //               style: TextStyle(
-                //                 color: Colors.blue,
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 16,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: 16),
-                Row(
+                const SizedBox(height: 16),
+                _buildSection(
+                  context,
+                  icon: Icons.height_rounded,
+                  title: 'parent_height'.tr,
+                  note: 'parent_height_note'.tr,
                   children: [
-                    Text(
-                      'is_premature'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                    AppTextField(
+                      label: 'mother_height'.tr,
+                      required: true,
+                      controller: tinggi_badan_ibu,
+                      hint: 'birth_height_hint'.tr,
+                      suffixText: 'cm',
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
                       ),
+                      inputFormatters: [DecimalInputFormatter()],
+                      error: _errors['mother'],
+                      onChanged: (_) => _clearError('mother'),
+                    ),
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      label: 'father_height'.tr,
+                      required: true,
+                      controller: tinggi_badan_ayah,
+                      hint: 'birth_height_hint'.tr,
+                      suffixText: 'cm',
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [DecimalInputFormatter()],
+                      error: _errors['father'],
+                      onChanged: (_) => _clearError('father'),
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Ya',
-                      groupValue: _selectedPrematur,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPrematur = value as String?;
-                          _errors.remove('prematur');
-                        });
-                      },
-                    ),
-                    Text('yes'.tr),
-                    SizedBox(width: 16),
-                    Radio(
-                      value: 'Tidak',
-                      groupValue: _selectedPrematur,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPrematur = value as String?;
-                        });
-                      },
-                    ),
-                    Text('no'.tr),
-                  ],
-                ),
-                _inlineError('prematur'),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'birth_weight_label'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                TextField(
-                  controller: berat_badan,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalInputFormatter()],
-                  onChanged: (_) => _clearError('weight'),
-                  decoration: InputDecoration(
-                    hintText: 'birth_weight_hint'.tr,
-                    errorText: _errors['weight'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'birth_height_label'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                TextField(
-                  controller: tinggi_badan,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalInputFormatter()],
-                  onChanged: (_) => _clearError('height'),
-                  decoration: InputDecoration(
-                    hintText: 'birth_height_hint'.tr,
-                    errorText: _errors['height'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'birth_head_label'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                TextField(
-                  controller: lingkar_kepala,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalInputFormatter()],
-                  onChanged: (_) => _clearError('head'),
-                  decoration: InputDecoration(
-                    hintText: 'birth_head_label'.tr,
-                    errorText: _errors['head'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'additional_profile'.tr,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'blood_group'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                DropdownButtonFormField(
-                  value: _selectedBloodGroup ?? '',
-                  items: _blood.map((blood) {
-                    return DropdownMenuItem(
-                      value: blood,
-                      child: Text(blood == 'Pilih Golongan Darah'
-                          ? 'select_blood_group'.tr
-                          : blood),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedBloodGroup = value;
-                      _errors.remove('blood');
-                    });
-                  },
-                  decoration: InputDecoration(
-                    errorText: _errors['blood'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'has_allergy'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Ya',
-                      groupValue: _selectedAllergy,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedAllergy = value as String?;
-                          _errors.remove('allergy');
-                        });
-                      },
-                    ),
-                    Text('yes'.tr),
-                    SizedBox(width: 16),
-                    Radio(
-                      value: 'Tidak',
-                      groupValue: _selectedAllergy,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedAllergy = value as String?;
-                        });
-                      },
-                    ),
-                    Text('no'.tr),
-                  ],
-                ),
-                _inlineError('allergy'),
-                SizedBox(height: 16),
-                Text(
-                  'parent_height'.tr,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'parent_height_note'.tr,
-                  maxLines: 2,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 10,
-                  ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'mother_height'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                TextField(
-                  controller: tinggi_badan_ibu,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalInputFormatter()],
-                  onChanged: (_) => _clearError('mother'),
-                  decoration: InputDecoration(
-                    hintText: 'mother_height'.tr,
-                    errorText: _errors['mother'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Text(
-                      'father_height'.tr,
-                      style: TextStyle(),
-                    ),
-                    Text(
-                      '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-                TextField(
-                  controller: tinggi_badan_ayah,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [DecimalInputFormatter()],
-                  onChanged: (_) => _clearError('father'),
-                  decoration: InputDecoration(
-                    hintText: 'father_height'.tr,
-                    errorText: _errors['father'],
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isClicked
-                            ? const Color.fromARGB(255, 188, 180, 179)
-                            : Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      isClicked = true;
-                    });
-                  },
-                  onSubmitted: (value) {
-                    setState(() {
-                      isClicked = false;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: height * 0.13,
-                )
               ],
             ),
           ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.fromLTRB(20, 8, 20, 12 + bottomInset),
+        child: AppButton(
+          label: 'save'.tr,
+          icon: Icons.check_rounded,
+          loading: _isSaving,
+          onPressed: _isSaving ? null : _save,
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: _isSaving ? null : _save,
-        child: Container(
-            alignment: Alignment.center,
-            width: width * 0.9,
-            height: height * 0.06,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              shape: BoxShape.rectangle,
-              color: Colors.blue,
-            ),
-            child: _isSaving
-                ? SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
+    );
+  }
+
+  Widget _buildPhotoCard(BuildContext context) {
+    final existingPhoto =
+        isChildern.isNotEmpty ? isChildern[0]['photo']?.toString() : null;
+
+    return AppCard(
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+      child: Column(
+        children: [
+          AnimatedPressable(
+            onTap: _pickImage,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.primarySoft, width: 3),
+                  ),
+                  child: image == null
+                      ? (existingPhoto != null && existingPhoto.isNotEmpty
+                          ? ClipOval(
+                              child: AppPhoto(
+                                existingPhoto,
+                                width: 92,
+                                height: 92,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Container(
+                              width: 92,
+                              height: 92,
+                              decoration: const BoxDecoration(
+                                gradient: AppColors.brandGradient,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.child_care_rounded,
+                                color: Colors.white,
+                                size: 42,
+                              ),
+                            ))
+                      : ClipOval(
+                          child: Image.file(
+                            image!,
+                            width: 92,
+                            height: 92,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                ),
+                Positioned(
+                  right: -2,
+                  bottom: -2,
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2.5),
                     ),
-                  )
-                : Text(
-                    "save".tr,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                  )),
+                    child: const Icon(
+                      Icons.photo_camera_rounded,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            image == null ? 'upload_photo'.tr : 'change_photo'.tr,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+            ),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  Widget _buildSection(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required List<Widget> children,
+    String? note,
+  }) {
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.primarySoft,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, size: 19, color: AppColors.primary),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            ],
+          ),
+          if (note != null) ...[
+            const SizedBox(height: 10),
+            Text(
+              note,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    height: 1.5,
+                  ),
+            ),
+          ],
+          const SizedBox(height: 18),
+          ...children,
+        ],
+      ),
     );
   }
 }
 
+class _DateField extends StatelessWidget {
+  const _DateField({required this.label, required this.onTap});
+
+  final String? label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.surfaceAlt,
+      borderRadius: BorderRadius.circular(AppRadius.md),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.calendar_today_rounded,
+                size: 19,
+                color: AppColors.inkMuted,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  label ?? 'select_date'.tr,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight:
+                        label == null ? FontWeight.w500 : FontWeight.w600,
+                    color: label == null ? AppColors.inkMuted : AppColors.ink,
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.expand_more_rounded,
+                color: AppColors.inkMuted,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

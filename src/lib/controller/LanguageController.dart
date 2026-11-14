@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
 /// Manages the app language.
 ///
@@ -32,6 +33,7 @@ class LanguageController extends GetxController {
     preference.value =
         (saved == english || saved == indonesian) ? saved! : system;
     locale.value = resolveLocale(preference.value);
+    Intl.defaultLocale = locale.value.languageCode;
   }
 
   /// Resolves a preference to a concrete locale, falling back to English.
@@ -50,6 +52,7 @@ class LanguageController extends GetxController {
   Future<void> setLanguage(String preferenceValue) async {
     preference.value = preferenceValue;
     locale.value = resolveLocale(preferenceValue);
+    Intl.defaultLocale = locale.value.languageCode;
     await _storage.write(storageKey, preferenceValue);
     await Get.updateLocale(locale.value);
   }
