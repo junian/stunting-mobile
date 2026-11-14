@@ -81,7 +81,44 @@ class AppTranslations extends Translations {
 
     // Static pages
     'terms_full_title': 'KidScale Terms and Conditions of Use',
-    'terms_last_updated': 'Last Updated: 1/12/2022',
+    'terms_last_updated': 'Last updated: 14 November 2026',
+    'terms_content': '''
+## 1. Acceptance of Terms
+
+By using KidScale, you agree to these Terms and Conditions. If you do not agree, please do not use the app.
+
+## 2. About KidScale
+
+KidScale is a child growth and immunization tracking app for parents and caregivers. It is built on official growth and immunization guidelines from the Indonesian Pediatric Society (IDAI). KidScale is not directly supervised or endorsed by IDAI.
+
+## 3. Reference and Education Only
+
+KidScale is for reference and education only. It does not provide medical advice, diagnosis, or treatment. Growth measurements, percentiles, and immunization information are aids and may not be complete or suitable for every child. Always consult a doctor, pediatrician, or official health service for accurate advice about your child. In an emergency, contact your local emergency services.
+
+## 4. Your Responsibilities
+
+You are responsible for the accuracy of the information you enter and for how you use the app. Keep your device and data secure, use KidScale as a supplement to — not a replacement for — professional medical care, and do not use the app to diagnose or treat any condition.
+
+## 5. Data and Privacy
+
+The information you enter is primarily stored on your device. We do not sell your personal data. If you use online features, limited technical data may be processed to provide those features. You are responsible for backing up your data. Uninstalling the app or clearing its storage may delete local data permanently.
+
+## 6. Content and Intellectual Property
+
+The KidScale name, logo, design, and content are owned by KidScale and its licensors. IDAI guidelines are referenced for informational purposes only and do not imply a partnership or endorsement. Do not copy, modify, or redistribute the app or its content without permission.
+
+## 7. Availability and Changes
+
+We may change, suspend, or discontinue features at any time. The app is provided "as is" and "as available", without a guarantee of uninterrupted or error-free operation. We may update these Terms; continued use after an update means you accept the revised Terms.
+
+## 8. Limitation of Liability
+
+To the maximum extent permitted by law, KidScale and its team are not liable for indirect or incidental damages, or for decisions or medical outcomes resulting from use of the app. Nothing in these Terms limits liability that cannot be limited by law.
+
+## 9. Contact
+
+Questions about these Terms? Email {email} or visit {website}.
+''',
     'about_description':
         'KidScale helps parents record and understand their child\'s growth and vaccination journey in one simple place. Track weight, height and head circumference, follow the national immunization schedule, and see growth trends over time. All data stays on your device — no account is needed.',
     'website': 'Website',
@@ -406,7 +443,44 @@ class AppTranslations extends Translations {
 
     // Static pages
     'terms_full_title': 'Syarat dan Ketentuan penggunaan KidScale',
-    'terms_last_updated': 'Perbaruan Terakhir : 1/12/2022',
+    'terms_last_updated': 'Terakhir diperbarui: 14 November 2026',
+    'terms_content': '''
+## 1. Penerimaan Syarat
+
+Dengan menggunakan KidScale, Anda menyetujui Syarat dan Ketentuan ini. Jika Anda tidak setuju, mohon jangan menggunakan aplikasi.
+
+## 2. Tentang KidScale
+
+KidScale adalah aplikasi pemantau tumbuh kembang dan imunisasi anak untuk orang tua dan pengasuh. Aplikasi ini dibangun berdasarkan pedoman pertumbuhan dan imunisasi resmi dari Ikatan Dokter Anak Indonesia (IDAI). KidScale tidak diawasi secara langsung dan tidak merupakan dukungan resmi dari IDAI.
+
+## 3. Hanya untuk Referensi dan Edukasi
+
+KidScale hanya untuk referensi dan edukasi. Aplikasi ini tidak memberikan saran medis, diagnosis, atau pengobatan. Pengukuran pertumbuhan, persentil, dan informasi imunisasi merupakan alat bantu dan mungkin tidak lengkap atau tidak sesuai untuk setiap anak. Selalu konsultasikan dengan dokter, dokter anak, atau layanan kesehatan resmi untuk saran yang akurat mengenai anak Anda. Dalam keadaan darurat, hubungi layanan gawat darurat setempat.
+
+## 4. Tanggung Jawab Anda
+
+Anda bertanggung jawab atas keakuratan informasi yang Anda masukkan dan cara Anda menggunakan aplikasi. Jaga keamanan perangkat dan data Anda, gunakan KidScale sebagai pelengkap — bukan pengganti — perawatan medis profesional, dan jangan gunakan aplikasi ini untuk mendiagnosis atau mengobati kondisi apa pun.
+
+## 5. Data dan Privasi
+
+Informasi yang Anda masukkan terutama disimpan di perangkat Anda. Kami tidak menjual data pribadi Anda. Jika Anda menggunakan fitur online, data teknis terbatas dapat diproses untuk menyediakan fitur tersebut. Anda bertanggung jawab untuk mencadangkan data Anda. Menghapus aplikasi atau menghapus penyimpanannya dapat menghapus data lokal secara permanen.
+
+## 6. Konten dan Hak Kekayaan Intelektual
+
+Nama, logo, desain, dan konten KidScale dimiliki oleh KidScale dan pemberi lisensinya. Pedoman IDAI hanya dirujuk untuk tujuan informasi dan tidak menyiratkan kemitraan atau dukungan resmi. Jangan menyalin, mengubah, atau mendistribusikan aplikasi atau kontennya tanpa izin.
+
+## 7. Ketersediaan dan Perubahan
+
+Kami dapat mengubah, menangguhkan, atau menghentikan fitur kapan saja. Aplikasi disediakan "sebagaimana adanya" dan "sebagaimana tersedia", tanpa jaminan operasi yang tidak terputus atau bebas kesalahan. Kami dapat memperbarui Syarat ini; penggunaan berkelanjutan setelah pembaruan berarti Anda menyetujui Syarat yang direvisi.
+
+## 8. Batasan Tanggung Jawab
+
+Sejauh diizinkan oleh hukum, KidScale dan timnya tidak bertanggung jawab atas kerugian tidak langsung atau insidental, atau atas keputusan atau hasil medis yang timbul dari penggunaan aplikasi. Tidak ada bagian dari Syarat ini yang membatasi tanggung jawab yang tidak dapat dibatasi oleh hukum.
+
+## 9. Kontak
+
+Ada pertanyaan tentang Syarat ini? Email {email} atau kunjungi {website}.
+''',
     'about_description':
         'KidScale membantu orang tua mencatat dan memahami perjalanan tumbuh kembang serta imunisasi anak dalam satu tempat yang sederhana. Pantau berat badan, tinggi badan, dan lingkar kepala, ikuti jadwal imunisasi nasional, dan lihat tren pertumbuhan dari waktu ke waktu. Semua data tersimpan di perangkat Anda — tanpa perlu akun.',
     'website': 'Situs Web',
