@@ -1,0 +1,43 @@
+KidScale is a child growth and vaccination tracker for Indonesian parents who want to monitor their child's growth with confidence. Formerly known as STANTAPP, KidScale brings growth records, growth status, and the national immunization schedule into one simple, offline-first app.
+
+Track your child's weight, height, and head circumference over time. KidScale calculates growth status using WHO growth references, shows percentiles in an easy-to-read chart, and helps you notice growth changes early, including signs that may need a doctor's attention. Early detection is an important step in preventing stunting and supporting healthy growth.
+
+VACCINATION SCHEDULE AND RECORDS
+Follow the IDAI immunization schedule from birth onward. See which vaccines are due, record the date, doctor, clinic, and batch number, and attach a photo of the vaccination book. Keep a clear vaccination history for every child.
+
+GROWTH FEATURES
+- Add and manage more than one child profile
+- Record weight, height, and head circumference
+- View growth history and trends in clear charts
+- See growth status and percentile references
+- Track measurements from birth through childhood
+- Keep vaccination records and photos in one place
+
+BUILT ON OFFICIAL GUIDELINES
+KidScale is built on official growth and immunization guidelines from the Indonesian Pediatric Society (IDAI). KidScale is not directly supervised or endorsed by IDAI. The app is a reference and education tool, not a medical diagnosis. Always consult a doctor, pediatrician, or health worker for accurate advice about your child.
+
+PRIVATE AND OFFLINE-FIRST
+Your child's data is stored on your device. No account is required to start tracking. KidScale works without an internet connection, so you can record measurements at home, at the clinic, or during a posyandu visit. You stay in control of your family's information.
+
+DESIGNED FOR INDONESIAN FAMILIES
+KidScale is available in Indonesian and English, with a clean interface made for busy parents. Whether you are tracking your first child or several children, KidScale helps you keep growth and vaccination information organized and easy to understand.
+
+WHY PARENTS CHOOSE KIDSCALE
+- Simple growth tracking without complicated forms
+- A clear vaccination schedule from birth
+- Growth charts and status that are easy to read
+- Local-first data storage and offline access
+- A calm, modern design that respects your time
+
+HOW KIDSCALE HELPS PREVENT STUNTING
+Stunting prevention starts with regular monitoring. By recording weight, height, and head circumference consistently, parents can see a growth curve that is flattening or falling behind and discuss it with a health professional sooner. KidScale makes those records easier to keep, easier to read, and easier to share with a doctor or posyandu cadre. The app does not replace professional care; it helps you prepare for it with better information.
+
+FOR EVERY STAGE OF CHILDHOOD
+Use KidScale from newborn check-ups through the toddler years and beyond, at home or at the clinic. Keep a single, organized timeline of growth measurements, vaccine dates, doctors, clinics, and vaccination book photos. When you change phones or clinics, your records remain easy to find on your device. Whether you are a first-time parent, a caregiver, or someone helping monitor a child's growth at home, KidScale gives you a clearer picture of your child's development.
+
+Start using KidScale today to track your child's growth, follow their vaccine schedule, and take confident steps toward preventing stunting. Formerly known as STANTAPP, KidScale is the next chapter of the app families already trust.
+
+Learn more: https://kidscale.junian.net
+Contact: support+kidscale@mail.junian.net
+
+Popular searches: KidScale, STANTAPP, stunting, child growth tracker, growth chart, vaccination schedule, immunization schedule, IDAI, WHO growth reference, baby growth, toddler growth, posyandu, Indonesian parents, cegah stunting, tumbuh kembang anak, jadwal imunisasi.
