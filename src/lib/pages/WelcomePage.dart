@@ -38,8 +38,9 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: Image.asset(
                     // 'images/image_$index.png', // Replace with the path or filename of the image you have
                     'images/logo.png',
-                    width: width * 0.5, // Set the image width as needed
-                    height: height * 0.4, // Set the image height as needed
+                    width: width * 0.5,
+                    height: height * 0.4,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Padding(

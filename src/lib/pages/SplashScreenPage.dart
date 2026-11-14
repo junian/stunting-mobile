@@ -93,22 +93,24 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                           );
                         },
                         child: Container(
-                          width: 132,
-                          height: 132,
-                          padding: const EdgeInsets.all(16),
+                          width: 140,
+                          height: 140,
+                          clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(38),
+                            borderRadius: BorderRadius.circular(40),
                             boxShadow: [
                               BoxShadow(
                                 color: const Color(0xFF06265C)
-                                    .withValues(alpha: 0.28),
+                                    .withValues(alpha: 0.30),
                                 blurRadius: 50,
                                 offset: const Offset(0, 24),
                               ),
                             ],
                           ),
-                          child: Image.asset('images/logo_mark.png'),
+                          child: Image.asset(
+                            'images/app_icon.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 30),
