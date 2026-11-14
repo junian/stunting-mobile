@@ -281,7 +281,9 @@ class HomePageState extends State<HomePage> {
       sessionController.user_id.value,
       child['anak_id'],
     );
-    await Get.to(() => ChildrenDetailPage());
+    await Get.to(
+      () => ChildrenDetailPage(anakId: '${child['anak_id']}'),
+    );
     if (mounted) refresh();
   }
 

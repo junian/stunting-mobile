@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/ChildrenController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widget/AppPhoto.dart';
 import 'package:growthtracker/widget/DecimalInputFormatter.dart';
@@ -188,7 +189,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
 
     setState(() => _isSaving = true);
 
-    final saved = await childernController.registerAnak(
+    final savedChild = await childernController.registerAnak(
       sessionController.user_id.value,
       widget.anak_id,
       nama_anak.text.trim(),
@@ -205,15 +206,29 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
       image,
     );
 
-    if (!saved) {
+    if (savedChild == null) {
       if (mounted) setState(() => _isSaving = false);
       AppSnack.error('save_failed'.tr);
       return;
     }
 
     if (mounted) setState(() => _isSaving = false);
-    AppSnack.success('saved'.tr);
-    Get.back();
+
+    final isNewChild = widget.anak_id == null;
+    AppSnack.success(
+      isNewChild ? 'child_added_success'.tr : 'saved'.tr,
+    );
+
+    if (isNewChild) {
+      // Replace the editor with the new child's detail page in one step, so
+      // the editor closes immediately and the user lands on the saved profile.
+      Get.off(
+        () => ChildrenDetailPage(anakId: '${savedChild['anak_id']}'),
+        transition: Transition.fadeIn,
+      );
+    } else {
+      Get.back();
+    }
   }
 
   @override

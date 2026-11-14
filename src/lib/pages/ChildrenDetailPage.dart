@@ -19,7 +19,10 @@ import 'package:growthtracker/widgets/app_widgets.dart';
 /// Full profile of one child: growth summary, vaccination progress, recent
 /// measurements and personal details.
 class ChildrenDetailPage extends StatefulWidget {
-  const ChildrenDetailPage({super.key});
+  /// Child to open initially. When omitted, the first child is selected.
+  final String? anakId;
+
+  const ChildrenDetailPage({super.key, this.anakId});
 
   @override
   State<ChildrenDetailPage> createState() => _ChildrenDetailPageState();
@@ -54,7 +57,9 @@ class _ChildrenDetailPageState extends State<ChildrenDetailPage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    if (_children.isNotEmpty) {
+    if (widget.anakId != null && widget.anakId!.isNotEmpty) {
+      _selectedId = widget.anakId;
+    } else if (_children.isNotEmpty) {
       _selectedId = '${_children.first['anak_id']}';
     }
     _loadData();

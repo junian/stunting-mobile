@@ -259,6 +259,7 @@ Questions about these Terms? Email {email} or visit {website}.
     'overview': 'Overview',
     'details': 'Details',
     'saved': 'Saved successfully',
+    'child_added_success': 'New child added successfully',
     'coming_soon': 'Coming soon',
 
     // Child detail
@@ -621,6 +622,7 @@ Ada pertanyaan tentang Syarat ini? Email {email} atau kunjungi {website}.
     'overview': 'Ringkasan',
     'details': 'Detail',
     'saved': 'Berhasil disimpan',
+    'child_added_success': 'Data anak baru berhasil ditambahkan',
     'coming_soon': 'Segera hadir',
 
     // Child detail
