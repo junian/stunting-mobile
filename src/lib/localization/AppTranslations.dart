@@ -238,7 +238,7 @@ class AppTranslations extends Translations {
     'see_detail': 'See Detail',
     'vaccination_schedule': 'Vaccination Schedule',
     'vaccination_schedule_hint': 'Tap a vaccine to record or update its vaccination details.',
-    'growth_history': 'Growth History',
+    'growth_history': 'Growth',
     'child_growth_history': 'Child Growth History',
 
     // Growth
@@ -563,7 +563,7 @@ class AppTranslations extends Translations {
     'see_detail': 'Lihat Detail',
     'vaccination_schedule': 'Jadwal Vaksinasi',
     'vaccination_schedule_hint': 'Ketuk vaksin untuk mencatat atau memperbarui data vaksinasinya.',
-    'growth_history': 'Riwayat Pertumbuhan',
+    'growth_history': 'Pertumbuhan',
     'child_growth_history': 'Riwayat Pertumbuhan Anak',
 
     // Growth

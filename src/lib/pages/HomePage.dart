@@ -8,7 +8,9 @@ import 'package:growthtracker/controller/GrowthHistoryController.dart';
 import 'package:growthtracker/controller/NotificationController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
 import 'package:growthtracker/controller/VaccinationScheduleController.dart';
-import 'package:growthtracker/pages/ArticlePage.dart';
+// Articles are intentionally hidden for this release. Re-enable this import
+// together with the corresponding quick action below when the feature is ready.
+// import 'package:growthtracker/pages/ArticlePage.dart';
 import 'package:growthtracker/pages/ChildrenDetailPage.dart';
 import 'package:growthtracker/pages/ChildrenEditorPage.dart';
 import 'package:growthtracker/pages/GrowthEditorPage.dart';
@@ -767,17 +769,21 @@ class HomePageState extends State<HomePage> {
               onTap: () => _openVaccination(child),
             ),
           ),
-          Expanded(
-            child: _QuickTile(
-              icon: Icons.menu_book_rounded,
-              label: 'articles'.tr,
-              tone: AppTone.amber,
-              onTap: () => Get.to(
-                () => const ArticlePage(),
-                transition: Transition.fadeIn,
-              ),
-            ),
-          ),
+          // NOTE: Articles are temporarily disabled for this release. Keep the
+          // tile implementation below and restore it when the feature is ready
+          // to be exposed (also re-enable the ArticlePage import at the top).
+          //
+          // Expanded(
+          //   child: _QuickTile(
+          //     icon: Icons.menu_book_rounded,
+          //     label: 'articles'.tr,
+          //     tone: AppTone.amber,
+          //     onTap: () => Get.to(
+          //       () => const ArticlePage(),
+          //       transition: Transition.fadeIn,
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: _QuickTile(
               icon: Icons.notifications_active_rounded,
