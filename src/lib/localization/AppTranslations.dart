@@ -139,8 +139,7 @@ Questions about these Terms? Email {email} or visit {website}.
         'Could not download the reference document. Check your connection.',
 
     // Vaccination
-    'vaccine_added_success':
-        'Vaccination data added successfully, refresh the vaccination page!',
+    'vaccine_added_success': 'Vaccination data added successfully',
     'vaccine_added_failed': 'Failed to add vaccination data',
 
     // Child profile form
@@ -503,8 +502,7 @@ Ada pertanyaan tentang Syarat ini? Email {email} atau kunjungi {website}.
         'Gagal mengunduh dokumen referensi. Periksa koneksi Anda.',
 
     // Vaccination
-    'vaccine_added_success':
-        'Anda berhasil menambahkan data vaksinasi, segarkan ulang page vaksinasi!',
+    'vaccine_added_success': 'Data vaksinasi berhasil ditambahkan',
     'vaccine_added_failed': 'Anda gagal menambahkan data vaksinasi',
 
     // Child profile form

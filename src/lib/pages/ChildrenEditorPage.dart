@@ -215,11 +215,9 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
     if (mounted) setState(() => _isSaving = false);
 
     final isNewChild = widget.anak_id == null;
-    AppSnack.success(
-      isNewChild ? 'child_added_success'.tr : 'saved'.tr,
-    );
 
     if (isNewChild) {
+      AppSnack.success('child_added_success'.tr);
       // Replace the editor with the new child's detail page in one step, so
       // the editor closes immediately and the user lands on the saved profile.
       Get.off(
@@ -227,7 +225,10 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
         transition: Transition.fadeIn,
       );
     } else {
+      // Close first: Get.back() can otherwise dismiss a snackbar instead of
+      // the editor when a toast was just shown.
       Get.back();
+      AppSnack.success('saved'.tr);
     }
   }
 

@@ -90,8 +90,13 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
       return;
     }
 
-    AppSnack.success('saved'.tr);
+    final editing = widget.vaksin_anak_id != null;
+    // Close the editor first: Get.back() would otherwise dismiss the snackbar
+    // we just showed and leave the editor on screen.
     Get.back();
+    AppSnack.success(
+      editing ? 'saved'.tr : 'vaccine_added_success'.tr,
+    );
   }
 
   void _clearError(String field) {
