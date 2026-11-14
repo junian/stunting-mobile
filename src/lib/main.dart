@@ -11,9 +11,14 @@ import 'package:growthtracker/pages/SplashScreenPage.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+//import 'package:growthtracker/dev_seed_play_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Only seed the Play Store data if the app is running in debug mode.
+  // Use it only to take screenshots.
+  // await seedPlayStoreData();
 
   await GetStorage.init();
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/VaccinationController.dart';
@@ -127,31 +128,38 @@ class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
   Widget build(BuildContext context) {
     final recorded = _status == 'Sudah';
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Column(
-        children: [
-          AppPageHeader(title: 'vaccination_status'.tr),
-          Expanded(
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
-              children: [
-                _buildHero(context),
-                const SizedBox(height: 24),
-                AppSectionHeader(title: 'details'.tr),
-                const SizedBox(height: 12),
-                if (_initialLoading)
-                  _buildDetailsSkeleton()
-                else if (_record == null)
-                  _buildNoRecord(context)
-                else
-                  _buildRecord(context, _record!),
-              ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: AppColors.background,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: Column(
+          children: [
+            AppPageHeader(title: 'vaccination_status'.tr),
+            Expanded(
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
+                children: [
+                  _buildHero(context),
+                  const SizedBox(height: 24),
+                  AppSectionHeader(title: 'details'.tr),
+                  const SizedBox(height: 12),
+                  if (_initialLoading)
+                    _buildDetailsSkeleton()
+                  else if (_record == null)
+                    _buildNoRecord(context)
+                  else
+                    _buildRecord(context, _record!),
+                ],
+              ),
             ),
-          ),
-          _buildActions(recorded),
-        ],
+            _buildActions(recorded),
+          ],
+        ),
       ),
     );
   }
