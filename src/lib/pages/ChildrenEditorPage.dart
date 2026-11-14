@@ -139,20 +139,15 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
   void _validateNumber(
     Map<String, String> errors,
     String field,
-    String value, {
-    required double min,
-    required double max,
-  }) {
+    String value,
+  ) {
     final raw = value.trim().replaceAll(',', '.');
     if (raw.isEmpty) {
       errors[field] = 'validation_required'.tr;
       return;
     }
-    final number = double.tryParse(raw);
-    if (number == null) {
+    if (double.tryParse(raw) == null) {
       errors[field] = 'validation_number'.tr;
-    } else if (number < min || number > max) {
-      errors[field] = 'validation_range'.tr;
     }
   }
 
@@ -181,17 +176,17 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
     if (_selectedPrematur == null) {
       errors['prematur'] = 'validation_select_option'.tr;
     }
-    _validateNumber(errors, 'weight', berat_badan.text, min: 0.5, max: 10);
-    _validateNumber(errors, 'height', tinggi_badan.text, min: 20, max: 80);
-    _validateNumber(errors, 'head', lingkar_kepala.text, min: 20, max: 60);
+    _validateNumber(errors, 'weight', berat_badan.text);
+    _validateNumber(errors, 'height', tinggi_badan.text);
+    _validateNumber(errors, 'head', lingkar_kepala.text);
     if (_selectedBloodGroup == null || _selectedBloodGroup == _blood.first) {
       errors['blood'] = 'validation_select_option'.tr;
     }
     if (_selectedAllergy == null) {
       errors['allergy'] = 'validation_select_option'.tr;
     }
-    _validateNumber(errors, 'mother', tinggi_badan_ibu.text, min: 50, max: 250);
-    _validateNumber(errors, 'father', tinggi_badan_ayah.text, min: 50, max: 250);
+    _validateNumber(errors, 'mother', tinggi_badan_ibu.text);
+    _validateNumber(errors, 'father', tinggi_badan_ayah.text);
 
     setState(() {
       _errors

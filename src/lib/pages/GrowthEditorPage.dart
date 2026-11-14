@@ -60,20 +60,15 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
   void _validateNumber(
     Map<String, String> errors,
     String field,
-    String value, {
-    required double min,
-    required double max,
-  }) {
+    String value,
+  ) {
     final raw = value.trim().replaceAll(',', '.');
     if (raw.isEmpty) {
       errors[field] = 'validation_required'.tr;
       return;
     }
-    final number = double.tryParse(raw);
-    if (number == null) {
+    if (double.tryParse(raw) == null) {
       errors[field] = 'validation_number'.tr;
-    } else if (number < min || number > max) {
-      errors[field] = 'validation_range'.tr;
     }
   }
 
@@ -91,12 +86,9 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
       }
     }
 
-    _validateNumber(errors, 'weight', tambahPertumbuhanAnak.beratBadan.text,
-        min: 0.5, max: 60);
-    _validateNumber(errors, 'height', tambahPertumbuhanAnak.tinggiBadan.text,
-        min: 20, max: 200);
-    _validateNumber(errors, 'head', tambahPertumbuhanAnak.lingkarKepala.text,
-        min: 20, max: 70);
+    _validateNumber(errors, 'weight', tambahPertumbuhanAnak.beratBadan.text);
+    _validateNumber(errors, 'height', tambahPertumbuhanAnak.tinggiBadan.text);
+    _validateNumber(errors, 'head', tambahPertumbuhanAnak.lingkarKepala.text);
 
     setState(() {
       _errors
