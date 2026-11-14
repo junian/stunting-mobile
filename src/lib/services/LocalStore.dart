@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalStore {
   static const String _childrenKey = 'local_children';
   static const String _growthKey = 'local_growth_records';
+  static const String _vaccinationsKey = 'local_vaccinations';
 
   Future<List<Map<String, dynamic>>> children() => _read(_childrenKey);
 
@@ -27,6 +28,11 @@ class LocalStore {
 
   Future<void> saveGrowthRecords(List<Map<String, dynamic>> records) =>
       _write(_growthKey, records);
+
+  Future<List<Map<String, dynamic>>> vaccinations() => _read(_vaccinationsKey);
+
+  Future<void> saveVaccinations(List<Map<String, dynamic>> records) =>
+      _write(_vaccinationsKey, records);
 
   String newId(String prefix) =>
       '$prefix${DateTime.now().microsecondsSinceEpoch}';

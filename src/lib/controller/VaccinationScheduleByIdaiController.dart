@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -13,26 +12,22 @@ class VaccinationScheduleByIdaiController extends GetxController {
   final dio.Dio _dio = dio.Dio();
 
   Future<File> createFileOfPdfUrl() async {
-    Completer<File> completer = Completer();
-    print("Start downloading file from the internet!");
-    try {
-      final url = "https://mystantapp.siuinsa.com/jadwal-imunisasi.pdf";
-      final filename = url.substring(url.lastIndexOf("/") + 1);
+    final url = "https://mystantapp.siuinsa.com/jadwal-imunisasi.pdf";
+    final filename = url.substring(url.lastIndexOf("/") + 1);
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File("${dir.path}/$filename");
 
+    try {
       var response = await _dio.get(url,
           options: Options(responseType: ResponseType.bytes));
-      var bytes = response.data;
-      var dir = await getApplicationDocumentsDirectory();
-      print("Download files");
-      print("${dir.path}/$filename");
-      File file = File("${dir.path}/$filename");
-
-      await file.writeAsBytes(bytes, flush: true);
-      completer.complete(file);
+      await file.writeAsBytes(response.data, flush: true);
+      return file;
     } catch (e) {
+      // Offline: fall back to the copy downloaded on a previous visit.
+      if (await file.exists()) {
+        return file;
+      }
       throw Exception('Error downloading file!');
     }
-
-    return completer.future;
   }
 }

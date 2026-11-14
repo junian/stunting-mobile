@@ -1,14 +1,10 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:growthtracker/controller/GrowthEditorController.dart';
 import 'package:growthtracker/controller/VaccinationController.dart';
-import 'package:growthtracker/pages/HomePage.dart';
-import 'package:growthtracker/widget/BottomNavbar.dart';
 
 class VaccinationEditorPage extends StatefulWidget {
   String anak_id;
@@ -26,6 +22,66 @@ class VaccinationEditorPage extends StatefulWidget {
 
 class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
   var vaksinasiController = Get.put(VaccinationController());
+
+  bool _saving = false;
+  final Map<String, String> _errors = {};
+
+  Future<void> _save() async {
+    final errors = <String, String>{};
+
+    final tanggal = vaksinasiController.dateinput.text.trim();
+    if (tanggal.isEmpty) {
+      errors['date'] = 'validation_required'.tr;
+    } else {
+      final date = DateTime.tryParse(tanggal);
+      if (date == null) {
+        errors['date'] = 'validation_date'.tr;
+      } else if (date.isAfter(DateTime.now())) {
+        errors['date'] = 'validation_date_future'.tr;
+      }
+    }
+
+    if (vaksinasiController.nama_dokter.text.trim().isEmpty) {
+      errors['doctor'] = 'validation_required'.tr;
+    }
+    if (vaksinasiController.tempat.text.trim().isEmpty) {
+      errors['place'] = 'validation_required'.tr;
+    }
+
+    setState(() {
+      _errors
+        ..clear()
+        ..addAll(errors);
+    });
+
+    if (errors.isNotEmpty) {
+      Get.snackbar('warning'.tr, 'complete_form_message'.tr);
+      return;
+    }
+
+    setState(() => _saving = true);
+
+    final saved = await vaksinasiController.addVaksinAnak(
+        vaksin_anak_id: widget.vaksin_anak_id,
+        anak_id: widget.anak_id,
+        vaksin_id: widget.vaksin_id,
+        tanggal_vaksin: tanggal,
+        name_dokter: vaksinasiController.nama_dokter.text.trim(),
+        tempat: vaksinasiController.tempat.text.trim(),
+        no_batch: vaksinasiController.no_batch.text.trim(),
+        pickedImage: vaksinasiController.pickedImage);
+
+    if (!mounted) return;
+    setState(() => _saving = false);
+
+    if (!saved) {
+      Get.snackbar('failed'.tr, 'vaccine_added_failed'.tr);
+      return;
+    }
+
+    Get.snackbar('success'.tr, 'vaccine_added_success'.tr);
+    Get.back();
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     try {
@@ -59,18 +115,11 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
         title: Text('add_child_vaccination'.tr),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          vaksinasiController.addVaksinAnak(
-              vaksin_anak_id: widget.vaksin_anak_id,
-              anak_id: widget.anak_id,
-              vaksin_id: widget.vaksin_id,
-              tanggal_vaksin: vaksinasiController.dateinput.text,
-              name_dokter: vaksinasiController.nama_dokter.text,
-              tempat: vaksinasiController.tempat.text,
-              no_batch: vaksinasiController.no_batch.text,
-              pickedImage: vaksinasiController.pickedImage);
-          Get.offAll(BottomNavbar());
-        },
+        onTap: _saving
+            ? null
+            : () {
+                _save();
+              },
         child: Container(
             alignment: Alignment.center,
             width: width * 0.9,
@@ -180,6 +229,7 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
                               .dateinput, //editing controller of this TextField
                           decoration: InputDecoration(
                             hintText: 'vaccination_date'.tr,
+                            errorText: _errors['date'],
                             border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: isClicked
@@ -203,7 +253,7 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime(
                                     2000), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2101));
+                                lastDate: DateTime.now());
 
                             if (pickedDate != null) {
                               print(
@@ -271,6 +321,7 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             border: InputBorder.none,
+                            errorText: _errors['doctor'],
                           ),
                         ),
                       ),
@@ -316,6 +367,7 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
                             hintStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                             border: InputBorder.none,
+                            errorText: _errors['place'],
                           ),
                         ),
                       ),

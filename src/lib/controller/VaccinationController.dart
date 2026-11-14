@@ -1,27 +1,65 @@
 import 'dart:io';
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:growthtracker/helper/Constant.dart';
-import 'package:growthtracker/models/MGetArticle.dart';
-import 'package:growthtracker/models/MGetArticleCategory.dart';
+import 'package:get/get.dart';
 
-import 'package:growthtracker/models/MGetGrowthRecord.dart';
 import 'package:growthtracker/pages/VaccinationEditorPage.dart';
+import 'package:growthtracker/services/LocalStore.dart';
 
+/// Reads and writes the child's vaccination records. Everything is kept in
+/// [LocalStore], so the vaccination screens work without a network connection.
 class VaccinationController extends GetxController {
-  final api = helper.api;
-  final dio.Dio _dio = dio.Dio();
+  final LocalStore _store = LocalStore();
+
   File? pickedImage;
   TextEditingController nama_dokter = TextEditingController();
   TextEditingController tempat = TextEditingController();
   TextEditingController no_batch = TextEditingController();
   TextEditingController dateinput = TextEditingController();
 
-  Future<void> addVaksinAnak({
+  Future<List<Map<String, dynamic>>> vaccinations(String anakID) async {
+    final records = await _store.vaccinations();
+    return records
+        .where((record) => record['anak_id'] == anakID)
+        .map((record) => Map<String, dynamic>.from(record))
+        .toList();
+  }
+
+  /// The saved record of one vaccine for one child, or `null` when the vaccine
+  /// has not been recorded yet.
+  Future<Map<String, dynamic>?> vaccinationRecord({
+    required String anak_id,
+    required String vaksin_id,
+  }) async {
+    for (final record in await vaccinations(anak_id)) {
+      if (record['vaksin_id'] == vaksin_id) return record;
+    }
+    return null;
+  }
+
+  /// Opens the editor filled with the existing record of this vaccine.
+  Future<void> getVaksinAnak({
+    required String anak_id,
+    required String vaksin_id,
+  }) async {
+    final record = await vaccinationRecord(anak_id: anak_id, vaksin_id: vaksin_id);
+    if (record == null) return;
+
+    dateinput.text = '${record['tanggal_vaksin'] ?? ''}';
+    nama_dokter.text = '${record['nama_dokter'] ?? ''}';
+    tempat.text = '${record['tempat'] ?? ''}';
+    no_batch.text = '${record['no_batch'] ?? ''}';
+
+    await Get.to(() => VaccinationEditorPage(
+          anak_id: anak_id,
+          vaksin_id: vaksin_id,
+          vaksin_anak_id: '${record['vaksin_anak_id']}',
+        ));
+  }
+
+  /// Saves (or updates) the record of one vaccine. Returns `false` when nothing
+  /// could be written, so the caller can tell the user.
+  Future<bool> addVaksinAnak({
     String? vaksin_anak_id,
     required anak_id,
     required vaksin_id,
@@ -32,70 +70,60 @@ class VaccinationController extends GetxController {
     required File? pickedImage,
   }) async {
     try {
-      dio.FormData formData = dio.FormData.fromMap({
+      String? photoPath;
+      if (pickedImage != null) {
+        photoPath = await _store.savePhoto(pickedImage);
+      }
+
+      final records = await _store.vaccinations();
+      Map<String, dynamic>? previous;
+      final existing = records.indexWhere((record) =>
+          record['anak_id'] == anak_id && record['vaksin_id'] == vaksin_id);
+      if (existing >= 0) {
+        previous = records.removeAt(existing);
+      }
+
+      records.add({
+        'vaksin_anak_id': vaksin_anak_id ??
+            previous?['vaksin_anak_id'] ??
+            _store.newId('vaksin_anak_'),
         'anak_id': anak_id,
         'vaksin_id': vaksin_id,
         'tanggal_vaksin': tanggal_vaksin,
         'nama_dokter': name_dokter,
         'tempat': tempat,
-        'no_batch': Null,
-        'vaksin_anak_id': vaksin_anak_id,
+        'no_batch': no_batch,
+        'photo': photoPath ?? previous?['photo'],
+        'created_date': DateTime.now().toIso8601String(),
       });
 
-      if (pickedImage != null) {
-        String fileName = pickedImage.path.split('/').last;
-        formData.files.add(MapEntry(
-            'photo',
-            await dio.MultipartFile.fromFile(pickedImage.path,
-                filename: fileName)));
-      }
+      await _store.saveVaccinations(records);
 
-      final response = await _dio.post('$api/addVaksinAnak', data: formData);
-
-      if (response.statusCode == 200) {
-        // Data sent successfully
-        print('Data berhasil terkirim');
-        Get.snackbar("success".tr, "vaccine_added_success".tr);
-      } else {
-        Get.snackbar("failed".tr, "vaccine_added_failed".tr);
-        // Failed to send data
-        print('Gagal mengirim data');
+      if (photoPath != null) {
+        await _store.deletePhoto(previous?['photo'] as String?);
       }
+      return true;
     } catch (e) {
-      // Error while sending data
-      print('Error: $e');
+      print('Could not save vaccination: $e');
+      return false;
     }
   }
 
-  Future<void> getVaksinAnak({
+  /// Deletes the record of one vaccine, used when the parent marks it as not
+  /// done anymore.
+  Future<void> removeVaksinAnak({
     required String anak_id,
     required String vaksin_id,
   }) async {
-    try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'anak_id': anak_id,
-        'vaksin_id': vaksin_id,
-      });
-
-      final response = await _dio.post('$api/getVaksinAnak', data: formData);
-
-      if (response.statusCode == 200) {
-        dateinput.text = response.data[0]['tanggal_vaksin'];
-        nama_dokter.text = response.data[0]['nama_dokter'];
-        tempat.text = response.data[0]['tempat'];
-        no_batch.text = response.data[0]['no_batch'];
-
-        Get.to(() => VaccinationEditorPage(
-              anak_id: anak_id,
-              vaksin_id: vaksin_id,
-              vaksin_anak_id: response.data[0]['vaksin_anak_id'],
-            ));
-      } else {
-        print('gk ada  data ');
-      }
-    } catch (e) {
-      // Error while sending data
-      print('Error: $e');
+    final records = await _store.vaccinations();
+    Map<String, dynamic>? removed;
+    final existing = records.indexWhere((record) =>
+        record['anak_id'] == anak_id && record['vaksin_id'] == vaksin_id);
+    if (existing >= 0) {
+      removed = records.removeAt(existing);
     }
+
+    await _store.saveVaccinations(records);
+    await _store.deletePhoto(removed?['photo'] as String?);
   }
 }

@@ -1,78 +1,61 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:growthtracker/helper/Constant.dart';
+import 'package:intl/intl.dart';
 
+import 'package:growthtracker/services/ImmunizationSchedule.dart';
+import 'package:growthtracker/services/LocalStore.dart';
+
+/// Builds a child's immunization schedule from data stored on the device: the
+/// schedule bundled in [immunizationSchedule] plus the vaccination records in
+/// [LocalStore]. This mirrors the server's getJadwalVaksin endpoint without
+/// needing a network connection.
 class VaccinationScheduleController extends GetxController {
-  final api = helper.api;
-  final dio.Dio _dio = dio.Dio();
+  final LocalStore _store = LocalStore();
 
-  File? pickedImage;
+  final RxList<Map<String, dynamic>> jadwalVaksinasi =
+      <Map<String, dynamic>>[].obs;
 
-  RxList<Map<String, dynamic>> jadwalVaksinasi =
-      RxList<Map<String, dynamic>>([]);
+  Future<void> getJadwalVaksin(String anakID) async {
+    final child = await _store.childById(anakID);
+    final records = await _store.vaccinations();
 
-  Future<String> getJadwalVaksin(String anakID) async {
-    jadwalVaksinasi.clear();
+    final done = <String>{
+      for (final record in records)
+        if (record['anak_id'] == anakID && record['vaksin_id'] != null)
+          record['vaksin_id'].toString(),
+    };
 
-    try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'anak_id': anakID,
-      });
+    final birthDate = DateTime.tryParse('${child?['tanggal_lahir'] ?? ''}');
 
-      final response = await _dio.post('$api/getJadwalVaksin', data: formData);
-
-      if (response.statusCode == 200) {
-        List allJadwal = response.data;
-
-        List<Map<String, dynamic>> convertedList =
-            allJadwal.map((item) => item as Map<String, dynamic>).toList();
-        jadwalVaksinasi.value = convertedList;
-        return response.data;
-      } else {
-        print("erorr");
-      }
-    } catch (e) {
-      print(e);
-    }
-
-    return "sukses";
+    jadwalVaksinasi.value = [
+      for (final period in immunizationSchedule)
+        {
+          'periode': 'age_months_only'.trParams({'count': '${period.ageMonths}'}),
+          'bulan_ke': '${period.ageMonths}',
+          'rekomendasi': birthDate == null
+              ? ''
+              : DateFormat('d MMM yyyy')
+                  .format(_addMonths(birthDate, period.ageMonths)),
+          'vaksin': [
+            for (final vaccine in period.vaccines)
+              {
+                'vaksin_id': vaccine.id,
+                'nama_vaksin': vaccine.name,
+                'bulan_ke': '${period.ageMonths}',
+                'status': done.contains(vaccine.id) ? 'Sudah' : 'Belum',
+              },
+          ],
+        },
+    ];
   }
 
-  Future<String> addVaksinAnak(String anak_id, String tanggal_vaksin,
-      String nama_dokter, String tempat, String no_batch, File? photo) async {
-    try {
-      dio.FormData formData = dio.FormData.fromMap({
-        'anak_id': anak_id,
-        'tanggal_vaksin': tanggal_vaksin,
-        'nama_dokter': nama_dokter,
-        'tempat': tempat,
-        'no_batch': no_batch,
-      });
-
-      print('${tanggal_vaksin}, ${nama_dokter}, ${tempat}, ${anak_id}');
-
-      if (photo != null) {
-        String fileName = photo.path.split('/').last;
-        formData.files.add(MapEntry('photo',
-            await dio.MultipartFile.fromFile(photo.path, filename: fileName)));
-      }
-
-      // final response = await _dio.post('$api/addVaksinAnak', data: formData);
-
-      //   print(response);
-      // if (response.statusCode == 200) {
-      // } else {
-      //   print("erorr");
-      // }
-    } catch (e) {
-      print(e);
-    }
-
-    return "sukses";
+  /// Adds [months] to [date], keeping the day of the month when it exists.
+  DateTime _addMonths(DateTime date, int months) {
+    final target = DateTime(date.year, date.month + months, 1);
+    final lastDay = DateTime(target.year, target.month + 1, 0).day;
+    return DateTime(
+      target.year,
+      target.month,
+      date.day <= lastDay ? date.day : lastDay,
+    );
   }
 }

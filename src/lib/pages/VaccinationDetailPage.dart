@@ -1,14 +1,7 @@
-import 'dart:io';
-
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:growthtracker/controller/VaccinationScheduleController.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/controller/VaccinationController.dart';
 import 'package:growthtracker/pages/VaccinationEditorPage.dart';
-import 'package:growthtracker/pages/WelcomePage.dart';
 
 class VaccinationDetailPage extends StatefulWidget {
   String anak_id;
@@ -30,32 +23,45 @@ class VaccinationDetailPage extends StatefulWidget {
 }
 
 class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
-  var vaksinasiController = Get.put(VaccinationScheduleController());
   var vaksinasi = Get.put(VaccinationController());
   String? _selectedOption;
+  late String _status;
 
-  //image picker
-  File? image;
-  Future<void> _pickImage() async {
-    try {
-      final imagePicker = ImagePicker();
-      final image = await imagePicker.pickImage(source: ImageSource.gallery);
-
-      if (image != null) {
-        // Get the selected image file
-        File imageTemporary = File(image.path);
-
-        setState(() {
-          vaksinasiController.pickedImage = imageTemporary;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
+  @override
+  void initState() {
+    super.initState();
+    _status = widget.status;
+    _refreshStatus();
   }
 
-  void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+  /// Re-reads the saved record, so the screen always shows the current status.
+  Future<void> _refreshStatus() async {
+    final record = await vaksinasi.vaccinationRecord(
+      anak_id: widget.anak_id,
+      vaksin_id: widget.vaksin_id,
+    );
+    if (!mounted) return;
+    setState(() => _status = record == null ? 'Belum' : 'Sudah');
+  }
+
+  Future<void> _openEditor() async {
+    vaksinasi.dateinput.text = "";
+    vaksinasi.nama_dokter.text = "";
+    vaksinasi.no_batch.text = "";
+    vaksinasi.tempat.text = "";
+    await Get.to(VaccinationEditorPage(
+        anak_id: widget.anak_id, vaksin_id: widget.vaksin_id));
+    await _refreshStatus();
+  }
+
+  Future<void> _markNotDone() async {
+    await vaksinasi.removeVaksinAnak(
+        anak_id: widget.anak_id, vaksin_id: widget.vaksin_id);
+    await _refreshStatus();
+  }
+
+  Future<void> _showModalBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         var width = MediaQuery.of(context).size.width;
@@ -159,20 +165,13 @@ class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
                   ),
                   SizedBox(height: 16.0),
                   GestureDetector(
-                    onTap: () {
-                      print('Pilihan: $_selectedOption');
-                      // Navigator.of(context).pop();
-                      if (_selectedOption == 'Sudah') {
-                        vaksinasi.dateinput.text = "";
-                        vaksinasi.nama_dokter.text = "";
-                        vaksinasi.no_batch.text = "";
-                        vaksinasi.tempat.text = "";
-                        Get.to(VaccinationEditorPage(
-                            anak_id: widget.anak_id,
-                            vaksin_id: widget.vaksin_id));
-                        ;
-                      } else {
-                        Get.back();
+                    onTap: () async {
+                      final option = _selectedOption;
+                      Navigator.of(context).pop();
+                      if (option == 'Sudah') {
+                        await _openEditor();
+                      } else if (option == 'Belum') {
+                        await _markNotDone();
                       }
                     },
                     child: Center(
@@ -203,20 +202,14 @@ class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
           },
         );
       },
-    ).whenComplete(() {
-      // Reinitialize the _selectedOption value
-      // setState(() {
-      //   _selectedOption = null;
-      // });
-    });
+    );
+    _selectedOption = null;
   }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    print(image);
 
     return Scaffold(
       appBar: AppBar(
@@ -360,16 +353,16 @@ class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
                             EdgeInsets.symmetric(vertical: 4, horizontal: 7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: widget.status == "Sudah"
+                          color: _status == "Sudah"
                               ? Colors.green[100]
                               : Colors.red[100],
                         ),
                         child: Text(
-                          widget.status == "Sudah"
+                          _status == "Sudah"
                               ? 'status_done'.tr
                               : 'status_not_yet'.tr,
                           style: TextStyle(
-                            color: widget.status == "Sudah"
+                            color: _status == "Sudah"
                                 ? Colors.green
                                 : Colors.red,
                           ),
@@ -378,13 +371,14 @@ class _VaccinationDetailPageState extends State<VaccinationDetailPage> {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {
-                      if (widget.status == "Sudah") {
-                        vaksinasi.getVaksinAnak(
+                    onTap: () async {
+                      if (_status == "Sudah") {
+                        await vaksinasi.getVaksinAnak(
                             anak_id: widget.anak_id,
                             vaksin_id: widget.vaksin_id);
+                        await _refreshStatus();
                       } else {
-                        _showModalBottomSheet(context);
+                        await _showModalBottomSheet(context);
                       }
                     },
                     child: Container(

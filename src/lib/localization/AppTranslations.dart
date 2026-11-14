@@ -97,6 +97,8 @@ class AppTranslations extends Translations {
     'search_articles': 'Search Articles',
     'author_by': 'Written by @author',
     'failed': 'Failed',
+    'pdf_download_failed':
+        'Could not download the reference document. Check your connection.',
 
     // Vaccination
     'vaccine_added_success':
@@ -187,6 +189,7 @@ class AppTranslations extends Translations {
     'vaccination': 'Vaccination',
     'see_detail': 'See Detail',
     'vaccination_schedule': 'Vaccination Schedule',
+    'vaccination_schedule_hint': 'Tap a vaccine to record or update its vaccination details.',
     'growth_history': 'Growth History',
     'child_growth_history': 'Child Growth History',
 
@@ -348,6 +351,8 @@ class AppTranslations extends Translations {
     'search_articles': 'Cari Artikel',
     'author_by': 'Ditulis Oleh @author',
     'failed': 'Gagal',
+    'pdf_download_failed':
+        'Gagal mengunduh dokumen referensi. Periksa koneksi Anda.',
 
     // Vaccination
     'vaccine_added_success':
@@ -438,6 +443,7 @@ class AppTranslations extends Translations {
     'vaccination': 'Vaksinasi',
     'see_detail': 'Lihat Detail',
     'vaccination_schedule': 'Jadwal Vaksinasi',
+    'vaccination_schedule_hint': 'Ketuk vaksin untuk mencatat atau memperbarui data vaksinasinya.',
     'growth_history': 'Riwayat Pertumbuhan',
     'child_growth_history': 'Riwayat Pertumbuhan Anak',
 
