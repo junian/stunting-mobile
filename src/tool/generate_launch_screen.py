@@ -82,20 +82,27 @@ def make(locale: str) -> Image.Image:
 
     # Icon tile with a soft drop shadow.
     icon = rounded_icon()
+    icon_top = 690
+    icon_size = 360
     shadow = Image.new("RGBA", base.size, (0, 0, 0, 0))
     sd = ImageDraw.Draw(shadow)
     sd.rounded_rectangle(
-        [540 * S - 180 * S, 728 * S - 180 * S + 24 * S, 540 * S + 180 * S, 728 * S + 180 * S + 24 * S],
+        [
+            540 * S - 180 * S,
+            (icon_top + 24) * S,
+            540 * S + 180 * S,
+            (icon_top + icon_size + 24) * S,
+        ],
         radius=100 * S,
         fill=(3, 18, 51, 120),
     )
     shadow = shadow.filter(ImageFilter.GaussianBlur(50 * S))
     base.alpha_composite(shadow)
-    base.alpha_composite(icon, (540 * S - 180 * S, 728 * S - 180 * S))
+    base.alpha_composite(icon, (540 * S - 180 * S, icon_top * S))
 
     draw = ImageDraw.Draw(base)
     wordmark = font("PlusJakartaSans-ExtraBold.ttf", 78)
-    tracked_text(draw, "KidScale", 540, 1180, wordmark, WHITE, tracking=3.2)
+    tracked_text(draw, "KidScale", 540, 1157, wordmark, WHITE, tracking=3.2)
 
     tagline = font("PlusJakartaSans-Medium.ttf", 34)
     tag = (
@@ -103,18 +110,18 @@ def make(locale: str) -> Image.Image:
         if locale == "in"
         else "Healthy growth for happy little ones"
     )
-    tracked_text(draw, tag, 540, 1298, tagline, (255, 255, 255, 210))
+    tracked_text(draw, tag, 540, 1268, tagline, (255, 255, 255, 210))
 
     # Static spinner ring so the transition to Flutter's spinner is seamless.
     ring = Image.new("RGBA", base.size, (0, 0, 0, 0))
     rd = ImageDraw.Draw(ring)
     rd.ellipse(
-        [(540 - 34) * S, (2095 - 34) * S, (540 + 34) * S, (2095 + 34) * S],
+        [(540 - 34) * S, (2080 - 34) * S, (540 + 34) * S, (2080 + 34) * S],
         outline=(255, 255, 255, 46),
         width=6 * S,
     )
     rd.arc(
-        [(540 - 34) * S, (2095 - 34) * S, (540 + 34) * S, (2095 + 34) * S],
+        [(540 - 34) * S, (2080 - 34) * S, (540 + 34) * S, (2080 + 34) * S],
         start=-90,
         end=160,
         fill=(255, 255, 255, 225),
@@ -124,7 +131,7 @@ def make(locale: str) -> Image.Image:
 
     version = font("PlusJakartaSans-Medium.ttf", 29)
     label = "Versi 1.3.5" if locale == "in" else "Version 1.3.5"
-    tracked_text(draw, label, 540, 2248, version, (255, 255, 255, 140))
+    tracked_text(draw, label, 540, 2238, version, (255, 255, 255, 140))
 
     return base.convert("RGB").resize((W, H), Image.LANCZOS)
 

@@ -79,20 +79,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   child: Column(
                     children: [
                       const Spacer(flex: 5),
-                      TweenAnimationBuilder<double>(
-                        tween: Tween(begin: 0, end: 1),
-                        duration: const Duration(milliseconds: 700),
-                        curve: Curves.easeOutBack,
-                        builder: (context, value, child) {
-                          return Opacity(
-                            opacity: value.clamp(0.0, 1.0),
-                            child: Transform.scale(
-                              scale: 0.82 + 0.18 * value,
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: Container(
+                      Container(
                           width: 140,
                           height: 140,
                           clipBehavior: Clip.antiAlias,
@@ -107,27 +94,13 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                               ),
                             ],
                           ),
-                          child: Image.asset(
-                            'images/app_icon.png',
-                            fit: BoxFit.cover,
-                          ),
+                        child: Image.asset(
+                          'images/app_icon.png',
+                          fit: BoxFit.cover,
                         ),
                       ),
                       const SizedBox(height: 30),
-                      TweenAnimationBuilder<double>(
-                        tween: Tween(begin: 0, end: 1),
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeOut,
-                        builder: (context, value, child) {
-                          return Opacity(
-                            opacity: value.clamp(0.0, 1.0),
-                            child: Transform.translate(
-                              offset: Offset(0, 16 * (1 - value)),
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: ConstrainedBox(
+                      ConstrainedBox(
                           constraints: BoxConstraints(
                             maxWidth: size.width - 56,
                           ),
@@ -158,7 +131,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                                 ),
                               ),
                             ],
-                          ),
                         ),
                       ),
                       const Spacer(flex: 6),
