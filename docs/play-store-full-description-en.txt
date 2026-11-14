@@ -37,7 +37,7 @@ Use KidScale from newborn check-ups through the toddler years and beyond, at hom
 
 Start using KidScale today to track your child's growth, follow their vaccine schedule, and take confident steps toward preventing stunting. Formerly known as STANTAPP, KidScale is the next chapter of the app families already trust.
 
-Learn more: https://kidscale.junian.net
-Contact: support+kidscale@mail.junian.net
+Learn more: https://kidscale.juniandev.com
+Contact: support+kidscale@mail.juniandev.com
 
 Popular searches: KidScale, STANTAPP, stunting, child growth tracker, growth chart, vaccination schedule, immunization schedule, IDAI, WHO growth reference, baby growth, toddler growth, posyandu, Indonesian parents, cegah stunting, tumbuh kembang anak, jadwal imunisasi.

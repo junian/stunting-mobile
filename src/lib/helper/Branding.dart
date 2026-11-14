@@ -7,9 +7,9 @@ const String kAppName = 'KidScale';
 
 /// Support and public links. Keep these in one place so the About page, the
 /// settings screen and the help copy cannot drift apart.
-const String kSupportEmail = 'support+kidscale@mail.junian.net';
+const String kSupportEmail = 'support+kidscale@mail.juniandev.com';
 const String kSupportMailto = 'mailto:$kSupportEmail';
-const String kWebsiteUrl = 'https://kidscale.junian.net';
+const String kWebsiteUrl = 'https://kidscale.juniandev.com';
 const String kYouTubeUrl = 'https://youtube.com/@JunianDev';
 
 /// Replaces the legacy product name in copy fetched from the server.

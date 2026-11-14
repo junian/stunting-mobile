@@ -198,7 +198,7 @@ def main():
     pill(x0 + w1 + 10 * S, 334 * S, 'Vaccine schedule', 'vax')
 
     draw.text((66 * S, 437 * S), 'Formerly known as STANTAPP', font=f(MEDIUM, 11.5), fill=(255, 255, 255, 170))
-    draw.text((66 * S, 456 * S), 'kidscale.junian.net', font=f(REGULAR, 10.5), fill=(255, 255, 255, 125))
+    draw.text((66 * S, 456 * S), 'kidscale.juniandev.com', font=f(REGULAR, 10.5), fill=(255, 255, 255, 125))
 
     base.alpha_composite(fg)
     final = base.resize((1024, 500), Image.LANCZOS).convert('RGB')
