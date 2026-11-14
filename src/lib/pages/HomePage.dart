@@ -287,6 +287,8 @@ class HomePageState extends State<HomePage> {
     if (mounted) refresh();
   }
 
+  // Kept ready for when the notification entry points are re-enabled.
+  // ignore: unused_element
   void _openNotifications() {
     notificationController.getNotifikasi(sessionController.user_id.value);
     Get.to(() => NotifikasiPage());
@@ -403,34 +405,38 @@ class HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  AppIconButton(
-                    icon: Icons.notifications_none_rounded,
-                    background: Colors.white.withValues(alpha: 0.16),
-                    foreground: Colors.white,
-                    onTap: _openNotifications,
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 11,
-                    child: Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFC24B),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.primary,
-                          width: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Notifications are temporarily disabled for this release. Keep
+              // the bell and badge below; uncomment the block when the feature
+              // is ready to be exposed to parents.
+              //
+              // const SizedBox(width: 12),
+              // Stack(
+              //   clipBehavior: Clip.none,
+              //   children: [
+              //     AppIconButton(
+              //       icon: Icons.notifications_none_rounded,
+              //       background: Colors.white.withValues(alpha: 0.16),
+              //       foreground: Colors.white,
+              //       onTap: _openNotifications,
+              //     ),
+              //     Positioned(
+              //       top: 10,
+              //       right: 11,
+              //       child: Container(
+              //         width: 7,
+              //         height: 7,
+              //         decoration: BoxDecoration(
+              //           color: const Color(0xFFFFC24B),
+              //           shape: BoxShape.circle,
+              //           border: Border.all(
+              //             color: AppColors.primary,
+              //             width: 1.2,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
           if (_children.isNotEmpty) ...[
@@ -786,14 +792,18 @@ class HomePageState extends State<HomePage> {
           //     ),
           //   ),
           // ),
-          Expanded(
-            child: _QuickTile(
-              icon: Icons.notifications_active_rounded,
-              label: 'notifications'.tr,
-              tone: AppTone.coral,
-              onTap: _openNotifications,
-            ),
-          ),
+          // Notifications are temporarily disabled for this release. Keep the
+          // tile below; uncomment it together with the top-right bell when the
+          // notification feature is ready to be exposed.
+          //
+          // Expanded(
+          //   child: _QuickTile(
+          //     icon: Icons.notifications_active_rounded,
+          //     label: 'notifications'.tr,
+          //     tone: AppTone.coral,
+          //     onTap: _openNotifications,
+          //   ),
+          // ),
         ],
       ),
     );
