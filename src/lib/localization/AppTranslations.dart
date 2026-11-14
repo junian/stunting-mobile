@@ -260,6 +260,7 @@ Questions about these Terms? Email {email} or visit {website}.
     'details': 'Details',
     'saved': 'Saved successfully',
     'child_added_success': 'New child added successfully',
+    'growth_added_success': 'Growth data added successfully',
     'coming_soon': 'Coming soon',
 
     // Child detail
@@ -623,6 +624,7 @@ Ada pertanyaan tentang Syarat ini? Email {email} atau kunjungi {website}.
     'details': 'Detail',
     'saved': 'Berhasil disimpan',
     'child_added_success': 'Data anak baru berhasil ditambahkan',
+    'growth_added_success': 'Data pertumbuhan berhasil ditambahkan',
     'coming_soon': 'Segera hadir',
 
     // Child detail

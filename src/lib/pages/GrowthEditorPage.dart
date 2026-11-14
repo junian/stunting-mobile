@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/GrowthEditorController.dart';
+import 'package:growthtracker/pages/GrowthDetailPage.dart';
 import 'package:growthtracker/services/LocalStore.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widget/DecimalInputFormatter.dart';
@@ -139,7 +140,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
 
     setState(() => _isSaving = true);
 
-    final saved = await tambahPertumbuhanAnak.addPertumbuhanAnak(
+    final savedRecord = await tambahPertumbuhanAnak.addPertumbuhanAnak(
       anakID: widget.anakID,
       selectedDate: dateinput.text,
       pickedImage: tambahPertumbuhanAnak.pickedImage,
@@ -150,14 +151,36 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
       tinggiBadanAyah: widget.tinggiBadanAyah,
     );
 
-    if (!saved) {
+    if (savedRecord == null) {
       if (mounted) setState(() => _isSaving = false);
       AppSnack.error('save_failed'.tr);
       return;
     }
 
-    AppSnack.success('saved'.tr);
-    Get.back();
+    if (mounted) setState(() => _isSaving = false);
+    AppSnack.success('growth_added_success'.tr);
+
+    // Replace the editor with the new record in one step so it closes
+    // immediately and the user lands on the saved measurement.
+    Get.off(
+      () => GrowthDetailPage(
+        pertumbuhanAnakId: '${savedRecord['pertumbuhan_anak_id']}',
+        anakId: '${savedRecord['anak_id']}',
+        beratBadan: '${savedRecord['berat_badan']}',
+        tinggiBadan: '${savedRecord['tinggi_badan']}',
+        lingkarKepala: '${savedRecord['lingkar_kepala']}',
+        createdDate:
+            '${savedRecord['tanggal_pertumbuhan'] ?? savedRecord['created_date'] ?? ''}',
+        statusPertumbuhanBerat:
+            '${savedRecord['status_pertumbuhan_berat'] ?? '-'}',
+        statusPertumbuhanTinggi:
+            '${savedRecord['status_pertumbuhan_tinggi'] ?? '-'}',
+        statusPertumbuhanLingkarKepala:
+            '${savedRecord['status_pertumbuhan_lingkar_kepala'] ?? '-'}',
+        umur: '${savedRecord['umur'] ?? ''}',
+      ),
+      transition: Transition.fadeIn,
+    );
   }
 
   @override
