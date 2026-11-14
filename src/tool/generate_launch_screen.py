@@ -1,7 +1,8 @@
 """Generate the native Android launch screen artwork.
 
 The image mirrors the Flutter splash (gradient, bubbles, icon tile, wordmark,
-tagline, spinner ring and version) so the hand-off into Flutter is seamless.
+tagline and spinner ring) so the hand-off into Flutter is seamless. The version
+label is intentionally left to the Flutter splash, which reads it at runtime.
 """
 from __future__ import annotations
 
@@ -128,10 +129,6 @@ def make(locale: str) -> Image.Image:
         width=6 * S,
     )
     base.alpha_composite(ring)
-
-    version = font("PlusJakartaSans-Medium.ttf", 29)
-    label = "Versi 1.3.5" if locale == "in" else "Version 1.3.5"
-    tracked_text(draw, label, 540, 2238, version, (255, 255, 255, 140))
 
     return base.convert("RGB").resize((W, H), Image.LANCZOS)
 

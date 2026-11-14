@@ -13,7 +13,7 @@ class AppTranslations extends Translations {
 
   static const Map<String, String> _en = {
     'app_name': 'KidScale',
-    'version': 'Version 1.3.5',
+    'version_prefix': 'Version',
     'warning': 'Warning',
     'error': 'Error',
     'success': 'Success',
@@ -375,7 +375,7 @@ Questions about these Terms? Email {email} or visit {website}.
 
   static const Map<String, String> _id = {
     'app_name': 'KidScale',
-    'version': 'Versi 1.3.5',
+    'version_prefix': 'Versi',
     'warning': 'Peringatan',
     'error': 'Kesalahan',
     'success': 'Berhasil',

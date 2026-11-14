@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:growthtracker/helper/AppVersion.dart';
 import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widgets/app_widgets.dart';
@@ -158,7 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                       ),
                       child: Text(
-                        'version'.tr,
+                        AppVersion.label('version_prefix'.tr),
                         style: const TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w700,

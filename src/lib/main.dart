@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
 import 'package:growthtracker/helper/AppRouteObserver.dart';
+import 'package:growthtracker/helper/AppVersion.dart';
 import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/localization/AppTranslations.dart';
 import 'package:growthtracker/pages/SplashScreenPage.dart';
@@ -15,6 +16,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppVersion.load();
 
   // Only seed the Play Store data if the app is running in debug mode.
   // Use it only to take screenshots.

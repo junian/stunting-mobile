@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:growthtracker/controller/AuthController.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
 import 'package:growthtracker/controller/SessionController.dart';
+import 'package:growthtracker/helper/AppVersion.dart';
 import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/pages/AboutPage.dart';
 import 'package:growthtracker/pages/TermsOfServicePage.dart';
@@ -208,7 +209,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${'app_name'.tr} · ${'version'.tr}',
+                      '${'app_name'.tr} · ${AppVersion.label('version_prefix'.tr)}',
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,

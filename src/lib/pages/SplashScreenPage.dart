@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:growthtracker/controller/AuthController.dart';
+import 'package:growthtracker/helper/AppVersion.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widget/BottomNavbar.dart';
 
@@ -80,20 +81,20 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     children: [
                       const Spacer(flex: 5),
                       Container(
-                          width: 140,
-                          height: 140,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF06265C)
-                                    .withValues(alpha: 0.30),
-                                blurRadius: 50,
-                                offset: const Offset(0, 24),
-                              ),
-                            ],
-                          ),
+                        width: 140,
+                        height: 140,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF06265C)
+                                  .withValues(alpha: 0.30),
+                              blurRadius: 50,
+                              offset: const Offset(0, 24),
+                            ),
+                          ],
+                        ),
                         child: Image.asset(
                           'images/app_icon.png',
                           fit: BoxFit.cover,
@@ -101,36 +102,36 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                       ),
                       const SizedBox(height: 30),
                       ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: size.width - 56,
-                          ),
-                          child: Column(
-                            children: [
-                              Text(
-                                'app_name'.tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 3.2,
-                                      fontSize: 30,
-                                    ),
+                        constraints: BoxConstraints(
+                          maxWidth: size.width - 56,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'app_name'.tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 3.2,
+                                    fontSize: 30,
+                                  ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'app_tagline'.tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.2,
+                                height: 1.5,
+                                color: Colors.white.withValues(alpha: 0.82),
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                'app_tagline'.tr,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0.2,
-                                  height: 1.5,
-                                  color: Colors.white.withValues(alpha: 0.82),
-                                ),
-                              ),
-                            ],
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(flex: 6),
@@ -152,7 +153,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                       ),
                       const SizedBox(height: 28),
                       Text(
-                        'version'.tr,
+                        AppVersion.label('version_prefix'.tr),
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w500,
