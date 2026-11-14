@@ -74,112 +74,120 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 right: size.width * 0.16,
                 child: _Bubble(size: 12, opacity: 0.22),
               ),
-              SafeArea(
-                child: Column(
-                  children: [
-                    const Spacer(flex: 5),
-                    TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: 1),
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.easeOutBack,
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value.clamp(0.0, 1.0),
-                          child: Transform.scale(
-                            scale: 0.82 + 0.18 * value,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 132,
-                        height: 132,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(38),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF06265C)
-                                  .withValues(alpha: 0.28),
-                              blurRadius: 50,
-                              offset: const Offset(0, 24),
+              Positioned.fill(
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      const Spacer(flex: 5),
+                      TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0, end: 1),
+                        duration: const Duration(milliseconds: 700),
+                        curve: Curves.easeOutBack,
+                        builder: (context, value, child) {
+                          return Opacity(
+                            opacity: value.clamp(0.0, 1.0),
+                            child: Transform.scale(
+                              scale: 0.82 + 0.18 * value,
+                              child: child,
                             ),
-                          ],
-                        ),
-                        child: Image.asset('images/logo.png'),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: 1),
-                      duration: const Duration(milliseconds: 800),
-                      curve: Curves.easeOut,
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value.clamp(0.0, 1.0),
-                          child: Transform.translate(
-                            offset: Offset(0, 16 * (1 - value)),
-                            child: child,
+                          );
+                        },
+                        child: Container(
+                          width: 132,
+                          height: 132,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(38),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF06265C)
+                                    .withValues(alpha: 0.28),
+                                blurRadius: 50,
+                                offset: const Offset(0, 24),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Text(
-                            'STANTAPP',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 3.2,
-                                  fontSize: 30,
+                          child: Image.asset('images/logo_mark.png'),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0, end: 1),
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeOut,
+                        builder: (context, value, child) {
+                          return Opacity(
+                            opacity: value.clamp(0.0, 1.0),
+                            child: Transform.translate(
+                              offset: Offset(0, 16 * (1 - value)),
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: size.width - 56,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'app_name'.tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 3.2,
+                                      fontSize: 30,
+                                    ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                'app_tagline'.tr,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.2,
+                                  height: 1.5,
+                                  color: Colors.white.withValues(alpha: 0.82),
                                 ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'app_tagline'.tr,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 13.5,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.2,
-                              height: 1.5,
-                              color: Colors.white.withValues(alpha: 0.82),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(flex: 6),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 300),
-                      opacity: _ready ? 0 : 1,
-                      child: SizedBox(
-                        width: 26,
-                        height: 26,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.4,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white.withValues(alpha: 0.9),
-                          ),
-                          backgroundColor: Colors.white.withValues(alpha: 0.18),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 28),
-                    Text(
-                      'version'.tr,
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withValues(alpha: 0.55),
+                      const Spacer(flex: 6),
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 300),
+                        opacity: _ready ? 0 : 1,
+                        child: SizedBox(
+                          width: 26,
+                          height: 26,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.4,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white.withValues(alpha: 0.9),
+                            ),
+                            backgroundColor:
+                                Colors.white.withValues(alpha: 0.18),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 18),
-                  ],
+                      const SizedBox(height: 28),
+                      Text(
+                        'version'.tr,
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white.withValues(alpha: 0.55),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                    ],
+                  ),
                 ),
               ),
             ],

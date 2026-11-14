@@ -8,7 +8,7 @@
         tools:node="remove" />
 
     <application
-        android:label="Stunting App"
+        android:label="KidScale"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

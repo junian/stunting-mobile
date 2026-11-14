@@ -60,7 +60,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           //   textAlign: TextAlign.center,
                           //   text: TextSpan(
                           //     text:
-                          //         'STANTAPP merupakan pelopor aplikasi tumbuh kembang anak dari tahun 2017 yang bermitra resmi dengan ikatan dokter anak Indonesisa & Kementrian Kesehatan RI',
+                          //         'KidScale merupakan aplikasi tumbuh kembang anak yang bermitra resmi dengan ikatan dokter anak Indonesia & Kementerian Kesehatan RI',
                           //     style: TextStyle(
                           //       fontSize: 14,
                           //       fontWeight: FontWeight.normal,

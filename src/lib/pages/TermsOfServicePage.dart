@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'package:growthtracker/controller/ParameterController.dart';
+import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widgets/app_widgets.dart';
 
@@ -43,7 +44,7 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
     if (!mounted) return;
     final value = parameterController.parameterValue.trim();
     setState(() {
-      _content = value;
+      _content = rebrandServerCopy(value);
       _loading = false;
       _failed = value.isEmpty;
     });

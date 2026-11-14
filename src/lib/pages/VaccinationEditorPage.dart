@@ -36,6 +36,7 @@ class _VaccinationEditorPageState extends State<VaccinationEditorPage> {
   final Map<String, String> _errors = {};
 
   Future<void> _save() async {
+    if (_saving) return;
     final errors = <String, String>{};
 
     final tanggal = vaksinasiController.dateinput.text.trim();

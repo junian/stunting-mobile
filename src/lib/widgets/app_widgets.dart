@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../helper/Branding.dart';
 import '../theme/app_theme.dart';
 import '../widget/AppPhoto.dart';
 
@@ -1711,7 +1712,7 @@ class AppSnack {
       );
 
   static void info(String message) => _show(
-        title: 'STANTAPP',
+        title: kAppName,
         message: message,
         tone: AppTone.primary,
         icon: Icons.info_rounded,

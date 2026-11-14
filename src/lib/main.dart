@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:growthtracker/controller/LanguageController.dart';
 import 'package:growthtracker/helper/AppRouteObserver.dart';
+import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/localization/AppTranslations.dart';
 import 'package:growthtracker/pages/SplashScreenPage.dart';
 import 'package:growthtracker/theme/app_theme.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'STANTAPP',
+      title: kAppName,
       debugShowCheckedModeBanner: false,
       translations: AppTranslations(),
       locale: Get.locale,

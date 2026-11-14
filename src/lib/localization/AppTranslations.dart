@@ -12,7 +12,7 @@ class AppTranslations extends Translations {
       };
 
   static const Map<String, String> _en = {
-    'app_name': 'STANTAPP',
+    'app_name': 'KidScale',
     'version': 'Version 1.3.5',
     'warning': 'Warning',
     'error': 'Error',
@@ -49,7 +49,7 @@ class AppTranslations extends Translations {
     'language_changed': 'Language changed successfully',
 
     // Welcome / Login / Verification
-    'welcome_title': 'Welcome to STANTAPP',
+    'welcome_title': 'Welcome to KidScale',
     'register_new_account': 'Create New Account',
     'login_with_email': 'Sign in with Email',
     'email': 'Email',
@@ -67,7 +67,7 @@ class AppTranslations extends Translations {
     'profile': 'Profile',
     'terms_conditions': 'Terms and Conditions',
     'about_app': 'About App',
-    'about_this_app': 'About Stant App',
+    'about_this_app': 'About KidScale',
     'logout_confirm': 'Are you sure you want to logout?',
 
     // Register
@@ -77,15 +77,15 @@ class AppTranslations extends Translations {
     'email_hint': 'Enter your email address',
     'terms_prefix': 'I have read and agree to the ',
     'terms_link': 'Terms & Conditions',
-    'terms_suffix': ' from the STANTAPP Team.',
+    'terms_suffix': ' from the KidScale Team.',
     'fill_required_fields':
         'Please check the empty fields or you have not accepted the terms and conditions',
 
     // Static pages
-    'terms_full_title': 'STANTAPP Terms and Conditions of Use',
+    'terms_full_title': 'KidScale Terms and Conditions of Use',
     'terms_last_updated': 'Last Updated: 1/12/2022',
     'about_disclaimer':
-        'The content and recommendations in STANTAPP are created and supervised by the Indonesian Pediatric Society (IDAI).',
+        'The content and recommendations in KidScale are created and supervised by the Indonesian Pediatric Society (IDAI).',
 
     // Notifications / Consultation
     'notifications': 'Notifications',
@@ -337,7 +337,7 @@ class AppTranslations extends Translations {
   };
 
   static const Map<String, String> _id = {
-    'app_name': 'STANTAPP',
+    'app_name': 'KidScale',
     'version': 'Versi 1.3.5',
     'warning': 'Peringatan',
     'error': 'Kesalahan',
@@ -374,7 +374,7 @@ class AppTranslations extends Translations {
     'language_changed': 'Bahasa berhasil diubah',
 
     // Welcome / Login / Verification
-    'welcome_title': 'Selamat Datang di STANTAPP',
+    'welcome_title': 'Selamat Datang di KidScale',
     'register_new_account': 'Daftar Akun Baru',
     'login_with_email': 'Masuk Dengan Email',
     'email': 'Email',
@@ -392,7 +392,7 @@ class AppTranslations extends Translations {
     'profile': 'Profil',
     'terms_conditions': 'Syarat dan Ketentuan',
     'about_app': 'Tentang Aplikasi',
-    'about_this_app': 'Tentang Stant App',
+    'about_this_app': 'Tentang KidScale',
     'logout_confirm': 'Apakah anda yakin ingin keluar?',
 
     // Register
@@ -402,15 +402,15 @@ class AppTranslations extends Translations {
     'email_hint': 'Masukkan alamat email Anda',
     'terms_prefix': 'Saya telah membaca dan menyetujui ',
     'terms_link': 'Syarat & Ketentuan',
-    'terms_suffix': ' dari Tim STANTAPP.',
+    'terms_suffix': ' dari Tim KidScale.',
     'fill_required_fields':
         'Cek Kembali field yang kosong atau anda belum menerima syarat dan ketentuan',
 
     // Static pages
-    'terms_full_title': 'Syarat dan Ketentuan penggunaan STANTAPP',
+    'terms_full_title': 'Syarat dan Ketentuan penggunaan KidScale',
     'terms_last_updated': 'Perbaruan Terakhir : 1/12/2022',
     'about_disclaimer':
-        'Isi dan rekomendasi yang terdapat di dalam STANTAPP dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).',
+        'Isi dan rekomendasi yang terdapat di dalam KidScale dibuat dan disupervisi oleh Ikatan dokter Anak Indonesia (IDAI).',
 
     // Notifications / Consultation
     'notifications': 'Notifikasi',

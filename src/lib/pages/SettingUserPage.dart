@@ -202,14 +202,14 @@ class _SettingUserPageState extends State<SettingUserPage> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'images/logo.png',
+                      'images/logo_mark.png',
                       width: 42,
                       height: 42,
                       opacity: const AlwaysStoppedAnimation(0.55),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'STANTAPP · ${'version'.tr}',
+                      '${'app_name'.tr} · ${'version'.tr}',
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Central design tokens for STANTAPP.
+/// Central design tokens for KidScale.
 ///
 /// The palette follows the brand mark: trustworthy blue paired with a fresh
 /// mint/teal that represents healthy growth. Everything in the app should pull

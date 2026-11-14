@@ -141,6 +141,7 @@ class _ChildrenEditorPageState extends State<ChildrenEditorPage> {
   }
 
   Future<void> _save() async {
+    if (_isSaving) return;
     final errors = <String, String>{};
 
     if (nama_anak.text.trim().isEmpty) {

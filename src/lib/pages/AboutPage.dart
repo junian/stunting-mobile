@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:growthtracker/controller/ParameterController.dart';
+import 'package:growthtracker/helper/Branding.dart';
 import 'package:growthtracker/theme/app_theme.dart';
 import 'package:growthtracker/widgets/app_widgets.dart';
 
@@ -50,7 +51,7 @@ class _AboutPageState extends State<AboutPage> {
     if (!mounted) return;
     final value = parameterController.parameterValue.trim();
     setState(() {
-      _description = value;
+      _description = rebrandServerCopy(value);
       _loading = false;
       _failed = value.isEmpty;
     });
@@ -165,13 +166,13 @@ class _AboutPageState extends State<AboutPage> {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: Image.asset(
-                        'images/logo.png',
+                        'images/logo_mark.png',
                         fit: BoxFit.contain,
                       ),
                     ),
                     const SizedBox(height: 18),
                     Text(
-                      'STANTAPP',
+                      'app_name'.tr,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,

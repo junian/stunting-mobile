@@ -110,6 +110,7 @@ class _GrowthEditorPageState extends State<GrowthEditorPage> {
   }
 
   Future<void> _save() async {
+    if (_isSaving) return;
     HapticFeedback.mediumImpact();
     final errors = <String, String>{};
 

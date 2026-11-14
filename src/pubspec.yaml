@@ -1,5 +1,5 @@
 name: growthtracker
-description: Kid Growth Tracker App. Offline-first, easy to use, and simple. Track your kid's growth and development with ease.
+description: KidScale — offline-first child growth and immunization tracker.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -58,7 +58,6 @@ dependencies:
   get_storage: ^2.1.1
   flutter_pdfview: ^1.3.1
   path_provider: ^2.0.15
-  flutter_launcher_icons: ^0.14.4
   flutter_local_notifications: ^19.4.2
   youtube_player_flutter: ^9.1.2
 
@@ -72,11 +71,21 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.14.4
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "images/logo.png"
+  image_path: "images/app_icon.png"
+  adaptive_icon_background: "#F4F8FF"
+  adaptive_icon_foreground: "images/logo_foreground.png"
+  adaptive_icon_foreground_inset: 0
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "images/app_icon.png"
+    background_color: "#F4F8FF"
+    theme_color: "#3E66EB"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
